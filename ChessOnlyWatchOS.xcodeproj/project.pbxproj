@@ -1,0 +1,698 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */; };
+		2A3137752C3AD91200B68401 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137742C3AD91200B68401 /* ContentView.swift */; };
+		2A3137772C3AD91400B68401 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137762C3AD91400B68401 /* Assets.xcassets */; };
+		2A31377A2C3AD91400B68401 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137792C3AD91400B68401 /* Preview Assets.xcassets */; };
+		2A3137842C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */; };
+		2A31378E2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */; };
+		2A3137902C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A31376F2C3AD91200B68401 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A3137612C3AD91100B68401 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A31376C2C3AD91200B68401;
+			remoteInfo = "ChessOnlyWatchOS Watch App";
+		};
+		2A3137802C3AD91400B68401 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A3137612C3AD91100B68401 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A31376C2C3AD91200B68401;
+			remoteInfo = "ChessOnlyWatchOS Watch App";
+		};
+		2A31378A2C3AD91400B68401 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A3137612C3AD91100B68401 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A31376C2C3AD91200B68401;
+			remoteInfo = "ChessOnlyWatchOS Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2A3137962C3AD91400B68401 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessOnlyWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChessOnlyWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOSApp.swift; sourceTree = "<group>"; };
+		2A3137742C3AD91200B68401 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2A3137762C3AD91400B68401 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2A3137792C3AD91400B68401 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2A31377F2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChessOnlyWatchOS Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppTests.swift; sourceTree = "<group>"; };
+		2A3137892C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChessOnlyWatchOS Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A31376A2C3AD91200B68401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A31377C2C3AD91400B68401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A3137862C3AD91400B68401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A3137602C3AD91100B68401 = {
+			isa = PBXGroup;
+			children = (
+				2A3137712C3AD91200B68401 /* ChessOnlyWatchOS Watch App */,
+				2A3137822C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests */,
+				2A31378C2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests */,
+				2A3137682C3AD91200B68401 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2A3137682C3AD91200B68401 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */,
+				2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */,
+				2A31377F2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests.xctest */,
+				2A3137892C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A3137712C3AD91200B68401 /* ChessOnlyWatchOS Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */,
+				2A3137742C3AD91200B68401 /* ContentView.swift */,
+				2A3137762C3AD91400B68401 /* Assets.xcassets */,
+				2A3137782C3AD91400B68401 /* Preview Content */,
+			);
+			path = "ChessOnlyWatchOS Watch App";
+			sourceTree = "<group>";
+		};
+		2A3137782C3AD91400B68401 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137792C3AD91400B68401 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2A3137822C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */,
+			);
+			path = "ChessOnlyWatchOS Watch AppTests";
+			sourceTree = "<group>";
+		};
+		2A31378C2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */,
+				2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "ChessOnlyWatchOS Watch AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2A3137662C3AD91200B68401 /* ChessOnlyWatchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A3137972C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS" */;
+			buildPhases = (
+				2A3137652C3AD91200B68401 /* Resources */,
+				2A3137962C3AD91400B68401 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A3137702C3AD91200B68401 /* PBXTargetDependency */,
+			);
+			name = ChessOnlyWatchOS;
+			productName = ChessOnlyWatchOS;
+			productReference = 2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		2A31376C2C3AD91200B68401 /* ChessOnlyWatchOS Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A3137932C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS Watch App" */;
+			buildPhases = (
+				2A3137692C3AD91200B68401 /* Sources */,
+				2A31376A2C3AD91200B68401 /* Frameworks */,
+				2A31376B2C3AD91200B68401 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ChessOnlyWatchOS Watch App";
+			productName = "ChessOnlyWatchOS Watch App";
+			productReference = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2A31377E2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A31379A2C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS Watch AppTests" */;
+			buildPhases = (
+				2A31377B2C3AD91400B68401 /* Sources */,
+				2A31377C2C3AD91400B68401 /* Frameworks */,
+				2A31377D2C3AD91400B68401 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A3137812C3AD91400B68401 /* PBXTargetDependency */,
+			);
+			name = "ChessOnlyWatchOS Watch AppTests";
+			productName = "ChessOnlyWatchOS Watch AppTests";
+			productReference = 2A31377F2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2A3137882C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A31379D2C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS Watch AppUITests" */;
+			buildPhases = (
+				2A3137852C3AD91400B68401 /* Sources */,
+				2A3137862C3AD91400B68401 /* Frameworks */,
+				2A3137872C3AD91400B68401 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A31378B2C3AD91400B68401 /* PBXTargetDependency */,
+			);
+			name = "ChessOnlyWatchOS Watch AppUITests";
+			productName = "ChessOnlyWatchOS Watch AppUITests";
+			productReference = 2A3137892C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A3137612C3AD91100B68401 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					2A3137662C3AD91200B68401 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					2A31376C2C3AD91200B68401 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					2A31377E2C3AD91400B68401 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 2A31376C2C3AD91200B68401;
+					};
+					2A3137882C3AD91400B68401 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 2A31376C2C3AD91200B68401;
+					};
+				};
+			};
+			buildConfigurationList = 2A3137642C3AD91100B68401 /* Build configuration list for PBXProject "ChessOnlyWatchOS" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2A3137602C3AD91100B68401;
+			productRefGroup = 2A3137682C3AD91200B68401 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2A3137662C3AD91200B68401 /* ChessOnlyWatchOS */,
+				2A31376C2C3AD91200B68401 /* ChessOnlyWatchOS Watch App */,
+				2A31377E2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests */,
+				2A3137882C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A3137652C3AD91200B68401 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A31376B2C3AD91200B68401 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A31377A2C3AD91400B68401 /* Preview Assets.xcassets in Resources */,
+				2A3137772C3AD91400B68401 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A31377D2C3AD91400B68401 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A3137872C3AD91400B68401 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A3137692C3AD91200B68401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A3137752C3AD91200B68401 /* ContentView.swift in Sources */,
+				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A31377B2C3AD91400B68401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A3137842C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A3137852C3AD91400B68401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A31378E2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift in Sources */,
+				2A3137902C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A3137702C3AD91200B68401 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A31376C2C3AD91200B68401 /* ChessOnlyWatchOS Watch App */;
+			targetProxy = 2A31376F2C3AD91200B68401 /* PBXContainerItemProxy */;
+		};
+		2A3137812C3AD91400B68401 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A31376C2C3AD91200B68401 /* ChessOnlyWatchOS Watch App */;
+			targetProxy = 2A3137802C3AD91400B68401 /* PBXContainerItemProxy */;
+		};
+		2A31378B2C3AD91400B68401 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A31376C2C3AD91200B68401 /* ChessOnlyWatchOS Watch App */;
+			targetProxy = 2A31378A2C3AD91400B68401 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2A3137912C3AD91400B68401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2A3137922C3AD91400B68401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		2A3137942C3AD91400B68401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ChessOnlyWatchOS Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessOnlyWatchOS;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ordinary.ChessOnlyWatchOS.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		2A3137952C3AD91400B68401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ChessOnlyWatchOS Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessOnlyWatchOS;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ordinary.ChessOnlyWatchOS.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		2A3137982C3AD91400B68401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessOnlyWatchOS;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ordinary.ChessOnlyWatchOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2A3137992C3AD91400B68401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessOnlyWatchOS;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ordinary.ChessOnlyWatchOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2A31379B2C3AD91400B68401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ordinary.ChessOnlyWatchOS-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessOnlyWatchOS Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessOnlyWatchOS Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		2A31379C2C3AD91400B68401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ordinary.ChessOnlyWatchOS-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessOnlyWatchOS Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessOnlyWatchOS Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		2A31379E2C3AD91400B68401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ordinary.ChessOnlyWatchOS-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "ChessOnlyWatchOS Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		2A31379F2C3AD91400B68401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN4J7445H4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ordinary.ChessOnlyWatchOS-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "ChessOnlyWatchOS Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A3137642C3AD91100B68401 /* Build configuration list for PBXProject "ChessOnlyWatchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A3137912C3AD91400B68401 /* Debug */,
+				2A3137922C3AD91400B68401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A3137932C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A3137942C3AD91400B68401 /* Debug */,
+				2A3137952C3AD91400B68401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A3137972C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A3137982C3AD91400B68401 /* Debug */,
+				2A3137992C3AD91400B68401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A31379A2C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A31379B2C3AD91400B68401 /* Debug */,
+				2A31379C2C3AD91400B68401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A31379D2C3AD91400B68401 /* Build configuration list for PBXNativeTarget "ChessOnlyWatchOS Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A31379E2C3AD91400B68401 /* Debug */,
+				2A31379F2C3AD91400B68401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A3137612C3AD91100B68401 /* Project object */;
+}
