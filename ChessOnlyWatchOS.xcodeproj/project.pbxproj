@@ -9,12 +9,25 @@
 /* Begin PBXBuildFile section */
 		2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */; };
-		2A3137752C3AD91200B68401 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137742C3AD91200B68401 /* ContentView.swift */; };
+		2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137742C3AD91200B68401 /* GameFieldView.swift */; };
 		2A3137772C3AD91400B68401 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137762C3AD91400B68401 /* Assets.xcassets */; };
 		2A31377A2C3AD91400B68401 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137792C3AD91400B68401 /* Preview Assets.xcassets */; };
 		2A3137842C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */; };
 		2A31378E2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */; };
 		2A3137902C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */; };
+		2A3137A22C3AE57200B68401 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137A12C3AE57200B68401 /* StartView.swift */; };
+		2A3137A52C3AE59700B68401 /* CompactButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137A42C3AE59700B68401 /* CompactButton.swift */; };
+		2A3137A82C3AF38700B68401 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137A72C3AF38700B68401 /* Piece.swift */; };
+		2A3137AC2C3AF41300B68401 /* GameFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137AB2C3AF41300B68401 /* GameFieldViewModel.swift */; };
+		2A3137AF2C3AF47800B68401 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137AE2C3AF47800B68401 /* Board.swift */; };
+		2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B12C3AFBE600B68401 /* Collection.swift */; };
+		2A3137B42C3AFCF500B68401 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B32C3AFCF500B68401 /* View.swift */; };
+		2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B62C3B166200B68401 /* CellPicker.swift */; };
+		2ACFF3A22C3B32B400E9F05F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A12C3B32B400E9F05F /* SettingsView.swift */; };
+		2ACFF3A52C3B33CA00E9F05F /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A42C3B33CA00E9F05F /* SettingsViewModel.swift */; };
+		2ACFF3A72C3B341000E9F05F /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A62C3B341000E9F05F /* Defaults.swift */; };
+		2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A82C3B379C00E9F05F /* Notification.swift */; };
+		2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +72,7 @@
 		2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessOnlyWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChessOnlyWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOSApp.swift; sourceTree = "<group>"; };
-		2A3137742C3AD91200B68401 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2A3137742C3AD91200B68401 /* GameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFieldView.swift; sourceTree = "<group>"; };
 		2A3137762C3AD91400B68401 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A3137792C3AD91400B68401 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A31377F2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChessOnlyWatchOS Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +80,19 @@
 		2A3137892C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChessOnlyWatchOS Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2A3137A12C3AE57200B68401 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		2A3137A42C3AE59700B68401 /* CompactButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactButton.swift; sourceTree = "<group>"; };
+		2A3137A72C3AF38700B68401 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
+		2A3137AB2C3AF41300B68401 /* GameFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFieldViewModel.swift; sourceTree = "<group>"; };
+		2A3137AE2C3AF47800B68401 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		2A3137B12C3AFBE600B68401 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		2A3137B32C3AFCF500B68401 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		2A3137B62C3B166200B68401 /* CellPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellPicker.swift; sourceTree = "<group>"; };
+		2ACFF3A12C3B32B400E9F05F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2ACFF3A42C3B33CA00E9F05F /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		2ACFF3A62C3B341000E9F05F /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		2ACFF3A82C3B379C00E9F05F /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,8 +145,12 @@
 			isa = PBXGroup;
 			children = (
 				2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */,
-				2A3137742C3AD91200B68401 /* ContentView.swift */,
-				2A3137762C3AD91400B68401 /* Assets.xcassets */,
+				2A3137A02C3ADA8400B68401 /* Screens */,
+				2A3137A32C3AE58700B68401 /* Controls */,
+				2A3137B52C3B15F400B68401 /* Services */,
+				2A3137A62C3AF37200B68401 /* Models */,
+				2A3137B02C3AFBD500B68401 /* Extensions & Utils */,
+				2A3137AD2C3AF43700B68401 /* Resources */,
 				2A3137782C3AD91400B68401 /* Preview Content */,
 			);
 			path = "ChessOnlyWatchOS Watch App";
@@ -149,6 +179,95 @@
 				2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */,
 			);
 			path = "ChessOnlyWatchOS Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		2A3137A02C3ADA8400B68401 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137A92C3AF3FB00B68401 /* Start */,
+				2A3137AA2C3AF40100B68401 /* GameField */,
+				2ACFF3A32C3B32BA00E9F05F /* Settings */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		2A3137A32C3AE58700B68401 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137B82C3B166500B68401 /* CellPicker */,
+				2A3137A42C3AE59700B68401 /* CompactButton.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		2A3137A62C3AF37200B68401 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137A72C3AF38700B68401 /* Piece.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2A3137A92C3AF3FB00B68401 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137A12C3AE57200B68401 /* StartView.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		2A3137AA2C3AF40100B68401 /* GameField */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137742C3AD91200B68401 /* GameFieldView.swift */,
+				2A3137AB2C3AF41300B68401 /* GameFieldViewModel.swift */,
+			);
+			path = GameField;
+			sourceTree = "<group>";
+		};
+		2A3137AD2C3AF43700B68401 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137762C3AD91400B68401 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2A3137B02C3AFBD500B68401 /* Extensions & Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137B12C3AFBE600B68401 /* Collection.swift */,
+				2A3137B32C3AFCF500B68401 /* View.swift */,
+				2ACFF3A82C3B379C00E9F05F /* Notification.swift */,
+				2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */,
+			);
+			path = "Extensions & Utils";
+			sourceTree = "<group>";
+		};
+		2A3137B52C3B15F400B68401 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137AE2C3AF47800B68401 /* Board.swift */,
+				2ACFF3A62C3B341000E9F05F /* Defaults.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2A3137B82C3B166500B68401 /* CellPicker */ = {
+			isa = PBXGroup;
+			children = (
+				2A3137B62C3B166200B68401 /* CellPicker.swift */,
+			);
+			path = CellPicker;
+			sourceTree = "<group>";
+		};
+		2ACFF3A32C3B32BA00E9F05F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2ACFF3A12C3B32B400E9F05F /* SettingsView.swift */,
+				2ACFF3A42C3B33CA00E9F05F /* SettingsViewModel.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,8 +428,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A3137752C3AD91200B68401 /* ContentView.swift in Sources */,
+				2A3137A22C3AE57200B68401 /* StartView.swift in Sources */,
+				2ACFF3A72C3B341000E9F05F /* Defaults.swift in Sources */,
+				2A3137AC2C3AF41300B68401 /* GameFieldViewModel.swift in Sources */,
+				2A3137A52C3AE59700B68401 /* CompactButton.swift in Sources */,
+				2A3137A82C3AF38700B68401 /* Piece.swift in Sources */,
+				2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */,
+				2A3137AF2C3AF47800B68401 /* Board.swift in Sources */,
+				2A3137B42C3AFCF500B68401 /* View.swift in Sources */,
+				2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */,
+				2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */,
 				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
+				2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */,
+				2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */,
+				2ACFF3A22C3B32B400E9F05F /* SettingsView.swift in Sources */,
+				2ACFF3A52C3B33CA00E9F05F /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +542,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -463,6 +596,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -492,7 +626,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -523,7 +657,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
