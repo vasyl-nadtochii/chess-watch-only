@@ -196,7 +196,7 @@
 		2A3137A32C3AE58700B68401 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				2A3137B82C3B166500B68401 /* CellPicker */,
+				2A3137B62C3B166200B68401 /* CellPicker.swift */,
 				2A3137A42C3AE59700B68401 /* CompactButton.swift */,
 			);
 			path = Controls;
@@ -254,14 +254,6 @@
 				2ACFF3A62C3B341000E9F05F /* Defaults.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		2A3137B82C3B166500B68401 /* CellPicker */ = {
-			isa = PBXGroup;
-			children = (
-				2A3137B62C3B166200B68401 /* CellPicker.swift */,
-			);
-			path = CellPicker;
 			sourceTree = "<group>";
 		};
 		2ACFF3A32C3B32BA00E9F05F /* Settings */ = {

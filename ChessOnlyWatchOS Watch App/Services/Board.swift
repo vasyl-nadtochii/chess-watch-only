@@ -15,6 +15,10 @@ class Board {
     var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     var numberOfSquaresToEdge: [[Int]] = []
 
+    var opponentSide: Int {
+        return (playerSide == Piece.white) ? Piece.black : Piece.white
+    }
+
     // initial position
     // let fenString = Constants.initialChessPosition
     let fenString = "8/6b1/2q5/8/5r2/8/8/8" // just for test
@@ -51,7 +55,7 @@ class Board {
 
                 moves.append(.init(startSquare: startIndex, targetSquare: targetSquareIndex))
 
-                if Piece.pieceColor(from: pieceOnTargetSquare) != playerSide {
+                if Piece.pieceColor(from: pieceOnTargetSquare) == opponentSide {
                     break
                 }
             }
@@ -69,8 +73,8 @@ class Board {
             for rank in 0..<8 {
                 let numNorth = 7 - rank
                 let numSouth = rank
-                let numWest = 7 - file
-                let numEast = file
+                let numWest = file
+                let numEast = 7 - file
 
                 let squareIndex = rank * 8 + file
 

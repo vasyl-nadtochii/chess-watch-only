@@ -44,7 +44,7 @@ struct GameFieldView: View {
                                         && viewModel.availableCellsIndiciesForPlayerToPick.contains(where: {
                                             $0 == viewModel.getCellIndex(file: file, rank: rank)
                                         }) {
-                                        Color.green.opacity(0.2)
+                                        Color.green.opacity(0.15)
                                             .frame(width: gameFieldHeight / 8, height: gameFieldHeight / 8)
                                     }
                                     drawPieceIfNeed(file: file, rank: rank)
