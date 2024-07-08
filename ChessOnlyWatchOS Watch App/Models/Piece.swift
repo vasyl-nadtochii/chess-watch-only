@@ -9,7 +9,6 @@ import Foundation
 
 class Piece {
 
-    static let none = 0
     static let king = 1
     static let pawn = 2
     static let knight = 3
@@ -81,5 +80,37 @@ extension Piece {
             return Piece.black
         }
         return nil
+    }
+
+    static func pieceType(from piece: Int) -> Int? {
+        var binaryRepresentation = String(piece, radix: 2)
+
+        guard binaryRepresentation.count >= 4 else { return nil }
+        if binaryRepresentation.count == 4 {
+            binaryRepresentation = "0\(binaryRepresentation)"
+        }
+
+        let suffix = binaryRepresentation.suffix(3)
+        if suffix == "000" {
+            return nil
+        } else if suffix == "001" {
+            return Piece.king
+        } else if suffix == "010" {
+            return Piece.pawn
+        } else if suffix == "011" {
+            return Piece.knight
+        } else if suffix == "100" {
+            return Piece.bishop
+        } else if suffix == "101" {
+            return Piece.rook
+        } else if suffix == "110" {
+            return Piece.queen
+        }
+        return nil
+    }
+
+    static func isSlidingPiece(_ piece: Int) -> Bool {
+        let slidingPieces = [Piece.bishop, Piece.rook, Piece.queen]
+        return slidingPieces.contains(where: { $0 == pieceType(from: piece) })
     }
 }

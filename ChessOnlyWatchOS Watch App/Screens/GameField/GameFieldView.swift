@@ -35,10 +35,17 @@ struct GameFieldView: View {
                         createCell(file: file, rank: rank)
                             .overlay {
                                 ZStack {
-                                    if viewModel.isCellSelected(file: file, rank: rank) {
+                                    if viewModel.isCursorPointingAtCell(file: file, rank: rank) {
                                         Color.clear
                                             .frame(width: gameFieldHeight / 8, height: gameFieldHeight / 8)
                                             .border(viewModel.selectButtonColor, width: 2)
+                                    }
+                                    if viewModel.shouldHighlightAvailableCells
+                                        && viewModel.availableCellsIndiciesForPlayerToPick.contains(where: {
+                                            $0 == viewModel.getCellIndex(file: file, rank: rank)
+                                        }) {
+                                        Color.green.opacity(0.2)
+                                            .frame(width: gameFieldHeight / 8, height: gameFieldHeight / 8)
                                     }
                                     drawPieceIfNeed(file: file, rank: rank)
                                 }
@@ -69,7 +76,7 @@ struct GameFieldView: View {
     var cellPicker: some View {
         CellPicker(
             availableCellIndicies: viewModel.availableCellsIndiciesForPlayerToPick,
-            currentIndex: $viewModel.selectedCellIndex
+            currentIndex: $viewModel.cursorCellIndex
         )
     }
 

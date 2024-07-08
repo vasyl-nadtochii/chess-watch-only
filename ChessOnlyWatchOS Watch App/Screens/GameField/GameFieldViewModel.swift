@@ -49,7 +49,6 @@ class GameFieldViewModel: ObservableObject {
         }
     }
 
-    @Published var selectButtonAction: SelectButtonAction = .select
     var cancelButtonAction: CancelButtonAction {
         switch selectButtonAction {
         case .select:
@@ -59,7 +58,41 @@ class GameFieldViewModel: ObservableObject {
         }
     }
 
-    @Published var selectedCellIndex: Int = 0
+    var shouldHighlightAvailableCells: Bool {
+        return selectButtonAction == .makeMove
+    }
+
+    var availableCellsIndiciesForPlayerToPick: [Int] {
+        let allCells = Array(0...(board.squares.count - 1))
+        switch selectButtonAction {
+        case .select:
+            return allCells.filter({
+                guard let piece = getPieceAtCell(index: $0) else {
+                    return false
+                }
+                return Piece.pieceColor(from: piece) == board.playerSide
+            })
+        case .makeMove:
+            guard let selectedCellIndex = selectedCellIndex,
+                let pieceAtCell = getPieceAtCell(index: selectedCellIndex),
+                let selectedPieceType = Piece.pieceType(from: pieceAtCell)
+            else { return [] }
+
+            switch selectedPieceType {
+            case Piece.king:
+                return []
+            case Piece.bishop, Piece.queen, Piece.rook:
+                return board.getAvailableSlidingMoves(at: selectedCellIndex, for: pieceAtCell)
+                    .map { $0.targetSquare }
+            default:
+                return []
+            }
+        }
+    }
+
+    @Published var selectButtonAction: SelectButtonAction = .select
+    @Published var cursorCellIndex: Int = 0 // cell at which points cursor
+    @Published var selectedCellIndex: Int? // cell which was selected by pressing "Select"
 
     private let defaults: Defaults
 
@@ -71,16 +104,6 @@ class GameFieldViewModel: ObservableObject {
         NotificationCenter.default.addObserver(forName: .playerSideUpdated, object: nil, queue: .main) { _ in
             self.setInitialCursorPosition()
         }
-    }
-
-    var availableCellsIndiciesForPlayerToPick: [Int] {
-        let allCells = Array(0...(board.squares.count - 1))
-        return allCells.filter({
-            guard let piece = getPieceAtCell(index: $0) else {
-                return false
-            }
-            return Piece.pieceColor(from: piece) == board.playerSide
-        })
     }
 
     func getPieceAtCell(index: Int) -> Int? {
@@ -95,13 +118,16 @@ class GameFieldViewModel: ObservableObject {
         return (8 - file) * 8 + rank - 1
     }
 
-    func isCellSelected(file: Int, rank: Int) -> Bool {
-        return getCellIndex(file: file, rank: rank) == selectedCellIndex
+    func isCursorPointingAtCell(file: Int, rank: Int) -> Bool {
+        return getCellIndex(file: file, rank: rank) == cursorCellIndex
     }
 
     func onSelectButtonTapped() {
         if selectButtonAction == .select {
+            selectedCellIndex = cursorCellIndex
             selectButtonAction = .makeMove
+        } else {
+            
         }
     }
 
@@ -109,11 +135,15 @@ class GameFieldViewModel: ObservableObject {
         if selectButtonAction == .select {
             dismissClosure()
         } else {
+            if let selectedCellIndex = selectedCellIndex {
+                cursorCellIndex = selectedCellIndex
+                self.selectedCellIndex = nil
+            }
             selectButtonAction = .select
         }
     }
 
     private func setInitialCursorPosition() {
-        selectedCellIndex = availableCellsIndiciesForPlayerToPick.min() ?? 0
+        cursorCellIndex = availableCellsIndiciesForPlayerToPick.min() ?? 0
     }
 }
