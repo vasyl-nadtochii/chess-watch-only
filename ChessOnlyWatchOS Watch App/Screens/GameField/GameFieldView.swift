@@ -23,6 +23,22 @@ struct GameFieldView: View {
             cellPicker
         }
         .background(Color("FieldBackgroundColor"))
+        .alert(
+            "Promote your pawn to:",
+            isPresented: $viewModel.isShowingPawnPromotionOptions,
+            actions: {
+                ForEach(viewModel.pawnPromotionOptions, id: \.self) { promotionOption in
+                    Button(Piece.pieceName(fromType: promotionOption)) {
+                        guard let pawnToPromote = viewModel.pawnToPromote,
+                            let pawnIndexToPromote = viewModel.pawnIndexToPromote
+                        else {
+                            return
+                        }
+                        viewModel.promotePawn(at: pawnIndexToPromote, from: pawnToPromote, to: promotionOption)
+                    }
+                }
+            }
+        )
         .navigationBarBackButtonHidden()
         .edgesIgnoringSafeArea(.bottom)
     }

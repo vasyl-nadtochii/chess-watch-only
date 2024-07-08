@@ -9,10 +9,15 @@ import Foundation
 
 class Board {
 
+    enum Result {
+        case pawnShouldBePromoted(pawn: Int, pawnIndex: Int)
+    }
+
     var sideToMove: Int
     var squares: [Int]
     var playerSide: Int
     var boardPosition: BoardPosition
+    var onResult: ((Result) -> Void)?
 
     private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     private var numberOfSquaresToEdge: [[Int]] = []
@@ -23,7 +28,7 @@ class Board {
 
     // initial position
     // let fenString = Constants.initialChessPosition
-    let fenString = "rnbqkbnr/ppp1p1pp/6Q1/3p1p2/4P3/6P1/PPPP1P1P/RNB1KBNR" // just for test
+    let fenString = "8/8/8/8/8/8/3p4/8" // just for test
 
     private let defaults: Defaults
 
@@ -152,8 +157,9 @@ class Board {
         squares[move.startSquare] = 0
         squares[move.targetSquare] = piece
 
-        if Piece.pieceType(from: piece) == Piece.pawn {
-            // TODO: Handle pawn promotion if need
+        if Piece.pieceType(from: piece) == Piece.pawn && checkPawnPromotion(move: move, piece: piece) {
+            onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
+            // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion
         }
 
         // TODO: Check for check/checkmate
@@ -161,6 +167,11 @@ class Board {
         toggleSideToMove()
 
         return true
+    }
+
+    func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
+        guard let pawnColor = Piece.pieceColor(from: pawn) else { return }
+        squares[squareIndex] = newPieceType | pawnColor
     }
 
     private func loadPositionsFromFEN(_ fenString: String) {
@@ -196,5 +207,22 @@ class Board {
 
     private func toggleSideToMove() {
         sideToMove = (sideToMove == Piece.white) ? Piece.black : Piece.white
+    }
+
+    private func checkPawnPromotion(move: Move, piece: Int) -> Bool {
+        var startOfPromotionZone = 0
+        var endOfPromotionZone = 7
+
+        if (boardPosition == .whiteBelowBlackAbove && Piece.pieceColor(from: piece) == Piece.white)
+            || (boardPosition == .blackBelowWhiteAbove && Piece.pieceColor(from: piece) == Piece.black) {
+            startOfPromotionZone = 56
+            endOfPromotionZone = 63
+        }
+
+        if move.targetSquare >= startOfPromotionZone && move.targetSquare <= endOfPromotionZone {
+            return true
+        }
+
+        return false
     }
 }

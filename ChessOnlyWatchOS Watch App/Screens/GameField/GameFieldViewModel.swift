@@ -58,6 +58,10 @@ class GameFieldViewModel: ObservableObject {
         }
     }
 
+    var pawnPromotionOptions: [Int] {
+        return Piece.pawnPromotionOptions
+    }
+
     var shouldHighlightAvailableCells: Bool {
         return selectButtonAction == .makeMove
     }
@@ -93,15 +97,30 @@ class GameFieldViewModel: ObservableObject {
         }
     }
 
+    var pawnToPromote: Int?
+    var pawnIndexToPromote: Int?
+
     @Published var selectButtonAction: SelectButtonAction = .select
     @Published var cursorCellIndex: Int = 0 // cell at which points cursor
     @Published var selectedCellIndex: Int? // cell which was selected by pressing "Select"
+    @Published var isShowingPawnPromotionOptions: Bool = false
 
     private let defaults: Defaults
 
     init(defaults: Defaults) {
         self.defaults = defaults
+
         self.board = .init(defaults: defaults)
+        self.board.onResult = { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .pawnShouldBePromoted(let pawn, let pawnIndex):
+                self.pawnToPromote = pawn
+                self.pawnIndexToPromote = pawnIndex
+                self.isShowingPawnPromotionOptions = true
+            }
+        }
+
         self.setInitialCursorPosition()
 
         NotificationCenter.default.addObserver(forName: .playerSideUpdated, object: nil, queue: .main) { _ in
@@ -156,6 +175,12 @@ class GameFieldViewModel: ObservableObject {
             }
             selectButtonAction = .select
         }
+    }
+
+    func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
+        board.promotePawn(at: squareIndex, from: pawn, to: newPieceType)
+        pawnIndexToPromote = nil
+        pawnToPromote = nil
     }
 
     private func setInitialCursorPosition() {

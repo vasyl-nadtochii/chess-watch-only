@@ -109,8 +109,31 @@ extension Piece {
         return nil
     }
 
+    static func pieceName(fromType pieceType: Int) -> String {
+        switch pieceType {
+        case Piece.pawn:
+            return "Pawn"
+        case Piece.king:
+            return "King"
+        case Piece.queen:
+            return "Queen"
+        case Piece.bishop:
+            return "Bishop"
+        case Piece.knight:
+            return "Knight"
+        case Piece.rook:
+            return "Rook"
+        default:
+            return String()
+        }
+    }
+
     static func isSlidingPiece(_ piece: Int) -> Bool {
         let slidingPieces = [Piece.bishop, Piece.rook, Piece.queen]
         return slidingPieces.contains(where: { $0 == pieceType(from: piece) })
+    }
+
+    static var pawnPromotionOptions: [Int] {
+        return [ Piece.queen, Piece.rook, Piece.bishop, Piece.knight ]
     }
 }
