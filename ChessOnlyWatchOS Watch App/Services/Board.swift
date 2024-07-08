@@ -21,7 +21,7 @@ class Board {
 
     // initial position
     // let fenString = Constants.initialChessPosition
-    let fenString = "8/6b1/2q5/8/5r2/8/8/8" // just for test
+    let fenString = "8/2q2b2/8/8/2r5/6P1/8/8" // just for test
 
     private let defaults: Defaults
 
@@ -29,7 +29,7 @@ class Board {
         self.defaults = defaults
         self.squares = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
-        self.sideToMove = defaults.playerSide // TODO: ???
+        self.sideToMove = defaults.playerSide
         loadPositionsFromFEN(fenString)
         precomputedMoveData()
 
@@ -92,8 +92,14 @@ class Board {
         }
     }
 
-    func printDistanceToEdges(file: Int, rank: Int) {
-        print("|||", numberOfSquaresToEdge[rank * 8 + file])
+    func makeMove(move: Move, piece: Int) {
+        guard sideToMove == Piece.pieceColor(from: piece) else {
+            return
+        }
+        squares[move.startSquare] = 0
+        squares[move.targetSquare] = piece
+
+        toggleSideToMove()
     }
 
     private func loadPositionsFromFEN(_ fenString: String) {
@@ -125,5 +131,9 @@ class Board {
                 }
             }
         }
+    }
+
+    private func toggleSideToMove() {
+        sideToMove = (sideToMove == Piece.white) ? Piece.black : Piece.white
     }
 }

@@ -127,7 +127,14 @@ class GameFieldViewModel: ObservableObject {
             selectedCellIndex = cursorCellIndex
             selectButtonAction = .makeMove
         } else {
-            
+            guard let selectedCellIndex = selectedCellIndex,
+                let piece = getPieceAtCell(index: selectedCellIndex)
+            else {
+                return
+            }
+            board.makeMove(move: .init(startSquare: selectedCellIndex, targetSquare: cursorCellIndex), piece: piece)
+            self.selectedCellIndex = nil
+            selectButtonAction = .select
         }
     }
 
