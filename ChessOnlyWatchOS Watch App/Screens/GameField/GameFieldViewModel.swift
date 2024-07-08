@@ -81,6 +81,9 @@ class GameFieldViewModel: ObservableObject {
             switch selectedPieceType {
             case Piece.king:
                 return []
+            case Piece.pawn:
+                return board.getAvailablePawnMoves(at: selectedCellIndex, for: pieceAtCell)
+                    .map { $0.targetSquare }
             case Piece.bishop, Piece.queen, Piece.rook:
                 return board.getAvailableSlidingMoves(at: selectedCellIndex, for: pieceAtCell)
                     .map { $0.targetSquare }
@@ -132,7 +135,12 @@ class GameFieldViewModel: ObservableObject {
             else {
                 return
             }
-            board.makeMove(move: .init(startSquare: selectedCellIndex, targetSquare: cursorCellIndex), piece: piece)
+            guard board.makeMove(
+                move: .init(startSquare: selectedCellIndex, targetSquare: cursorCellIndex),
+                piece: piece
+            ) else {
+                return
+            }
             self.selectedCellIndex = nil
             selectButtonAction = .select
         }

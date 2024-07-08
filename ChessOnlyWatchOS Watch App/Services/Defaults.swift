@@ -22,4 +22,15 @@ class Defaults {
             UserDefaults.standard.setValue(newValue, forKey: playerSideKey)
         }
     }
+
+    private let boardPositionKey: String = "boardPositionKey"
+    var boardPosition: BoardPosition {
+        get {
+            let rawValue = UserDefaults.standard.integer(forKey: boardPositionKey)
+            return BoardPosition(rawValue: rawValue) ?? .whiteBelowBlackAbove
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: boardPositionKey)
+        }
+    }
 }
