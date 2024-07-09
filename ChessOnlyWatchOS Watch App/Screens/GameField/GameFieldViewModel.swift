@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WatchKit
 
 class GameFieldViewModel: ObservableObject {
 
@@ -162,6 +163,7 @@ class GameFieldViewModel: ObservableObject {
             }
             self.selectedCellIndex = nil
             selectButtonAction = .select
+            WKInterfaceDevice.current().play(.click)
         }
     }
 
