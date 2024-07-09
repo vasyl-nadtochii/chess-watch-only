@@ -27,8 +27,8 @@ class Board {
     }
 
     // initial position
-    // let fenString = Constants.initialChessPosition
-    let fenString = "8/8/8/8/8/8/3p4/8" // just for test
+    let fenString = Constants.initialChessPosition
+    // let fenString = "8/8/8/8/8/8/3p4/8" // just for test
 
     private let defaults: Defaults
 
@@ -97,21 +97,41 @@ class Board {
         }
 
         // MARK: Handle two steps forward (initial move)
-        if boardPosition == .whiteBelowBlackAbove
-            && ((pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
-                || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56)))
-            && squares[startIndex + twoStepForward] == 0 {
+        if moves.count > 1 { // if we cant go one step forward, we cant go two
+            if boardPosition == .whiteBelowBlackAbove
+                && ((pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
+                    || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56)))
+                && squares[startIndex + twoStepForward] == 0 {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
-        } else if boardPosition == .blackBelowWhiteAbove
-            && ((pieceColor == Piece.black && (startIndex >= 8 && startIndex < 16))
-                || (pieceColor == Piece.white && (startIndex >= 48 && startIndex < 56)))
-            && squares[startIndex + twoStepForward] == 0 {
+            } else if boardPosition == .blackBelowWhiteAbove
+                && ((pieceColor == Piece.black && (startIndex >= 8 && startIndex < 16))
+                    || (pieceColor == Piece.white && (startIndex >= 48 && startIndex < 56)))
+                && squares[startIndex + twoStepForward] == 0 {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
+            }
         }
 
         // MARK: Handle attack move
+        if (Piece.pieceColor(from: piece) == Piece.white && boardPosition == .whiteBelowBlackAbove)
+            || (Piece.pieceColor(from: piece) == Piece.black && boardPosition == .blackBelowWhiteAbove) {
+            if startIndex % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 7 })
+            } else if (startIndex + 1) % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 9 })
+            }
+        } else if (Piece.pieceColor(from: piece) == Piece.black && boardPosition == .whiteBelowBlackAbove)
+            || (Piece.pieceColor(from: piece) == Piece.white && boardPosition == .blackBelowWhiteAbove) {
+            if startIndex % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 9 })
+            } else if (startIndex + 1) % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 7 })
+            }
+        }
+
         for attackStep in attackSteps {
-            if squares[startIndex + attackStep] != 0 {
+            if let pieceAtTargetSquare = squares[safe: startIndex + attackStep],
+               let pieceColorAtTargetSquare = Piece.pieceColor(from: pieceAtTargetSquare),
+               pieceColorAtTargetSquare != Piece.pieceColor(from: piece) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + attackStep))
             }
         }
@@ -164,7 +184,7 @@ class Board {
 
         // TODO: Check for check/checkmate
 
-        toggleSideToMove()
+        // toggleSideToMove()
 
         return true
     }
