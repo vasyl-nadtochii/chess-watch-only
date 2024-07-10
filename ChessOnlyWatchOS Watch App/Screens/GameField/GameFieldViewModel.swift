@@ -85,7 +85,8 @@ class GameFieldViewModel: ObservableObject {
 
             switch selectedPieceType {
             case Piece.king:
-                return []
+                return board.getAvailableKingMoves(at: selectedCellIndex, for: pieceAtCell)
+                    .map { $0.targetSquare }
             case Piece.pawn:
                 return board.getAvailablePawnMoves(at: selectedCellIndex, for: pieceAtCell)
                     .map { $0.targetSquare }

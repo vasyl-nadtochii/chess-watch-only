@@ -27,8 +27,8 @@ class Board {
     }
 
     // initial position
-    let fenString = Constants.initialChessPosition
-    // let fenString = "8/8/8/8/8/8/3p4/8" // just for test
+    // let fenString = Constants.initialChessPosition
+    let fenString = "3k4/8/8/8/2K5/8/8/8" // just for test
 
     private let defaults: Defaults
 
@@ -67,6 +67,36 @@ class Board {
                 if Piece.pieceColor(from: pieceOnTargetSquare) == opponentSide {
                     break
                 }
+            }
+        }
+
+        return moves
+    }
+
+    func getAvailableKingMoves(at startIndex: Int, for piece: Int) -> [Move] {
+        var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
+        var directionOffsets = self.directionOffsets
+        let pieceColor = Piece.pieceColor(from: piece)
+
+        if (pieceColor == Piece.white && boardPosition == .whiteBelowBlackAbove)
+            || (pieceColor == Piece.black && boardPosition == .blackBelowWhiteAbove) {
+            if startIndex % 8 == 0 {
+                directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })
+            } else if (startIndex + 1) % 8 == 0 {
+                directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
+            }
+        } else if (pieceColor == Piece.black && boardPosition == .whiteBelowBlackAbove)
+            || (pieceColor == Piece.white && boardPosition == .blackBelowWhiteAbove) {
+            if startIndex % 8 == 0 {
+                directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })
+            } else if (startIndex + 1) % 8 == 0 {
+                directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
+            }
+        }
+
+        for directionOffset in directionOffsets {
+            if startIndex + directionOffset >= 0 && startIndex + directionOffset < 64 {
+                moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
         }
 
