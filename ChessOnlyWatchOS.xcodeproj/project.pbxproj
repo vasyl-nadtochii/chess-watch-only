@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A2EC7A62C3F1E1E00F0AFBE /* BoardColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */; };
+		2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */; };
 		2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */; };
 		2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137742C3AD91200B68401 /* GameFieldView.swift */; };
@@ -71,6 +73,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColorTheme.swift; sourceTree = "<group>"; };
+		2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessOnlyWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChessOnlyWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOSApp.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				2A3137A72C3AF38700B68401 /* Piece.swift */,
 				2AC0C0382C3BB31300C1B9F4 /* Move.swift */,
 				2AC0C03A2C3C44FF00C1B9F4 /* BoardPosition.swift */,
+				2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				2A3137762C3AD91400B68401 /* Assets.xcassets */,
+				2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -429,6 +435,7 @@
 				2A3137A22C3AE57200B68401 /* StartView.swift in Sources */,
 				2ACFF3A72C3B341000E9F05F /* Defaults.swift in Sources */,
 				2A3137AC2C3AF41300B68401 /* GameFieldViewModel.swift in Sources */,
+				2A2EC7A62C3F1E1E00F0AFBE /* BoardColorTheme.swift in Sources */,
 				2A3137A52C3AE59700B68401 /* CompactButton.swift in Sources */,
 				2A3137A82C3AF38700B68401 /* Piece.swift in Sources */,
 				2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */,
@@ -437,6 +444,7 @@
 				2AC0C03B2C3C44FF00C1B9F4 /* BoardPosition.swift in Sources */,
 				2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */,
 				2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */,
+				2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */,
 				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
 				2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */,
 				2AC0C0392C3BB31300C1B9F4 /* Move.swift in Sources */,

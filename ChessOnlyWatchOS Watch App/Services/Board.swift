@@ -27,8 +27,8 @@ class Board {
     }
 
     // initial position
-    // let fenString = Constants.initialChessPosition
-    let fenString = "3k4/8/8/8/2K5/8/8/8" // just for test
+    let fenString = Constants.initialChessPosition
+    // let fenString = "3k4/8/8/8/2K5/8/8/8" // just for test
 
     private let defaults: Defaults
 
@@ -37,7 +37,8 @@ class Board {
         self.squares = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
         self.sideToMove = defaults.playerSide
-        self.boardPosition = defaults.boardPosition
+        // self.boardPosition = (playerSide == Piece.white) ? .whiteBelowBlackAbove : .blackBelowWhiteAbove
+        self.boardPosition = .whiteBelowBlackAbove // TODO: temporary
 
         loadPositionsFromFEN(fenString)
         precomputedMoveData()
@@ -95,10 +96,14 @@ class Board {
         }
 
         for directionOffset in directionOffsets {
-            if startIndex + directionOffset >= 0 && startIndex + directionOffset < 64 {
+            if (startIndex + directionOffset >= 0 && startIndex + directionOffset < 64)
+                && pieceColor != Piece.pieceColor(from: squares[safe: startIndex + directionOffset] ?? 0) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
         }
+
+        // TODO: handle pseudo legal moves
+        // TODO: handle castle scenario
 
         return moves
     }
@@ -142,15 +147,15 @@ class Board {
         }
 
         // MARK: Handle attack move
-        if (Piece.pieceColor(from: piece) == Piece.white && boardPosition == .whiteBelowBlackAbove)
-            || (Piece.pieceColor(from: piece) == Piece.black && boardPosition == .blackBelowWhiteAbove) {
+        if (pieceColor == Piece.white && boardPosition == .whiteBelowBlackAbove)
+            || (pieceColor == Piece.black && boardPosition == .blackBelowWhiteAbove) {
             if startIndex % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 7 })
             } else if (startIndex + 1) % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 9 })
             }
-        } else if (Piece.pieceColor(from: piece) == Piece.black && boardPosition == .whiteBelowBlackAbove)
-            || (Piece.pieceColor(from: piece) == Piece.white && boardPosition == .blackBelowWhiteAbove) {
+        } else if (pieceColor == Piece.black && boardPosition == .whiteBelowBlackAbove)
+            || (pieceColor == Piece.white && boardPosition == .blackBelowWhiteAbove) {
             if startIndex % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 9 })
             } else if (startIndex + 1) % 8 == 0 {

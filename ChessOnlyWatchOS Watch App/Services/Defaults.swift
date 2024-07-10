@@ -23,14 +23,13 @@ class Defaults {
         }
     }
 
-    private let boardPositionKey: String = "boardPositionKey"
-    var boardPosition: BoardPosition {
+    private let boardColorThemeKey: String = "appThemeKey"
+    var boardColorTheme: BoardColorTheme {
         get {
-            let rawValue = UserDefaults.standard.integer(forKey: boardPositionKey)
-            return BoardPosition(rawValue: rawValue) ?? .whiteBelowBlackAbove
+            return BoardColorTheme(rawValue: UserDefaults.standard.integer(forKey: boardColorThemeKey)) ?? .blackWhite
         }
         set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: boardPositionKey)
+            UserDefaults.standard.setValue(newValue.rawValue, forKey: boardColorThemeKey)
         }
     }
 }

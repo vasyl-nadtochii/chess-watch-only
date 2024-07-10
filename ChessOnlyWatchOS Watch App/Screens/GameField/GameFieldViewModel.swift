@@ -102,6 +102,8 @@ class GameFieldViewModel: ObservableObject {
     var pawnToPromote: Int?
     var pawnIndexToPromote: Int?
 
+    var currentColorTheme: BoardColorTheme
+
     @Published var selectButtonAction: SelectButtonAction = .select
     @Published var cursorCellIndex: Int = 0 // cell at which points cursor
     @Published var selectedCellIndex: Int? // cell which was selected by pressing "Select"
@@ -113,6 +115,7 @@ class GameFieldViewModel: ObservableObject {
         self.defaults = defaults
 
         self.board = .init(defaults: defaults)
+        self.currentColorTheme = defaults.boardColorTheme
         self.board.onResult = { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -127,6 +130,10 @@ class GameFieldViewModel: ObservableObject {
 
         NotificationCenter.default.addObserver(forName: .playerSideUpdated, object: nil, queue: .main) { _ in
             self.setInitialCursorPosition()
+            // TODO: flip board after changing player's side
+        }
+        NotificationCenter.default.addObserver(forName: .boardColorThemeUpdated, object: nil, queue: .main) { _ in
+            self.currentColorTheme = defaults.boardColorTheme
         }
     }
 

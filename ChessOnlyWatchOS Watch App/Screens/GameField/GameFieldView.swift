@@ -22,7 +22,7 @@ struct GameFieldView: View {
             }
             cellPicker
         }
-        .background(Color("FieldBackgroundColor"))
+        .background(Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme))
         .alert(
             "Promote your pawn to:",
             isPresented: $viewModel.isShowingPawnPromotionOptions,
@@ -102,7 +102,11 @@ struct GameFieldView: View {
 
     private func createCell(file: Int, rank: Int) -> some View {
         Rectangle()
-            .fill(((file + rank) - 1) % 2 == 0 ? Color("FieldBlackColor") : Color("FieldWhiteColor"))
+            .fill(
+                ((file + rank) - 1) % 2 == 0
+                    ? Color.getCellBlackColor(theme: viewModel.currentColorTheme)
+                    : Color.getCellWhiteColor(theme: viewModel.currentColorTheme)
+            )
             .frame(width: gameFieldHeight / 8, height: gameFieldHeight / 8)
     }
 

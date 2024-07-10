@@ -23,6 +23,17 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
+
+            Button {
+                viewModel.changeBoardColorTheme()
+            } label: {
+                VStack(alignment: .leading) {
+                    Text("Board's color theme")
+                        .font(.title3)
+                    Text(viewModel.boardColorTheme.stringRepresentation)
+                        .foregroundColor(.secondary)
+                }
+            }
         }
         .navigationTitle("Settings")
     }

@@ -15,6 +15,14 @@ class SettingsViewModel: ObservableObject {
             NotificationCenter.default.post(name: .playerSideUpdated, object: nil)
         }
     }
+
+    @Published var boardColorTheme: BoardColorTheme {
+        didSet {
+            defaults.boardColorTheme = boardColorTheme
+            NotificationCenter.default.post(name: .boardColorThemeUpdated, object: nil)
+        }
+    }
+
     var playerSideString: String {
         if playerSide == Piece.white {
             return "White"
@@ -30,6 +38,7 @@ class SettingsViewModel: ObservableObject {
     init(defaults: Defaults) {
         self.defaults = defaults
         self.playerSide = defaults.playerSide
+        self.boardColorTheme = defaults.boardColorTheme
     }
 
     func togglePlayerSide() {
@@ -37,6 +46,19 @@ class SettingsViewModel: ObservableObject {
             playerSide = Piece.black
         } else {
             playerSide = Piece.white
+        }
+    }
+
+    func changeBoardColorTheme() {
+        let allThemes = BoardColorTheme.allCases
+        guard let currentIndex = allThemes.firstIndex(of: self.boardColorTheme) else {
+            return
+        }
+
+        if currentIndex == allThemes.count - 1 {
+            self.boardColorTheme = allThemes[0]
+        } else {
+            self.boardColorTheme = allThemes[currentIndex + 1]
         }
     }
 }
