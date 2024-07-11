@@ -93,6 +93,9 @@ class GameFieldViewModel: ObservableObject {
             case Piece.bishop, Piece.queen, Piece.rook:
                 return board.getAvailableSlidingMoves(at: selectedCellIndex, for: pieceAtCell)
                     .map { $0.targetSquare }
+            case Piece.knight:
+                return board.getAvailableKnightMoves(at: selectedCellIndex, for: pieceAtCell)
+                    .map { $0.targetSquare }
             default:
                 return []
             }

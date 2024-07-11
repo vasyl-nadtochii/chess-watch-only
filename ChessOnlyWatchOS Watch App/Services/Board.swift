@@ -74,25 +74,45 @@ class Board {
         return moves
     }
 
+    func getAvailableKnightMoves(at startIndex: Int, for piece: Int) -> [Move] {
+        var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
+        var availableOffsets = [15, 17, -15, -17, 10, 6, -10, -6]
+        let pieceColor = Piece.pieceColor(from: piece)
+
+        for availableOffset in availableOffsets {
+            if startIndex + availableOffset < 0 || startIndex + availableOffset >= 64 {
+                availableOffsets.removeAll(where: { $0 == availableOffset })
+            }
+        }
+
+        if startIndex % 8 == 0 {
+            availableOffsets.removeAll(where: { $0 == 15 || $0 == 6 || $0 == -17 || $0 == -10 })
+        } else if (startIndex + 1) % 8 == 0 {
+            availableOffsets.removeAll(where: { $0 == 17 || $0 == 10 || $0 == -15 || $0 == -6 })
+        } else if startIndex % 8 == 1 {
+            availableOffsets.removeAll(where: { $0 == 6 || $0 == -10 })
+        } else if startIndex % 8 == 6 {
+            availableOffsets.removeAll(where: { $0 == 10 || $0 == -6 })
+        }
+
+        for availableOffset in availableOffsets {
+            if pieceColor != Piece.pieceColor(from: squares[safe: startIndex + availableOffset] ?? 0) {
+                moves.append(.init(startSquare: startIndex, targetSquare: startIndex + availableOffset))
+            }
+        }
+
+        return moves
+    }
+
     func getAvailableKingMoves(at startIndex: Int, for piece: Int) -> [Move] {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         var directionOffsets = self.directionOffsets
         let pieceColor = Piece.pieceColor(from: piece)
 
-        if (pieceColor == Piece.white && boardPosition == .whiteBelowBlackAbove)
-            || (pieceColor == Piece.black && boardPosition == .blackBelowWhiteAbove) {
-            if startIndex % 8 == 0 {
-                directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })
-            } else if (startIndex + 1) % 8 == 0 {
-                directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
-            }
-        } else if (pieceColor == Piece.black && boardPosition == .whiteBelowBlackAbove)
-            || (pieceColor == Piece.white && boardPosition == .blackBelowWhiteAbove) {
-            if startIndex % 8 == 0 {
-                directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })
-            } else if (startIndex + 1) % 8 == 0 {
-                directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
-            }
+        if startIndex % 8 == 0 {
+            directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })
+        } else if (startIndex + 1) % 8 == 0 {
+            directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
         }
 
         for directionOffset in directionOffsets {
