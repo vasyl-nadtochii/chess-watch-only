@@ -11,12 +11,15 @@ class Board {
 
     enum Result {
         case pawnShouldBePromoted(pawn: Int, pawnIndex: Int)
+        case playerSideUpdated
     }
 
     var sideToMove: Int
     var squares: [Int]
     var playerSide: Int
-    var boardPosition: BoardPosition
+    var boardPosition: BoardPosition {
+        return (playerSide == Piece.white) ? .whiteBelowBlackAbove : .blackBelowWhiteAbove
+    }
     var onResult: ((Result) -> Void)?
 
     private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
@@ -36,15 +39,14 @@ class Board {
         self.defaults = defaults
         self.squares = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
-        self.sideToMove = defaults.playerSide
-        // self.boardPosition = (playerSide == Piece.white) ? .whiteBelowBlackAbove : .blackBelowWhiteAbove
-        self.boardPosition = .whiteBelowBlackAbove // TODO: temporary
+        self.sideToMove = defaults.playerSide // TODO: ?
 
         loadPositionsFromFEN(fenString)
         precomputedMoveData()
 
         NotificationCenter.default.addObserver(forName: .playerSideUpdated, object: nil, queue: .main) { _ in
             self.playerSide = defaults.playerSide
+            self.onResult?(.playerSideUpdated)
         }
     }
 
@@ -137,8 +139,7 @@ class Board {
         var attackSteps = [7, 9]
 
         // MARK: Define direction
-        if (pieceColor == Piece.white && boardPosition == .blackBelowWhiteAbove)
-            || (pieceColor == Piece.black && boardPosition == .whiteBelowBlackAbove) {
+        if pieceColor == Piece.black {
             oneStepForward *= -1
             twoStepForward *= -1
             attackSteps = attackSteps.map({ $0 * -1 })
@@ -152,30 +153,20 @@ class Board {
         }
 
         // MARK: Handle two steps forward (initial move)
-        if moves.count > 1 { // if we cant go one step forward, we cant go two
-            if boardPosition == .whiteBelowBlackAbove
-                && ((pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
-                    || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56)))
-                && squares[startIndex + twoStepForward] == 0 {
-                moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
-            } else if boardPosition == .blackBelowWhiteAbove
-                && ((pieceColor == Piece.black && (startIndex >= 8 && startIndex < 16))
-                    || (pieceColor == Piece.white && (startIndex >= 48 && startIndex < 56)))
-                && squares[startIndex + twoStepForward] == 0 {
-                moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
-            }
+        if moves.count > 1 && squares[startIndex + twoStepForward] == 0 && (
+            (pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
+                || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56))
+        ) {
+            moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
         }
 
-        // MARK: Handle attack move
-        if (pieceColor == Piece.white && boardPosition == .whiteBelowBlackAbove)
-            || (pieceColor == Piece.black && boardPosition == .blackBelowWhiteAbove) {
+        if pieceColor == Piece.white {
             if startIndex % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 7 })
             } else if (startIndex + 1) % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 9 })
             }
-        } else if (pieceColor == Piece.black && boardPosition == .whiteBelowBlackAbove)
-            || (pieceColor == Piece.white && boardPosition == .blackBelowWhiteAbove) {
+        } else if pieceColor == Piece.black {
             if startIndex % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 9 })
             } else if (startIndex + 1) % 8 == 0 {
@@ -285,14 +276,8 @@ class Board {
     }
 
     private func checkPawnPromotion(move: Move, piece: Int) -> Bool {
-        var startOfPromotionZone = 0
-        var endOfPromotionZone = 7
-
-        if (boardPosition == .whiteBelowBlackAbove && Piece.pieceColor(from: piece) == Piece.white)
-            || (boardPosition == .blackBelowWhiteAbove && Piece.pieceColor(from: piece) == Piece.black) {
-            startOfPromotionZone = 56
-            endOfPromotionZone = 63
-        }
+        var startOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 0 : 56
+        var endOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 7 : 63
 
         if move.targetSquare >= startOfPromotionZone && move.targetSquare <= endOfPromotionZone {
             return true

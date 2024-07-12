@@ -66,10 +66,12 @@ struct GameFieldView: View {
                                     drawPieceIfNeed(file: file, rank: rank)
                                 }
                             }
+                            .rotationEffect(.degrees(viewModel.boardPosition == .blackBelowWhiteAbove ? 180 : 0))
                     }
                 }
             }
         }
+        .rotationEffect(.degrees(viewModel.boardPosition == .blackBelowWhiteAbove ? 180 : 0))
         .frame(width: gameFieldHeight, height: gameFieldHeight)
     }
 
