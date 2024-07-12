@@ -65,7 +65,7 @@ class GameFieldViewModel: ObservableObject {
         return selectButtonAction == .makeMove
     }
 
-    var availableCellsIndiciesForPlayerToPick: [Int] {
+    var availableCellsIndiciesToPick: [Int] {
         let allCells = Array(0...(board.squares.count - 1))
         switch selectButtonAction {
         case .select:
@@ -73,7 +73,7 @@ class GameFieldViewModel: ObservableObject {
                 guard let piece = getPieceAtCell(index: $0) else {
                     return false
                 }
-                return Piece.pieceColor(from: piece) == board.playerSide
+                return Piece.pieceColor(from: piece) == sideToMove
             })
         case .makeMove:
             guard let selectedCellIndex = selectedCellIndex else { return [] }
@@ -94,6 +94,7 @@ class GameFieldViewModel: ObservableObject {
     @Published var selectedCellIndex: Int? // cell which was selected by pressing "Select"
     @Published var isShowingPawnPromotionOptions: Bool = false
     @Published var boardPosition: BoardPosition
+    @Published var sideToMove: Int
 
     private let defaults: Defaults
 
@@ -102,6 +103,7 @@ class GameFieldViewModel: ObservableObject {
 
         self.board = .init(defaults: defaults)
         self.boardPosition = board.boardPosition
+        self.sideToMove = board.sideToMove
         self.currentColorTheme = defaults.boardColorTheme
         self.board.onResult = { [weak self] result in
             guard let self = self else { return }
@@ -113,6 +115,8 @@ class GameFieldViewModel: ObservableObject {
             case .playerSideUpdated:
                 self.boardPosition = self.board.boardPosition
                 self.setInitialCursorPosition()
+            case .sideToMoveChanged:
+                self.sideToMove = self.board.sideToMove
             }
         }
 
@@ -156,7 +160,8 @@ class GameFieldViewModel: ObservableObject {
                 return
             }
             self.selectedCellIndex = nil
-            selectButtonAction = .select
+            self.selectButtonAction = .select
+            self.setInitialCursorPosition()
             WKInterfaceDevice.current().play(.click)
         }
     }
@@ -180,6 +185,6 @@ class GameFieldViewModel: ObservableObject {
     }
 
     private func setInitialCursorPosition() {
-        cursorCellIndex = availableCellsIndiciesForPlayerToPick.min() ?? 0
+        cursorCellIndex = availableCellsIndiciesToPick.min() ?? 0
     }
 }

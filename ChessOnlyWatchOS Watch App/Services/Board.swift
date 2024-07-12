@@ -12,9 +12,17 @@ class Board {
     enum Result {
         case pawnShouldBePromoted(pawn: Int, pawnIndex: Int)
         case playerSideUpdated
+        case sideToMoveChanged
     }
 
-    var sideToMove: Int
+    var sideToMove: Int {
+        didSet {
+            if sideToMove != oldValue {
+                onResult?(.sideToMoveChanged)
+            }
+        }
+    }
+
     var squares: [Int]
     var playerSide: Int
     var boardPosition: BoardPosition {
@@ -74,6 +82,9 @@ class Board {
         let startDirectionIndex = (Piece.pieceType(from: piece) == Piece.bishop) ? 4 : 0
         let endDirectionIndex = (Piece.pieceType(from: piece) == Piece.rook) ? 4 : 8
 
+        let pieceColorOfSelectedPiece = Piece.pieceColor(from: piece)
+        let oppositeColorToSelected = pieceColorOfSelectedPiece == Piece.white ? Piece.black : Piece.white
+
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
 
         for directionIndex in startDirectionIndex..<endDirectionIndex {
@@ -81,13 +92,13 @@ class Board {
                 let targetSquareIndex = startIndex + directionOffsets[directionIndex] * (n + 1)
                 let pieceOnTargetSquare = squares[targetSquareIndex]
 
-                if Piece.pieceColor(from: pieceOnTargetSquare) == playerSide {
+                if Piece.pieceColor(from: pieceOnTargetSquare) == pieceColorOfSelectedPiece {
                     break
                 }
 
                 moves.append(.init(startSquare: startIndex, targetSquare: targetSquareIndex))
 
-                if Piece.pieceColor(from: pieceOnTargetSquare) == opponentSide {
+                if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected {
                     break
                 }
             }
@@ -250,7 +261,7 @@ class Board {
 
         // TODO: Check for check/checkmate
 
-        // toggleSideToMove()
+        toggleSideToMove()
 
         return true
     }
@@ -269,6 +280,12 @@ class Board {
             "r": Piece.rook,
             "q": Piece.queen
         ]
+
+        if fenString.contains(where: { $0 == "w" }) {
+           self.sideToMove = Piece.white
+        } else if fenString.contains(where: { $0 == "b" }) {
+           self.sideToMove = Piece.black
+        }
 
         let fenBoard = fenString.split(separator: " ")[0]
         var file = 0

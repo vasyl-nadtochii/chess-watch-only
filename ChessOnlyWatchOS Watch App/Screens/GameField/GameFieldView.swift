@@ -57,7 +57,7 @@ struct GameFieldView: View {
                                             .border(viewModel.selectButtonColor, width: 2)
                                     }
                                     if viewModel.shouldHighlightAvailableCells
-                                        && viewModel.availableCellsIndiciesForPlayerToPick.contains(where: {
+                                        && viewModel.availableCellsIndiciesToPick.contains(where: {
                                             $0 == viewModel.getCellIndex(file: file, rank: rank)
                                         }) {
                                         Color.green.opacity(0.15)
@@ -93,7 +93,7 @@ struct GameFieldView: View {
 
     var cellPicker: some View {
         CellPicker(
-            availableCellIndicies: viewModel.availableCellsIndiciesForPlayerToPick,
+            availableCellIndicies: viewModel.availableCellsIndiciesToPick,
             currentIndex: $viewModel.cursorCellIndex
         )
     }
