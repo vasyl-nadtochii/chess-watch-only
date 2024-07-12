@@ -50,7 +50,27 @@ class Board {
         }
     }
 
-    func getAvailableSlidingMoves(at startIndex: Int, for piece: Int) -> [Move] {
+    func getAvailableMoves(at startIndex: Int?, for piece: Int?) -> [Move] {
+        guard let selectedCellIndex = startIndex,
+            let pieceAtCell = piece,
+            let selectedPieceType = Piece.pieceType(from: pieceAtCell)
+        else { return [] }
+
+        switch selectedPieceType {
+        case Piece.king:
+            return getAvailableKingMoves(at: selectedCellIndex, for: pieceAtCell)
+        case Piece.pawn:
+            return getAvailablePawnMoves(at: selectedCellIndex, for: pieceAtCell)
+        case Piece.bishop, Piece.queen, Piece.rook:
+            return getAvailableSlidingMoves(at: selectedCellIndex, for: pieceAtCell)
+        case Piece.knight:
+            return getAvailableKnightMoves(at: selectedCellIndex, for: pieceAtCell)
+        default:
+            return []
+        }
+    }
+
+    private func getAvailableSlidingMoves(at startIndex: Int, for piece: Int) -> [Move] {
         let startDirectionIndex = (Piece.pieceType(from: piece) == Piece.bishop) ? 4 : 0
         let endDirectionIndex = (Piece.pieceType(from: piece) == Piece.rook) ? 4 : 8
 
@@ -76,7 +96,7 @@ class Board {
         return moves
     }
 
-    func getAvailableKnightMoves(at startIndex: Int, for piece: Int) -> [Move] {
+    private func getAvailableKnightMoves(at startIndex: Int, for piece: Int) -> [Move] {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         var availableOffsets = [15, 17, -15, -17, 10, 6, -10, -6]
         let pieceColor = Piece.pieceColor(from: piece)
@@ -106,7 +126,7 @@ class Board {
         return moves
     }
 
-    func getAvailableKingMoves(at startIndex: Int, for piece: Int) -> [Move] {
+    private func getAvailableKingMoves(at startIndex: Int, for piece: Int) -> [Move] {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         var directionOffsets = self.directionOffsets
         let pieceColor = Piece.pieceColor(from: piece)
@@ -130,7 +150,7 @@ class Board {
         return moves
     }
 
-    func getAvailablePawnMoves(at startIndex: Int, for piece: Int) -> [Move] {
+    private func getAvailablePawnMoves(at startIndex: Int, for piece: Int) -> [Move] {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         let pieceColor = Piece.pieceColor(from: piece)
 
@@ -276,13 +296,9 @@ class Board {
     }
 
     private func checkPawnPromotion(move: Move, piece: Int) -> Bool {
-        var startOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 0 : 56
-        var endOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 7 : 63
+        let startOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 0 : 56
+        let endOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 7 : 63
 
-        if move.targetSquare >= startOfPromotionZone && move.targetSquare <= endOfPromotionZone {
-            return true
-        }
-
-        return false
+        return move.targetSquare >= startOfPromotionZone && move.targetSquare <= endOfPromotionZone
     }
 }

@@ -76,27 +76,10 @@ class GameFieldViewModel: ObservableObject {
                 return Piece.pieceColor(from: piece) == board.playerSide
             })
         case .makeMove:
-            guard let selectedCellIndex = selectedCellIndex,
-                let pieceAtCell = getPieceAtCell(index: selectedCellIndex),
-                let selectedPieceType = Piece.pieceType(from: pieceAtCell)
-            else { return [] }
-
-            switch selectedPieceType {
-            case Piece.king:
-                return board.getAvailableKingMoves(at: selectedCellIndex, for: pieceAtCell)
-                    .map { $0.targetSquare }
-            case Piece.pawn:
-                return board.getAvailablePawnMoves(at: selectedCellIndex, for: pieceAtCell)
-                    .map { $0.targetSquare }
-            case Piece.bishop, Piece.queen, Piece.rook:
-                return board.getAvailableSlidingMoves(at: selectedCellIndex, for: pieceAtCell)
-                    .map { $0.targetSquare }
-            case Piece.knight:
-                return board.getAvailableKnightMoves(at: selectedCellIndex, for: pieceAtCell)
-                    .map { $0.targetSquare }
-            default:
-                return []
-            }
+            guard let selectedCellIndex = selectedCellIndex else { return [] }
+            return board.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
+                .map { $0.targetSquare }
+                .sorted(by: { $0 > $1 })
         }
     }
 
