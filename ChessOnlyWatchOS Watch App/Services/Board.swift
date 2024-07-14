@@ -13,6 +13,9 @@ class Board {
         case pawnShouldBePromoted(pawn: Int, pawnIndex: Int)
         case playerSideUpdated
         case sideToMoveChanged
+        
+        case madePlainMove
+        case capturedPiece
     }
 
     var sideToMove: Int {
@@ -314,12 +317,16 @@ class Board {
         guard sideToMove == Piece.pieceColor(from: piece) else {
             return false
         }
+
+        var capturedPiece = squares[move.targetSquare] != 0
+
         squares[move.startSquare] = 0
         squares[move.targetSquare] = piece
         
         if let enPassantSquareIndex = enPassantSquareIndex,
            checkIfUserUsedEnPassantMove(enPassantSquareIndex: enPassantSquareIndex, move: move, piece: piece) {
             squares[enPassantSquareIndex] = 0
+            capturedPiece = true
         }
         
         self.enPassantSquareIndex = nil
@@ -331,6 +338,12 @@ class Board {
             } else if checkEnPassantStartScenario(move: move, piece: piece) {
                 self.enPassantSquareIndex = move.targetSquare
             }
+        }
+        
+        if capturedPiece {
+            onResult?(.capturedPiece)
+        } else {
+            onResult?(.madePlainMove)
         }
 
         // TODO: Check for check/checkmate

@@ -34,6 +34,17 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
+            
+            Button {
+                viewModel.soundEnabled.toggle()
+            } label: {
+                VStack(alignment: .leading) {
+                    Text("Sound")
+                        .font(.title3)
+                    Text(viewModel.soundEnabled ? "Enabled" : "Disabled")
+                        .foregroundColor(.secondary)
+                }
+            }
         }
         .navigationTitle("Settings")
     }

@@ -22,6 +22,12 @@ class SettingsViewModel: ObservableObject {
             NotificationCenter.default.post(name: .boardColorThemeUpdated, object: nil)
         }
     }
+    
+    @Published var soundEnabled: Bool {
+        didSet {
+            defaults.soundEnabled = soundEnabled
+        }
+    }
 
     var playerSideString: String {
         if playerSide == Piece.white {
@@ -39,6 +45,7 @@ class SettingsViewModel: ObservableObject {
         self.defaults = defaults
         self.playerSide = defaults.playerSide
         self.boardColorTheme = defaults.boardColorTheme
+        self.soundEnabled = defaults.soundEnabled
     }
 
     func togglePlayerSide() {

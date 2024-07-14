@@ -32,4 +32,14 @@ class Defaults {
             UserDefaults.standard.setValue(newValue.rawValue, forKey: boardColorThemeKey)
         }
     }
+    
+    private let soundEnabledKey: String = "soundEnabledKey"
+    var soundEnabled: Bool {
+        get {
+            return !UserDefaults.standard.bool(forKey: soundEnabledKey)
+        }
+        set {
+            UserDefaults.standard.setValue(!newValue, forKey: soundEnabledKey)
+        }
+    }
 }

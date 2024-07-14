@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import WatchKit
+import AVFoundation
 
 class GameFieldViewModel: ObservableObject {
 
@@ -19,6 +20,13 @@ class GameFieldViewModel: ObservableObject {
     enum CancelButtonAction {
         case exit
         case cancelSelection
+    }
+    
+    enum SoundType {
+        case move
+        case capture
+        case check
+        case castle
     }
 
     var selectButtonColor: Color {
@@ -97,9 +105,11 @@ class GameFieldViewModel: ObservableObject {
     @Published var sideToMove: Int
 
     private let defaults: Defaults
+    private let avPlayer: AVPlayer
 
     init(defaults: Defaults) {
         self.defaults = defaults
+        self.avPlayer = AVPlayer()
 
         self.board = .init(defaults: defaults)
         self.boardPosition = board.boardPosition
@@ -117,6 +127,10 @@ class GameFieldViewModel: ObservableObject {
                 self.setInitialCursorPosition()
             case .sideToMoveChanged:
                 self.sideToMove = self.board.sideToMove
+            case .madePlainMove:
+                self.playSoundIfNeed(type: .move)
+            case .capturedPiece:
+                self.playSoundIfNeed(type: .capture)
             }
         }
 
@@ -186,5 +200,28 @@ class GameFieldViewModel: ObservableObject {
 
     private func setInitialCursorPosition() {
         cursorCellIndex = availableCellsIndiciesToPick.min() ?? 0
+    }
+    
+    private func playSoundIfNeed(type: SoundType) {
+        guard defaults.soundEnabled else { return }
+
+        let path: String
+        switch type {
+        case .move:
+            path = "move-self"
+        case .capture:
+            path = "capture"
+        case .check:
+            path = "move-check"
+        case .castle:
+            path = "castle"
+        }
+        
+        guard let path = Bundle.main.path(forResource: path, ofType: "mp3") else {
+            return
+        }
+
+        avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: path)))
+        avPlayer.play()
     }
 }
