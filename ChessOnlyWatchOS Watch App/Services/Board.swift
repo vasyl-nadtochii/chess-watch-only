@@ -156,7 +156,7 @@ class Board {
             }
         }
 
-        // TODO: handle pseudo legal moves
+        // TODO: handle illegal moves
         // TODO: handle castle scenario
 
         return moves

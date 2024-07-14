@@ -28,7 +28,7 @@ struct SettingsView: View {
                 viewModel.changeBoardColorTheme()
             } label: {
                 VStack(alignment: .leading) {
-                    Text("Board's color theme")
+                    Text("Color theme")
                         .font(.title3)
                     Text(viewModel.boardColorTheme.stringRepresentation)
                         .foregroundColor(.secondary)
