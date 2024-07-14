@@ -34,13 +34,13 @@ class Board {
     private var numberOfSquaresToEdge: [[Int]] = []
     private var enPassantSquareIndex: Int?
 
-    var opponentSide: Int {
+    var opponentToPlayerSide: Int {
         return (playerSide == Piece.white) ? Piece.black : Piece.white
     }
 
     // initial position
     // let fenString = Constants.initialChessPosition
-    let fenString = "rnbqkbnr/ppp1ppp1/8/P7/3p2p1/8/1PPPPPPP/RNBQKBNR" // just for test
+    let fenString = "8/n4Q1B/2N5/7B/8/R3k3/R4P2/8" // just for test
 
     private let defaults: Defaults
 
@@ -59,7 +59,7 @@ class Board {
         }
     }
 
-    func getAvailableMoves(at startIndex: Int?, for piece: Int?) -> [Move] {
+    func getAvailableMoves(at startIndex: Int?, for piece: Int?, onlyAttackMoves: Bool = false) -> [Move] {
         guard let selectedCellIndex = startIndex,
             let pieceAtCell = piece,
             let selectedPieceType = Piece.pieceType(from: pieceAtCell)
@@ -69,9 +69,17 @@ class Board {
         case Piece.king:
             return getAvailableKingMoves(at: selectedCellIndex, for: pieceAtCell)
         case Piece.pawn:
-            return getAvailablePawnMoves(at: selectedCellIndex, for: pieceAtCell)
+            return getAvailablePawnMoves(
+                at: selectedCellIndex,
+                for: pieceAtCell,
+                onlyAttackMoves: onlyAttackMoves
+            )
         case Piece.bishop, Piece.queen, Piece.rook:
-            return getAvailableSlidingMoves(at: selectedCellIndex, for: pieceAtCell)
+            return getAvailableSlidingMoves(
+                at: selectedCellIndex,
+                for: pieceAtCell,
+                onlyAttackMoves: onlyAttackMoves
+            )
         case Piece.knight:
             return getAvailableKnightMoves(at: selectedCellIndex, for: pieceAtCell)
         default:
@@ -79,7 +87,7 @@ class Board {
         }
     }
 
-    private func getAvailableSlidingMoves(at startIndex: Int, for piece: Int) -> [Move] {
+    private func getAvailableSlidingMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool) -> [Move] {
         let startDirectionIndex = (Piece.pieceType(from: piece) == Piece.bishop) ? 4 : 0
         let endDirectionIndex = (Piece.pieceType(from: piece) == Piece.rook) ? 4 : 8
 
@@ -92,15 +100,25 @@ class Board {
             for n in 0..<numberOfSquaresToEdge[startIndex][directionIndex] {
                 let targetSquareIndex = startIndex + directionOffsets[directionIndex] * (n + 1)
                 let pieceOnTargetSquare = squares[targetSquareIndex]
-
+                
                 if Piece.pieceColor(from: pieceOnTargetSquare) == pieceColorOfSelectedPiece {
+                    if onlyAttackMoves {
+                        moves.append(.init(startSquare: startIndex, targetSquare: targetSquareIndex))
+                    }
                     break
                 }
-
+                
                 moves.append(.init(startSquare: startIndex, targetSquare: targetSquareIndex))
 
-                if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected {
-                    break
+                if !onlyAttackMoves {
+                    if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected
+                        && Piece.pieceType(from: pieceOnTargetSquare) != Piece.king {
+                        break
+                    }
+                } else {
+                    if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected {
+                        break
+                    }
                 }
             }
         }
@@ -142,27 +160,30 @@ class Board {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         var directionOffsets = self.directionOffsets
         let pieceColor = Piece.pieceColor(from: piece)
+        let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
         if startIndex % 8 == 0 {
             directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })
         } else if (startIndex + 1) % 8 == 0 {
             directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
         }
+        
+        let allAttackMovesForOppositeSide = getAllAvailableAttackMoves(forSide: oppositeColorToPiece)
 
         for directionOffset in directionOffsets {
             if (startIndex + directionOffset >= 0 && startIndex + directionOffset < 64)
-                && pieceColor != Piece.pieceColor(from: squares[safe: startIndex + directionOffset] ?? 0) {
+                && pieceColor != Piece.pieceColor(from: squares[safe: startIndex + directionOffset] ?? 0)
+                && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + directionOffset }) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
         }
-
-        // TODO: handle illegal moves
+        
         // TODO: handle castle scenario
 
         return moves
     }
 
-    private func getAvailablePawnMoves(at startIndex: Int, for piece: Int) -> [Move] {
+    private func getAvailablePawnMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         let pieceColor = Piece.pieceColor(from: piece)
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
@@ -170,12 +191,30 @@ class Board {
         var oneStepForward = 8
         var twoStepForward = 16
         var attackSteps = [7, 9]
+        
+        if pieceColor == Piece.white {
+            if startIndex % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 7 })
+            } else if (startIndex + 1) % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 9 })
+            }
+        } else if pieceColor == Piece.black {
+            if startIndex % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 9 })
+            } else if (startIndex + 1) % 8 == 0 {
+                attackSteps.removeAll(where: { abs($0) == 7 })
+            }
+        }
 
         // MARK: Define direction
         if pieceColor == Piece.black {
             oneStepForward *= -1
             twoStepForward *= -1
             attackSteps = attackSteps.map({ $0 * -1 })
+        }
+        
+        guard !onlyAttackMoves else {
+            return attackSteps.map({ Move(startSquare: startIndex, targetSquare: startIndex + $0) })
         }
 
         // MARK: Handle one step forward (regular move)
@@ -194,20 +233,6 @@ class Board {
         }
 
         // MARK: Handle attack steps
-        if pieceColor == Piece.white {
-            if startIndex % 8 == 0 {
-                attackSteps.removeAll(where: { abs($0) == 7 })
-            } else if (startIndex + 1) % 8 == 0 {
-                attackSteps.removeAll(where: { abs($0) == 9 })
-            }
-        } else if pieceColor == Piece.black {
-            if startIndex % 8 == 0 {
-                attackSteps.removeAll(where: { abs($0) == 9 })
-            } else if (startIndex + 1) % 8 == 0 {
-                attackSteps.removeAll(where: { abs($0) == 7 })
-            }
-        }
-
         for attackStep in attackSteps {
             if let pieceAtTargetSquare = squares[safe: startIndex + attackStep],
                let pieceColorAtTargetSquare = Piece.pieceColor(from: pieceAtTargetSquare),
@@ -233,6 +258,27 @@ class Board {
         }
 
         return moves
+    }
+    
+    private func getAllAvailableAttackMoves(forSide colorToPickMoves: Int) -> [Move] {
+        var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
+        for index in 0..<squares.count {
+            if let pieceAtIndex = squares[safe: index],
+                pieceAtIndex != 0,
+                Piece.pieceColor(from: pieceAtIndex) == colorToPickMoves {
+                piecesToPickMovesFor.append((index, pieceAtIndex))
+            }
+        }
+        
+        var moves = [Move]()
+        for piece in piecesToPickMovesFor {
+            moves.append(contentsOf: getAvailableMoves(
+                at: piece.startIndex,
+                for: piece.piece,
+                onlyAttackMoves: true
+            ))
+        }
+        return Array(Set(moves))
     }
 
     func precomputedMoveData() {

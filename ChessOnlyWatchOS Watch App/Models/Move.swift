@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Move {
+struct Move: Hashable {
 
     let startSquare: Int
     let targetSquare: Int
