@@ -32,14 +32,15 @@ class Board {
 
     private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     private var numberOfSquaresToEdge: [[Int]] = []
+    private var enPassantSquareIndex: Int?
 
     var opponentSide: Int {
         return (playerSide == Piece.white) ? Piece.black : Piece.white
     }
 
     // initial position
-    let fenString = Constants.initialChessPosition
-    // let fenString = "3k4/8/8/8/2K5/8/8/8" // just for test
+    // let fenString = Constants.initialChessPosition
+    let fenString = "rnbqkbnr/ppp1ppp1/8/P7/3p2p1/8/1PPPPPPP/RNBQKBNR" // just for test
 
     private let defaults: Defaults
 
@@ -47,7 +48,7 @@ class Board {
         self.defaults = defaults
         self.squares = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
-        self.sideToMove = defaults.playerSide // TODO: ?
+        self.sideToMove = defaults.playerSide
 
         loadPositionsFromFEN(fenString)
         precomputedMoveData()
@@ -164,6 +165,7 @@ class Board {
     private func getAvailablePawnMoves(at startIndex: Int, for piece: Int) -> [Move] {
         var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
         let pieceColor = Piece.pieceColor(from: piece)
+        let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
         var oneStepForward = 8
         var twoStepForward = 16
@@ -191,6 +193,7 @@ class Board {
             moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
         }
 
+        // MARK: Handle attack steps
         if pieceColor == Piece.white {
             if startIndex % 8 == 0 {
                 attackSteps.removeAll(where: { abs($0) == 7 })
@@ -212,8 +215,22 @@ class Board {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + attackStep))
             }
         }
-
-        // TODO: Handle En passant scenario
+        
+        // MARK: Handle En Passant scenario
+        if let enPassantSquareIndex = enPassantSquareIndex,
+           (startIndex - 1 == enPassantSquareIndex || startIndex + 1 == enPassantSquareIndex),
+           let pieceColorAtEnPassantSquareIndex = Piece.pieceColor(from: squares[enPassantSquareIndex]),
+           pieceColorAtEnPassantSquareIndex == oppositeColorToPiece {
+            var step: Int = 0
+            if startIndex - 1 == enPassantSquareIndex {
+                step = pieceColor == Piece.white ? 7 : -9
+            } else if startIndex + 1 == enPassantSquareIndex {
+                step = pieceColor == Piece.white ? 9 : -7
+            }
+            if squares[startIndex + step] == 0 {
+                moves.append(.init(startSquare: startIndex, targetSquare: startIndex + step))
+            }
+        }
 
         return moves
     }
@@ -253,10 +270,21 @@ class Board {
         }
         squares[move.startSquare] = 0
         squares[move.targetSquare] = piece
+        
+        if let enPassantSquareIndex = enPassantSquareIndex,
+           checkIfUserUsedEnPassantMove(enPassantSquareIndex: enPassantSquareIndex, move: move, piece: piece) {
+            squares[enPassantSquareIndex] = 0
+        }
+        
+        self.enPassantSquareIndex = nil
 
-        if Piece.pieceType(from: piece) == Piece.pawn && checkPawnPromotion(move: move, piece: piece) {
-            onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
-            // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion
+        if Piece.pieceType(from: piece) == Piece.pawn {
+            if checkPawnPromotion(move: move, piece: piece) {
+                onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
+                // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion
+            } else if checkEnPassantStartScenario(move: move, piece: piece) {
+                self.enPassantSquareIndex = move.targetSquare
+            }
         }
 
         // TODO: Check for check/checkmate
@@ -311,11 +339,67 @@ class Board {
     private func toggleSideToMove() {
         sideToMove = (sideToMove == Piece.white) ? Piece.black : Piece.white
     }
+    
+    // MARK: Pawn moves check
 
     private func checkPawnPromotion(move: Move, piece: Int) -> Bool {
         let startOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 0 : 56
         let endOfPromotionZone = Piece.pieceColor(from: piece) == Piece.black ? 7 : 63
 
         return move.targetSquare >= startOfPromotionZone && move.targetSquare <= endOfPromotionZone
+    }
+    
+    private func checkEnPassantStartScenario(move: Move, piece: Int) -> Bool {
+        guard Piece.pieceType(from: piece) == Piece.pawn else {
+            return false
+        }
+
+        let pieceColor = Piece.pieceColor(from: piece)
+        let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
+
+        if abs(move.targetSquare - move.startSquare) == 16 {
+            let pieceOnLeft = squares[safe: move.targetSquare - 1] ?? 0
+            let pieceOnRight = squares[safe: move.targetSquare + 1] ?? 0
+            
+            let pieceColorOnLeft = Piece.pieceColor(from: pieceOnLeft)
+            let pieceColorOnRight = Piece.pieceColor(from: pieceOnRight)
+            
+            let pieceTypeOnLeft = Piece.pieceType(from: pieceOnLeft)
+            let pieceTypeOnRight = Piece.pieceType(from: pieceOnRight)
+            
+            let conditionForLeftEdge = pieceTypeOnRight == Piece.pawn && pieceColorOnRight == oppositeColorToPiece
+            let conditionForRightEdge = pieceTypeOnLeft == Piece.pawn && pieceColorOnLeft == oppositeColorToPiece
+            
+            if move.startSquare % 8 == 0 {
+                return conditionForLeftEdge
+            } else if (move.startSquare + 1) % 8 == 0 {
+                return conditionForRightEdge
+            }
+            
+            return conditionForLeftEdge || conditionForRightEdge
+        }
+
+        return false
+    }
+    
+    private func checkIfUserUsedEnPassantMove(enPassantSquareIndex: Int, move: Move, piece: Int) -> Bool {
+        let pieceColor = Piece.pieceColor(from: piece)
+        let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
+        guard Piece.pieceType(from: piece) == Piece.pawn,
+            let pieceAtEnPassantSquareIndex = squares[safe: enPassantSquareIndex],
+            Piece.pieceType(from: pieceAtEnPassantSquareIndex) == Piece.pawn,
+            Piece.pieceColor(from: pieceAtEnPassantSquareIndex) == oppositeColorToPiece
+        else {
+            return false
+        }
+        
+        var step: Int = 0
+        if move.startSquare - 1 == enPassantSquareIndex {
+            step = pieceColor == Piece.white ? 7 : -9
+        } else if move.startSquare + 1 == enPassantSquareIndex {
+            step = pieceColor == Piece.white ? 9 : -7
+        }
+        
+        return move.targetSquare == (move.startSquare + step)
     }
 }
