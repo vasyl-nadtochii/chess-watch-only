@@ -20,6 +20,7 @@ struct GameFieldView: View {
                 Spacer()
                 buttons
             }
+            .applySafeAreaOffsetIfNeed()
             cellPicker
         }
         .background(Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme))
@@ -41,6 +42,7 @@ struct GameFieldView: View {
         )
         .navigationBarBackButtonHidden()
         .edgesIgnoringSafeArea(.bottom)
+        .hideNavigationBarIfNeed()
     }
 
     var gameField: some View {

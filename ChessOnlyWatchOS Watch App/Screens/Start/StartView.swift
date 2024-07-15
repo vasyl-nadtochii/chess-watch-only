@@ -40,6 +40,7 @@ struct StartView: View {
                 )
             }
             .navigationTitle("Chess")
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }

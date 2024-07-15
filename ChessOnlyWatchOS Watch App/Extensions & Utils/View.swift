@@ -12,4 +12,20 @@ extension View {
     var anyView: AnyView {
         return AnyView(self)
     }
+    
+    func hideNavigationBarIfNeed() -> some View {
+        if #available(watchOS 10.0, *) {
+            return self
+        } else {
+            return self.navigationBarHidden(true)
+        }
+    }
+    
+    func applySafeAreaOffsetIfNeed() -> some View {
+        if #available(watchOS 10.0, *) {
+            return self
+        } else {
+            return self.padding(.top, 10)
+        }
+    }
 }
