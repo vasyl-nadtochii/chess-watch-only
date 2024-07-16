@@ -112,6 +112,10 @@ class GameFieldViewModel: ObservableObject {
         self.avPlayer = AVPlayer()
         self.avPlayer.automaticallyWaitsToMinimizeStalling = false
 
+        if let defaultPath = Bundle.main.path(forResource: "move-self", ofType: "mp3") {
+            self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
+        }
+
         self.board = .init(defaults: defaults)
         self.boardPosition = board.boardPosition
         self.sideToMove = board.sideToMove
@@ -206,19 +210,19 @@ class GameFieldViewModel: ObservableObject {
     private func playSoundIfNeed(type: SoundType) {
         guard defaults.soundEnabled else { return }
 
-        let path: String
+        let pathName: String
         switch type {
         case .move:
-            path = "move-self"
+            pathName = "move-self"
         case .capture:
-            path = "capture"
+            pathName = "capture"
         case .check:
-            path = "move-check"
+            pathName = "move-check"
         case .castle:
-            path = "castle"
+            pathName = "castle"
         }
         
-        guard let path = Bundle.main.path(forResource: path, ofType: "mp3") else {
+        guard let path = Bundle.main.path(forResource: pathName, ofType: "mp3") else {
             return
         }
 
