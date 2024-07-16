@@ -110,6 +110,7 @@ class GameFieldViewModel: ObservableObject {
     init(defaults: Defaults) {
         self.defaults = defaults
         self.avPlayer = AVPlayer()
+        self.avPlayer.automaticallyWaitsToMinimizeStalling = false
 
         self.board = .init(defaults: defaults)
         self.boardPosition = board.boardPosition

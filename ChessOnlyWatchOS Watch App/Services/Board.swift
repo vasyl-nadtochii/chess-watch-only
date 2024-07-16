@@ -114,12 +114,12 @@ class Board {
                 moves.append(.init(startSquare: startIndex, targetSquare: targetSquareIndex))
 
                 if !onlyAttackMoves {
-                    if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected
-                        && Piece.pieceType(from: pieceOnTargetSquare) != Piece.king {
+                    if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected {
                         break
                     }
                 } else {
-                    if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected {
+                    if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToSelected
+                        && Piece.pieceType(from: pieceOnTargetSquare) != Piece.king {
                         break
                     }
                 }
