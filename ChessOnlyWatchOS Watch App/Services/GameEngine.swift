@@ -373,7 +373,9 @@ class GameEngine {
                 self.enPassantSquareIndex = move.targetSquare
             }
         }
-        
+
+        removeCastlingRightIfNeed(moveStartIndex: move.startSquare, piece: piece)
+
         if capturedPiece {
             onResult?(.capturedPiece)
         } else {
@@ -523,5 +525,27 @@ class GameEngine {
         }
         
         return move.targetSquare == (move.startSquare + step)
+    }
+
+    private func removeCastlingRightIfNeed(moveStartIndex: Int, piece: Int) {
+        guard let pieceType = Piece.pieceType(from: piece),
+            let pieceColor = Piece.pieceColor(from: piece)
+        else {
+            return
+        }
+
+        if pieceType == Piece.rook {
+            let queenSideRookStartMoveIndex = pieceColor == Piece.white ? 0 : 56
+            let kingSideRookStartMoveIndex = pieceColor == Piece.white ? 7 : 63
+
+            if moveStartIndex == queenSideRookStartMoveIndex {
+                castlingRights[pieceColor]?[.queenSide] = false
+            } else if moveStartIndex == kingSideRookStartMoveIndex {
+                castlingRights[pieceColor]?[.kingSide] = false
+            }
+        } else if pieceType == Piece.king {
+            castlingRights[pieceColor]?[.queenSide] = false
+            castlingRights[pieceColor]?[.kingSide] = false
+        }
     }
 }
