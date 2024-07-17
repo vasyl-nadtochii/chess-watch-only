@@ -150,6 +150,8 @@ class GameFieldViewModel: ObservableObject {
                 self.playSoundIfNeed(type: .move)
             case .capturedPiece:
                 self.playSoundIfNeed(type: .capture)
+            case .madeCastleMove:
+                self.playSoundIfNeed(type: .castle)
             }
         }
 

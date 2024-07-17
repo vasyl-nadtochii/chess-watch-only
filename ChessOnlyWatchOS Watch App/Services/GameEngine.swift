@@ -16,20 +16,7 @@ class GameEngine {
         
         case madePlainMove
         case capturedPiece
-    }
-
-    enum CastlingSide: Hashable {
-        case kingSide
-        case queenSide
-
-        static func fromFENStringKey(fenStringKey: String) -> CastlingSide? {
-            if fenStringKey.lowercased() == "k" {
-                return .kingSide
-            } else if fenStringKey.lowercased() == "q" {
-                return .queenSide
-            }
-            return nil
-        }
+        case madeCastleMove
     }
 
     var sideToMove: Int {
@@ -40,27 +27,26 @@ class GameEngine {
         }
     }
 
-    var squares: [Int]
-    var playerSide: Int
     var boardPosition: BoardPosition {
         return (playerSide == Piece.white) ? .whiteBelowBlackAbove : .blackBelowWhiteAbove
     }
-    var onResult: ((Result) -> Void)?
-
-    private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
-    private var numberOfSquaresToEdge: [[Int]] = []
-    private var enPassantSquareIndex: Int?
 
     var opponentToPlayerSide: Int {
         return (playerSide == Piece.white) ? Piece.black : Piece.white
     }
 
-    // initial position
-    private let fenString = Constants.initialChessPosition
-    // private let fenString = "8/3k2b1/8/5K2/1NQ5/8/8/4q3" // just for test
+    var squares: [Int]
+    var playerSide: Int
+    var onResult: ((Result) -> Void)?
 
+    private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
+    private var numberOfSquaresToEdge: [[Int]] = []
+    private var enPassantSquareIndex: Int?
     private var castlingRights: [Int: [CastlingSide: Bool]]
 
+    // initial position
+    // private let fenString = Constants.initialChessPosition
+    private let fenString = "r3kn1r/8/8/8/8/8/8/R2QK2R w QKqk" // just for test
     private let defaults: Defaults
 
     init(defaults: Defaults) {
@@ -196,7 +182,11 @@ class GameEngine {
     private func getAvailableKingMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
         var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         var directionOffsets = self.directionOffsets
-        let pieceColor = Piece.pieceColor(from: piece)
+
+        guard let pieceColor = Piece.pieceColor(from: piece) else {
+            print("Error: could not determine King color at index \(startIndex)")
+            return moves
+        }
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
         if startIndex % 8 == 0 {
@@ -214,8 +204,21 @@ class GameEngine {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
         }
-        
-        // TODO: handle castle scenario
+
+        // MARK: Handle castle scenario
+        if !onlyAttackMoves {
+            let castlingRightsForSelectedColor = castlingRights[pieceColor]
+            if castlingRightsForSelectedColor?[.kingSide] == true {
+                if squares[startIndex + 1] == 0 && squares[startIndex + 2] == 0 {
+                    moves.append(.init(startSquare: startIndex, targetSquare: startIndex + 2))
+                }
+            }
+            if castlingRightsForSelectedColor?[.queenSide] == true {
+                if squares[startIndex - 1] == 0 && squares[startIndex - 2] == 0 && squares[startIndex - 3] == 0 {
+                    moves.append(.init(startSquare: startIndex, targetSquare: startIndex - 2))
+                }
+            }
+        }
 
         return moves
     }
@@ -356,7 +359,9 @@ class GameEngine {
 
         squares[move.startSquare] = 0
         squares[move.targetSquare] = piece
-        
+
+        let madeCastleMove = performCastleMoveIfNeed(piece: piece, move: move)
+
         if let enPassantSquareIndex = enPassantSquareIndex,
            checkIfUserUsedEnPassantMove(enPassantSquareIndex: enPassantSquareIndex, move: move, piece: piece) {
             squares[enPassantSquareIndex] = 0
@@ -378,6 +383,8 @@ class GameEngine {
 
         if capturedPiece {
             onResult?(.capturedPiece)
+        } else if madeCastleMove {
+            onResult?(.madeCastleMove)
         } else {
             onResult?(.madePlainMove)
         }
@@ -527,6 +534,8 @@ class GameEngine {
         return move.targetSquare == (move.startSquare + step)
     }
 
+    // MARK: Castle moves handlers
+
     private func removeCastlingRightIfNeed(moveStartIndex: Int, piece: Int) {
         guard let pieceType = Piece.pieceType(from: piece),
             let pieceColor = Piece.pieceColor(from: piece)
@@ -547,5 +556,32 @@ class GameEngine {
             castlingRights[pieceColor]?[.queenSide] = false
             castlingRights[pieceColor]?[.kingSide] = false
         }
+    }
+
+    private func performCastleMoveIfNeed(piece: Int, move: Move) -> Bool {
+        guard let pieceType = Piece.pieceType(from: piece),
+            let pieceColor = Piece.pieceColor(from: piece),
+            pieceType == Piece.king
+        else {
+            return false
+        }
+
+        let queenSideRookIndex = pieceColor == Piece.white ? 0 : 56
+        let kingSideRookIndex = pieceColor == Piece.white ? 7 : 63
+
+        if move.targetSquare - move.startSquare == 2 
+            && castlingRights[pieceColor]?[.kingSide] == true {
+            let rookPiece = squares[kingSideRookIndex]
+            squares[kingSideRookIndex] = 0
+            squares[kingSideRookIndex - 2] = rookPiece
+            return true
+        } else if move.targetSquare - move.startSquare == -2
+            && castlingRights[pieceColor]?[.queenSide] == true {
+            let rookPiece = squares[queenSideRookIndex]
+            squares[queenSideRookIndex] = 0
+            squares[queenSideRookIndex + 3] = rookPiece
+            return true
+        }
+        return false
     }
 }
