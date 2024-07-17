@@ -18,6 +18,20 @@ class Board {
         case capturedPiece
     }
 
+    enum CastlingSide: Hashable {
+        case kingSide
+        case queenSide
+
+        static func fromFENStringKey(fenStringKey: String) -> CastlingSide? {
+            if fenStringKey.lowercased() == "k" {
+                return .kingSide
+            } else if fenStringKey.lowercased() == "q" {
+                return .queenSide
+            }
+            return nil
+        }
+    }
+
     var sideToMove: Int {
         didSet {
             if sideToMove != oldValue {
@@ -42,8 +56,10 @@ class Board {
     }
 
     // initial position
-    // let fenString = Constants.initialChessPosition
-    let fenString = "8/3k2b1/8/5K2/1NQ5/8/8/4q3" // just for test
+    private let fenString = Constants.initialChessPosition
+    // private let fenString = "8/3k2b1/8/5K2/1NQ5/8/8/4q3" // just for test
+
+    private var castlingRights: [Int: [CastlingSide: Bool]]
 
     private let defaults: Defaults
 
@@ -52,6 +68,16 @@ class Board {
         self.squares = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
         self.sideToMove = defaults.playerSide
+        self.castlingRights = [
+            Piece.white: [
+                .kingSide: false,
+                .queenSide: false
+            ],
+            Piece.black: [
+                .kingSide: false,
+                .queenSide: false
+            ]
+        ]
 
         loadPositionsFromFEN(fenString)
         precomputedMoveData()
@@ -376,14 +402,16 @@ class Board {
             "q": Piece.queen
         ]
 
-        guard let fenBoard = fenString.split(separator: " ")[safe: 0] else {
+        let splitFENString = fenString.split(separator: " ")
+
+        guard let fenBoard = splitFENString[safe: 0] else {
             print("Error: wrong format of FEN string -> \(fenString)")
             return
         }
         var file = 0
         var rank = 7
 
-        let activeSide = fenString.split(separator: " ")[safe: 1]
+        let activeSide = splitFENString[safe: 1]
         if activeSide?.count == 1 {
             if activeSide == "w" {
                 self.sideToMove = Piece.white
@@ -392,7 +420,26 @@ class Board {
             }
         }
 
-        // TODO: parse castling rights
+        if let castlingRights = splitFENString[safe: 2] {
+            if castlingRights == "-" {
+                self.castlingRights = [
+                    Piece.white: [
+                        .kingSide: false,
+                        .queenSide: false
+                    ],
+                    Piece.black: [
+                        .kingSide: false,
+                        .queenSide: false
+                    ]
+                ]
+            } else {
+                for key in castlingRights {
+                    if let valueFromKey = CastlingSide.fromFENStringKey(fenStringKey: String(key)) {
+                        self.castlingRights[key.isLowercase ? Piece.black : Piece.white]?[valueFromKey] = true
+                    }
+                }
+            }
+        }
 
         for symbol in fenBoard {
             if symbol == "/" {
