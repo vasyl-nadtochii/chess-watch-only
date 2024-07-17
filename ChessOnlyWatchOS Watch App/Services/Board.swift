@@ -43,7 +43,7 @@ class Board {
 
     // initial position
     // let fenString = Constants.initialChessPosition
-    let fenString = "8/n4Q1B/2N5/7B/8/R3k3/R4P2/8" // just for test
+    let fenString = "8/3k2b1/8/5K2/1NQ5/8/8/4q3" // just for test
 
     private let defaults: Defaults
 
@@ -70,7 +70,11 @@ class Board {
 
         switch selectedPieceType {
         case Piece.king:
-            return getAvailableKingMoves(at: selectedCellIndex, for: pieceAtCell)
+            return getAvailableKingMoves(
+                at: selectedCellIndex,
+                for: pieceAtCell,
+                onlyAttackMoves: onlyAttackMoves
+            )
         case Piece.pawn:
             return getAvailablePawnMoves(
                 at: selectedCellIndex,
@@ -84,7 +88,11 @@ class Board {
                 onlyAttackMoves: onlyAttackMoves
             )
         case Piece.knight:
-            return getAvailableKnightMoves(at: selectedCellIndex, for: pieceAtCell)
+            return getAvailableKnightMoves(
+                at: selectedCellIndex,
+                for: pieceAtCell,
+                onlyAttackMoves: onlyAttackMoves
+            )
         default:
             return []
         }
@@ -97,7 +105,7 @@ class Board {
         let pieceColorOfSelectedPiece = Piece.pieceColor(from: piece)
         let oppositeColorToSelected = pieceColorOfSelectedPiece == Piece.white ? Piece.black : Piece.white
 
-        var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
+        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
 
         for directionIndex in startDirectionIndex..<endDirectionIndex {
             for n in 0..<numberOfSquaresToEdge[startIndex][directionIndex] {
@@ -129,8 +137,8 @@ class Board {
         return moves
     }
 
-    private func getAvailableKnightMoves(at startIndex: Int, for piece: Int) -> [Move] {
-        var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
+    private func getAvailableKnightMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
+        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         var availableOffsets = [15, 17, -15, -17, 10, 6, -10, -6]
         let pieceColor = Piece.pieceColor(from: piece)
 
@@ -159,8 +167,8 @@ class Board {
         return moves
     }
 
-    private func getAvailableKingMoves(at startIndex: Int, for piece: Int) -> [Move] {
-        var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
+    private func getAvailableKingMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
+        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         var directionOffsets = self.directionOffsets
         let pieceColor = Piece.pieceColor(from: piece)
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
@@ -170,8 +178,8 @@ class Board {
         } else if (startIndex + 1) % 8 == 0 {
             directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
         }
-        
-        let allAttackMovesForOppositeSide = getAllAvailableAttackMoves(forSide: oppositeColorToPiece)
+
+        let allAttackMovesForOppositeSide: [Move] = onlyAttackMoves ? [] : getAllAvailableAttackMoves(forSide: oppositeColorToPiece)
 
         for directionOffset in directionOffsets {
             if (startIndex + directionOffset >= 0 && startIndex + directionOffset < 64)
@@ -187,7 +195,7 @@ class Board {
     }
 
     private func getAvailablePawnMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
-        var moves: [Move] = [.init(startSquare: startIndex, targetSquare: startIndex)]
+        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         let pieceColor = Piece.pieceColor(from: piece)
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
@@ -368,15 +376,23 @@ class Board {
             "q": Piece.queen
         ]
 
-        if fenString.contains(where: { $0 == "w" }) {
-           self.sideToMove = Piece.white
-        } else if fenString.contains(where: { $0 == "b" }) {
-           self.sideToMove = Piece.black
+        guard let fenBoard = fenString.split(separator: " ")[safe: 0] else {
+            print("Error: wrong format of FEN string -> \(fenString)")
+            return
         }
-
-        let fenBoard = fenString.split(separator: " ")[0]
         var file = 0
         var rank = 7
+
+        let activeSide = fenString.split(separator: " ")[safe: 1]
+        if activeSide?.count == 1 {
+            if activeSide == "w" {
+                self.sideToMove = Piece.white
+            } else if activeSide == "b" {
+                self.sideToMove = Piece.black
+            }
+        }
+
+        // TODO: parse castling rights
 
         for symbol in fenBoard {
             if symbol == "/" {

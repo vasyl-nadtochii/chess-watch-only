@@ -112,6 +112,20 @@ class GameFieldViewModel: ObservableObject {
         self.avPlayer = AVPlayer()
         self.avPlayer.automaticallyWaitsToMinimizeStalling = false
 
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setMode(.moviePlayback)
+            AVAudioSession.sharedInstance().activate(completionHandler: { success, error in
+                if let error = error {
+                    print("Error while activating AudioSession: \(error.localizedDescription)")
+                } else {
+                    print("AVAudioSession activated - \(success)")
+                }
+            })
+        } catch {
+            print("Error occurred: \(error.localizedDescription)")
+        }
+
         if let defaultPath = Bundle.main.path(forResource: "move-self", ofType: "mp3") {
             self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
         }
