@@ -1,5 +1,5 @@
 //
-//  Board.swift
+//  GameEngine.swift
 //  ChessOnlyWatchOS Watch App
 //
 //  Created by Vasyl Nadtochii on 07.07.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Board {
+class GameEngine {
 
     enum Result {
         case pawnShouldBePromoted(pawn: Int, pawnIndex: Int)

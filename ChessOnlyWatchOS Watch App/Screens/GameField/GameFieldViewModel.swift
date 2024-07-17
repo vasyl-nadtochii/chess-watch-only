@@ -74,7 +74,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     var availableCellsIndiciesToPick: [Int] {
-        let allCells = Array(0...(board.squares.count - 1))
+        let allCells = Array(0...(gameEngine.squares.count - 1))
         switch selectButtonAction {
         case .select:
             return allCells.filter({
@@ -85,13 +85,13 @@ class GameFieldViewModel: ObservableObject {
             })
         case .makeMove:
             guard let selectedCellIndex = selectedCellIndex else { return [] }
-            return board.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
+            return gameEngine.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
                 .map { $0.targetSquare }
                 .sorted(by: { $0 > $1 })
         }
     }
 
-    var board: Board
+    var gameEngine: GameEngine
     var currentColorTheme: BoardColorTheme
 
     var pawnToPromote: Int?
@@ -130,11 +130,11 @@ class GameFieldViewModel: ObservableObject {
             self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
         }
 
-        self.board = .init(defaults: defaults)
-        self.boardPosition = board.boardPosition
-        self.sideToMove = board.sideToMove
+        self.gameEngine = .init(defaults: defaults)
+        self.boardPosition = gameEngine.boardPosition
+        self.sideToMove = gameEngine.sideToMove
         self.currentColorTheme = defaults.boardColorTheme
-        self.board.onResult = { [weak self] result in
+        self.gameEngine.onResult = { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .pawnShouldBePromoted(let pawn, let pawnIndex):
@@ -142,10 +142,10 @@ class GameFieldViewModel: ObservableObject {
                 self.pawnIndexToPromote = pawnIndex
                 self.isShowingPawnPromotionOptions = true
             case .playerSideUpdated:
-                self.boardPosition = self.board.boardPosition
+                self.boardPosition = self.gameEngine.boardPosition
                 self.setInitialCursorPosition()
             case .sideToMoveChanged:
-                self.sideToMove = self.board.sideToMove
+                self.sideToMove = self.gameEngine.sideToMove
             case .madePlainMove:
                 self.playSoundIfNeed(type: .move)
             case .capturedPiece:
@@ -161,7 +161,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     func getPieceAtCell(index: Int) -> Int? {
-        let valueAtCell = board.squares[safe: index]
+        let valueAtCell = gameEngine.squares[safe: index]
         if valueAtCell == 0 {
             return nil
         }
@@ -186,7 +186,7 @@ class GameFieldViewModel: ObservableObject {
             else {
                 return
             }
-            guard board.makeMove(
+            guard gameEngine.makeMove(
                 move: .init(startSquare: selectedCellIndex, targetSquare: cursorCellIndex),
                 piece: piece
             ) else {
@@ -212,7 +212,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
-        board.promotePawn(at: squareIndex, from: pawn, to: newPieceType)
+        gameEngine.promotePawn(at: squareIndex, from: pawn, to: newPieceType)
         pawnIndexToPromote = nil
         pawnToPromote = nil
     }
