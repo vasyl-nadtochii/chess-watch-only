@@ -52,7 +52,7 @@ class GameEngine {
 
     // initial position
     // private let fenString = Constants.initialChessPosition
-    private let fenString = "4k3/8/8/8/4b3/8/8/RN2K2R w QK" // just for test
+    private let fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/1N6 w -" // just for test
     private let defaults: Defaults
 
     init(defaults: Defaults) {
@@ -665,6 +665,16 @@ class GameEngine {
         let pieceAtTargetSquare = squares[move.targetSquare]
         squares[move.targetSquare] = piece
 
+        var pieceTookByEnPassantMove: Int?
+
+        if let enPassantSquareIndex = enPassantSquareIndex, Piece.pieceType(from: piece) == Piece.pawn {
+            let expectedEnPassantTargetSquare = enPassantSquareIndex + (pieceColor == Piece.white ? 8 : -8)
+            if move.targetSquare == expectedEnPassantTargetSquare {
+                pieceTookByEnPassantMove = squares[enPassantSquareIndex]
+                squares[enPassantSquareIndex] = 0
+            }
+        }
+
         let allAttackMovesForOppositeSide = getAllAvailableAttackMoves(forSide: oppositeColor)
         guard let kingPosition = squares.firstIndex(where: { $0 == Piece.king | pieceColor }) else {
             print("Error: is there no king at board?")
@@ -673,6 +683,9 @@ class GameEngine {
 
         squares[move.startSquare] = piece
         squares[move.targetSquare] = pieceAtTargetSquare
+        if let pieceTookByEnPassantMoveUnwrapped = pieceTookByEnPassantMove, let enPassantSquareIndex = enPassantSquareIndex {
+            squares[enPassantSquareIndex] = pieceTookByEnPassantMoveUnwrapped
+        }
 
         if allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == kingPosition }) {
             return false
