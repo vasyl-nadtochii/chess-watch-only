@@ -206,15 +206,20 @@ class GameEngine {
         }
 
         // MARK: Handle castle scenario
-        if !onlyAttackMoves {
+        if !onlyAttackMoves && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex }) {
             let castlingRightsForSelectedColor = castlingRights[pieceColor]
             if castlingRightsForSelectedColor?[.kingSide] == true {
-                if squares[startIndex + 1] == 0 && squares[startIndex + 2] == 0 {
+                if squares[startIndex + 1] == 0 && squares[startIndex + 2] == 0
+                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + 1 })
+                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + 2 }) {
                     moves.append(.init(startSquare: startIndex, targetSquare: startIndex + 2))
                 }
             }
             if castlingRightsForSelectedColor?[.queenSide] == true {
-                if squares[startIndex - 1] == 0 && squares[startIndex - 2] == 0 && squares[startIndex - 3] == 0 {
+                if squares[startIndex - 1] == 0 && squares[startIndex - 2] == 0 && squares[startIndex - 3] == 0
+                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 1 })
+                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 2 })
+                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 3 }) {
                     moves.append(.init(startSquare: startIndex, targetSquare: startIndex - 2))
                 }
             }
@@ -429,7 +434,7 @@ class GameEngine {
             }
         }
 
-        if let castlingRights = splitFENString[safe: 2] {
+        if let castlingRights = splitFENString[safe: 2] { 
             if castlingRights == "-" {
                 self.castlingRights = [
                     Piece.white: [
