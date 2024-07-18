@@ -45,8 +45,8 @@ class GameEngine {
     private var castlingRights: [Int: [CastlingSide: Bool]]
 
     // initial position
-    // private let fenString = Constants.initialChessPosition
-    private let fenString = "r3kn1r/8/8/8/8/8/8/R2QK2R w QKqk" // just for test
+    private let fenString = Constants.initialChessPosition
+    // private let fenString = "r3kn1r/8/8/8/8/8/8/R2QK2R w QKqk" // just for test
     private let defaults: Defaults
 
     init(defaults: Defaults) {
@@ -335,6 +335,29 @@ class GameEngine {
         return Array(Set(moves))
     }
 
+    private func getAllAvailableMoves(forSide colorToPickMovesFor: Int) -> [Move] {
+        var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
+
+        for index in 0..<squares.count {
+            if let pieceAtIndex = squares[safe: index],
+                pieceAtIndex != 0,
+                Piece.pieceColor(from: pieceAtIndex) == colorToPickMovesFor {
+                piecesToPickMovesFor.append((index, pieceAtIndex))
+            }
+        }
+
+        var moves = [Move]()
+        for piece in piecesToPickMovesFor {
+            moves.append(contentsOf: getAvailableMoves(
+                at: piece.startIndex,
+                for: piece.piece,
+                onlyAttackMoves: false
+            ))
+        }
+
+        return moves
+    }
+
     func precomputedMoveData() {
         self.numberOfSquaresToEdge = Array(
             repeating: Array(repeating: 0, count: 8),
@@ -483,6 +506,9 @@ class GameEngine {
 
     private func toggleSideToMove() {
         sideToMove = (sideToMove == Piece.white) ? Piece.black : Piece.white
+        if sideToMove == opponentToPlayerSide {
+            makeComputerMove()
+        }
     }
     
     // MARK: Pawn moves check
@@ -629,5 +655,21 @@ class GameEngine {
             return false
         }
         return true
+    }
+
+    // MARK: Computer
+
+    private func makeComputerMove() {
+        guard let move = chooseComputerMove() else {
+            print("Computer doesn't have available moves to pick")
+            return
+        }
+        let pieceThatComputerPicked = squares[move.startSquare]
+        _ = makeMove(move: move, piece: pieceThatComputerPicked)
+    }
+
+    private func chooseComputerMove() -> Move? {
+        let moves = getAllAvailableMoves(forSide: opponentToPlayerSide).filter({ $0.startSquare != $0.targetSquare })
+        return moves.randomElement()
     }
 }

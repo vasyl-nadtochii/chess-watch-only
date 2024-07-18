@@ -70,7 +70,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     var shouldHighlightAvailableCells: Bool {
-        return selectButtonAction == .makeMove
+        return selectButtonAction == .makeMove && sideToMove == gameEngine.playerSide
     }
 
     var availableCellsIndiciesToPick: [Int] = []
@@ -93,6 +93,7 @@ class GameFieldViewModel: ObservableObject {
     init(defaults: Defaults) {
         self.defaults = defaults
         self.avPlayer = AVPlayer()
+        self.avPlayer.volume = 10
         self.avPlayer.automaticallyWaitsToMinimizeStalling = false
 
         do {

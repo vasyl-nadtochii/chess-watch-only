@@ -57,6 +57,7 @@ struct GameFieldView: View {
                                         Color.clear
                                             .frame(width: gameFieldHeight / 8, height: gameFieldHeight / 8)
                                             .border(viewModel.selectButtonColor, width: 2)
+                                            .opacity(viewModel.sideToMove == viewModel.gameEngine.playerSide ? 1 : 0)
                                     }
                                     if viewModel.shouldHighlightAvailableCells
                                         && viewModel.availableCellsIndiciesToPick.contains(where: {
@@ -98,6 +99,7 @@ struct GameFieldView: View {
             availableCellIndicies: viewModel.availableCellsIndiciesToPick,
             currentIndex: $viewModel.cursorCellIndex
         )
+        .disabled(viewModel.sideToMove != viewModel.gameEngine.playerSide)
     }
 
     private var gameFieldHeight: CGFloat {
