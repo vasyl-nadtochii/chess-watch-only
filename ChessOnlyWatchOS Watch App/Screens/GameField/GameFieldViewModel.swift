@@ -70,7 +70,17 @@ class GameFieldViewModel: ObservableObject {
     }
 
     var shouldHighlightAvailableCells: Bool {
-        return selectButtonAction == .makeMove && sideToMove == gameEngine.playerSide
+        return selectButtonAction == .makeMove
+            && ((sideToMove == gameEngine.playerSide && gameEngine.gameMode == .playerVsAI) || gameEngine.gameMode == .playerVsPlayer)
+    }
+
+    var pickerDisabled: Bool {
+        switch gameEngine.gameMode {
+        case .playerVsPlayer:
+            return false
+        case .playerVsAI:
+            return sideToMove != gameEngine.playerSide
+        }
     }
 
     var availableCellsIndiciesToPick: [Int] = []

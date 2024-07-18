@@ -19,6 +19,11 @@ class GameEngine {
         case madeCastleMove
     }
 
+    enum GameMode {
+        case playerVsPlayer
+        case playerVsAI
+    }
+
     var sideToMove: Int {
         didSet {
             if sideToMove != oldValue {
@@ -38,6 +43,7 @@ class GameEngine {
     var squares: [Int]
     var playerSide: Int
     var onResult: ((Result) -> Void)?
+    let gameMode: GameMode = .playerVsPlayer
 
     private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     private var numberOfSquaresToEdge: [[Int]] = []
@@ -45,8 +51,8 @@ class GameEngine {
     private var castlingRights: [Int: [CastlingSide: Bool]]
 
     // initial position
-    private let fenString = Constants.initialChessPosition
-    // private let fenString = "r3kn1r/8/8/8/8/8/8/R2QK2R w QKqk" // just for test
+    // private let fenString = Constants.initialChessPosition
+    private let fenString = "4k3/8/8/8/4b3/8/8/RN2K2R w QK" // just for test
     private let defaults: Defaults
 
     init(defaults: Defaults) {
@@ -394,10 +400,11 @@ class GameEngine {
 
         var capturedPiece = squares[move.targetSquare] != 0
 
+        let madeCastleMove = performCastleMoveIfNeed(piece: piece, move: move)
+        removeCastlingRightIfNeed(move: move, piece: piece)
+
         squares[move.startSquare] = 0
         squares[move.targetSquare] = piece
-
-        let madeCastleMove = performCastleMoveIfNeed(piece: piece, move: move)
 
         if let enPassantSquareIndex = enPassantSquareIndex,
            checkIfUserUsedEnPassantMove(enPassantSquareIndex: enPassantSquareIndex, move: move, piece: piece) {
@@ -415,8 +422,6 @@ class GameEngine {
                 self.enPassantSquareIndex = move.targetSquare
             }
         }
-
-        removeCastlingRightIfNeed(moveStartIndex: move.startSquare, piece: piece)
 
         if capturedPiece {
             onResult?(.capturedPiece)
@@ -506,7 +511,7 @@ class GameEngine {
 
     private func toggleSideToMove() {
         sideToMove = (sideToMove == Piece.white) ? Piece.black : Piece.white
-        if sideToMove == opponentToPlayerSide {
+        if sideToMove == opponentToPlayerSide && gameMode == .playerVsAI {
             makeComputerMove()
         }
     }
@@ -576,25 +581,43 @@ class GameEngine {
 
     // MARK: Castle moves handlers
 
-    private func removeCastlingRightIfNeed(moveStartIndex: Int, piece: Int) {
+    private func removeCastlingRightIfNeed(move: Move, piece: Int) {
         guard let pieceType = Piece.pieceType(from: piece),
             let pieceColor = Piece.pieceColor(from: piece)
         else {
             return
         }
 
-        if pieceType == Piece.rook {
-            let queenSideRookStartMoveIndex = pieceColor == Piece.white ? 0 : 56
-            let kingSideRookStartMoveIndex = pieceColor == Piece.white ? 7 : 63
+        let moveStartIndex = move.startSquare
 
-            if moveStartIndex == queenSideRookStartMoveIndex {
+        let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
+        let queenSideRookStartMoveIndex = pieceColor == Piece.white ? 0 : 56
+        let kingSideRookStartMoveIndex = pieceColor == Piece.white ? 7 : 63
+
+        let queenSideRookStartMoveIndexForOppositeSide = oppositeColorToPiece == Piece.white ? 0 : 56
+        let kingSideRookStartMoveIndexForOppositeSide = oppositeColorToPiece == Piece.white ? 7 : 63
+
+        if (move.targetSquare == queenSideRookStartMoveIndexForOppositeSide
+            || move.targetSquare == kingSideRookStartMoveIndexForOppositeSide)
+            && Piece.pieceColor(from: squares[move.targetSquare]) == oppositeColorToPiece {
+            // MARK: Handle scenario when someone takes rook of opposite side
+            if move.targetSquare == queenSideRookStartMoveIndexForOppositeSide {
+                castlingRights[oppositeColorToPiece]?[.queenSide] = false
+            } else if move.targetSquare == kingSideRookStartMoveIndexForOppositeSide {
+                castlingRights[oppositeColorToPiece]?[.kingSide] = false
+            }
+        } else {
+            // MARK: Handle scenario when someone moves king/rook
+            if pieceType == Piece.rook {
+                if moveStartIndex == queenSideRookStartMoveIndex {
+                    castlingRights[pieceColor]?[.queenSide] = false
+                } else if moveStartIndex == kingSideRookStartMoveIndex {
+                    castlingRights[pieceColor]?[.kingSide] = false
+                }
+            } else if pieceType == Piece.king {
                 castlingRights[pieceColor]?[.queenSide] = false
-            } else if moveStartIndex == kingSideRookStartMoveIndex {
                 castlingRights[pieceColor]?[.kingSide] = false
             }
-        } else if pieceType == Piece.king {
-            castlingRights[pieceColor]?[.queenSide] = false
-            castlingRights[pieceColor]?[.kingSide] = false
         }
     }
 
