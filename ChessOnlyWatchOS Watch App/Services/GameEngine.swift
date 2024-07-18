@@ -606,7 +606,14 @@ class GameEngine {
             return false
         }
         let oppositeColor = pieceColor == Piece.white ? Piece.black : Piece.white
+
+        if move.startSquare == move.targetSquare {
+            return true
+        }
+
         squares[move.startSquare] = 0
+
+        let pieceAtTargetSquare = squares[move.targetSquare]
         squares[move.targetSquare] = piece
 
         let allAttackMovesForOppositeSide = getAllAvailableAttackMoves(forSide: oppositeColor)
@@ -616,7 +623,7 @@ class GameEngine {
         }
 
         squares[move.startSquare] = piece
-        squares[move.targetSquare] = 0
+        squares[move.targetSquare] = pieceAtTargetSquare
 
         if allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == kingPosition }) {
             return false

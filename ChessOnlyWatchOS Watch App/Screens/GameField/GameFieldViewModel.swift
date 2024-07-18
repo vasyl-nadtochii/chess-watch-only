@@ -138,8 +138,8 @@ class GameFieldViewModel: ObservableObject {
             }
         }
 
-        self.setInitialCursorPosition()
         self.updateAvailableCellsToPickMove()
+        self.setInitialCursorPosition()
 
         NotificationCenter.default.addObserver(forName: .boardColorThemeUpdated, object: nil, queue: .main) { _ in
             self.currentColorTheme = defaults.boardColorTheme
@@ -166,6 +166,7 @@ class GameFieldViewModel: ObservableObject {
         if selectButtonAction == .select {
             selectedCellIndex = cursorCellIndex
             selectButtonAction = .makeMove
+            updateAvailableCellsToPickMove()
         } else {
             guard let selectedCellIndex = selectedCellIndex,
                 let piece = getPieceAtCell(index: selectedCellIndex)
@@ -180,10 +181,10 @@ class GameFieldViewModel: ObservableObject {
             }
             self.selectedCellIndex = nil
             self.selectButtonAction = .select
-            self.setInitialCursorPosition()
+            updateAvailableCellsToPickMove()
+            setInitialCursorPosition()
             WKInterfaceDevice.current().play(.click)
         }
-        updateAvailableCellsToPickMove()
     }
 
     func onCancelButtonTapped(dismissClosure: () -> Void) {
