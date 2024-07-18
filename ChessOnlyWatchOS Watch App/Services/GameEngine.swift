@@ -146,7 +146,10 @@ class GameEngine {
             }
         }
 
-        return moves
+        if onlyAttackMoves {
+            return moves
+        }
+        return moves.filter({ checkIfMoveIsValid(piece: piece, move: $0) })
     }
 
     private func getAvailableKnightMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
@@ -176,7 +179,10 @@ class GameEngine {
             }
         }
 
-        return moves
+        if onlyAttackMoves {
+            return moves
+        }
+        return moves.filter({ checkIfMoveIsValid(piece: piece, move: $0) })
     }
 
     private func getAvailableKingMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
@@ -301,8 +307,11 @@ class GameEngine {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + step))
             }
         }
-
-        return moves
+        
+        if onlyAttackMoves {
+            return moves
+        }
+        return moves.filter({ checkIfMoveIsValid(piece: piece, move: $0) })
     }
     
     private func getAllAvailableAttackMoves(forSide colorToPickMoves: Int) -> [Move] {
@@ -588,5 +597,30 @@ class GameEngine {
             return true
         }
         return false
+    }
+
+    // MARK: Legal moves check
+    private func checkIfMoveIsValid(piece: Int, move: Move) -> Bool {
+        guard let pieceColor = Piece.pieceColor(from: piece) else {
+            print("Error: couldn't get piece color")
+            return false
+        }
+        let oppositeColor = pieceColor == Piece.white ? Piece.black : Piece.white
+        squares[move.startSquare] = 0
+        squares[move.targetSquare] = piece
+
+        let allAttackMovesForOppositeSide = getAllAvailableAttackMoves(forSide: oppositeColor)
+        guard let kingPosition = squares.firstIndex(where: { $0 == Piece.king | pieceColor }) else {
+            print("Error: is there no king at board?")
+            return false
+        }
+
+        squares[move.startSquare] = piece
+        squares[move.targetSquare] = 0
+
+        if allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == kingPosition }) {
+            return false
+        }
+        return true
     }
 }

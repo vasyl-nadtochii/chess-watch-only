@@ -73,24 +73,7 @@ class GameFieldViewModel: ObservableObject {
         return selectButtonAction == .makeMove
     }
 
-    var availableCellsIndiciesToPick: [Int] {
-        let allCells = Array(0...(gameEngine.squares.count - 1))
-        switch selectButtonAction {
-        case .select:
-            return allCells.filter({
-                guard let piece = getPieceAtCell(index: $0) else {
-                    return false
-                }
-                return Piece.pieceColor(from: piece) == sideToMove
-            })
-        case .makeMove:
-            guard let selectedCellIndex = selectedCellIndex else { return [] }
-            return gameEngine.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
-                .map { $0.targetSquare }
-                .sorted(by: { $0 > $1 })
-        }
-    }
-
+    var availableCellsIndiciesToPick: [Int] = []
     var gameEngine: GameEngine
     var currentColorTheme: BoardColorTheme
 
@@ -156,6 +139,7 @@ class GameFieldViewModel: ObservableObject {
         }
 
         self.setInitialCursorPosition()
+        self.updateAvailableCellsToPickMove()
 
         NotificationCenter.default.addObserver(forName: .boardColorThemeUpdated, object: nil, queue: .main) { _ in
             self.currentColorTheme = defaults.boardColorTheme
@@ -199,6 +183,7 @@ class GameFieldViewModel: ObservableObject {
             self.setInitialCursorPosition()
             WKInterfaceDevice.current().play(.click)
         }
+        updateAvailableCellsToPickMove()
     }
 
     func onCancelButtonTapped(dismissClosure: () -> Void) {
@@ -211,6 +196,7 @@ class GameFieldViewModel: ObservableObject {
             }
             selectButtonAction = .select
         }
+        updateAvailableCellsToPickMove()
     }
 
     func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
@@ -244,5 +230,26 @@ class GameFieldViewModel: ObservableObject {
 
         avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: path)))
         avPlayer.play()
+    }
+
+    private func updateAvailableCellsToPickMove() {
+        let allCells = Array(0...(gameEngine.squares.count - 1))
+        switch selectButtonAction {
+        case .select:
+            self.availableCellsIndiciesToPick = allCells.filter({
+                guard let piece = getPieceAtCell(index: $0) else {
+                    return false
+                }
+                return Piece.pieceColor(from: piece) == sideToMove
+            })
+        case .makeMove:
+            guard let selectedCellIndex = selectedCellIndex else {
+                self.availableCellsIndiciesToPick = []
+                return
+            }
+            self.availableCellsIndiciesToPick = gameEngine.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
+                .map { $0.targetSquare }
+                .sorted(by: { $0 > $1 })
+        }
     }
 }
