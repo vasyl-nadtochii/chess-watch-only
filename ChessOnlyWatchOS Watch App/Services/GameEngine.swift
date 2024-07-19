@@ -43,7 +43,7 @@ class GameEngine {
     var squares: [Int]
     var playerSide: Int
     var onResult: ((Result) -> Void)?
-    let gameMode: GameMode = .playerVsPlayer
+    let gameMode: GameMode = .playerVsAI
 
     private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     private var numberOfSquaresToEdge: [[Int]] = []
@@ -52,7 +52,7 @@ class GameEngine {
 
     // initial position
     // private let fenString = Constants.initialChessPosition
-    private let fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/1N6 w -" // just for test
+    private let fenString = "6k1/2P5/8/8/8/8/6p1/2K5 w -" // just for test
     private let defaults: Defaults
 
     init(defaults: Defaults) {
@@ -282,10 +282,10 @@ class GameEngine {
         }
 
         // MARK: Handle two steps forward (initial move)
-        if moves.count > 1 && squares[startIndex + twoStepForward] == 0 && (
+        if moves.count > 1 && (
             (pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
                 || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56))
-        ) {
+        ) && squares[startIndex + twoStepForward] == 0 {
             moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
         }
 
@@ -416,7 +416,11 @@ class GameEngine {
 
         if Piece.pieceType(from: piece) == Piece.pawn {
             if checkPawnPromotion(move: move, piece: piece) {
-                onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
+                if sideToMove == playerSide {
+                    onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
+                } else {
+                    promoteComputerPawn(at: move.targetSquare)
+                }
                 // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion
             } else if checkEnPassantStartScenario(move: move, piece: piece) {
                 self.enPassantSquareIndex = move.targetSquare
@@ -707,5 +711,10 @@ class GameEngine {
     private func chooseComputerMove() -> Move? {
         let moves = getAllAvailableMoves(forSide: opponentToPlayerSide).filter({ $0.startSquare != $0.targetSquare })
         return moves.randomElement()
+    }
+
+    private func promoteComputerPawn(at index: Int) {
+        let pieces = [Piece.queen, Piece.bishop, Piece.knight, Piece.rook]
+        squares[index] = opponentToPlayerSide | (pieces.randomElement() ?? Piece.queen)
     }
 }
