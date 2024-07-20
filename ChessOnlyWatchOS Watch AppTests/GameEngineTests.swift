@@ -22,10 +22,21 @@ final class GameEngineTests: XCTestCase {
     }
 
     func testMovesCount() {
-//        XCTAssertEqual(checkMovesCount(depth: 1), 20)
-//        XCTAssertEqual(checkMovesCount(depth: 2), 400)
-//        XCTAssertEqual(checkMovesCount(depth: 3), 8902)
+        XCTAssertEqual(checkMovesCount(depth: 1), 20)
+        XCTAssertEqual(checkMovesCount(depth: 2), 400)
+        XCTAssertEqual(checkMovesCount(depth: 3), 8902)
+    }
+
+    func testMoveCountForLargerDepth() {
         XCTAssertEqual(checkMovesCount(depth: 4), 197281)
+    }
+
+    func testCalculationTime() {
+        measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
+            startMeasuring()
+            XCTAssertEqual(checkMovesCount(depth: 3), 8902)
+            stopMeasuring()
+        }
     }
 
     private func checkMovesCount(depth: Int) -> Int? {
