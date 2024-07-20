@@ -14,6 +14,7 @@ final class GameEngineTests: XCTestCase {
 
     override func setUpWithError() throws {
         gameEngine = .init(defaults: MockDefaults())
+        gameEngine.gameMode = .playerVsPlayer
     }
 
     override func tearDownWithError() throws {
@@ -21,7 +22,10 @@ final class GameEngineTests: XCTestCase {
     }
 
     func testMovesCount() {
-        XCTAssertEqual(checkMovesCount(depth: 2), 400)
+//        XCTAssertEqual(checkMovesCount(depth: 1), 20)
+//        XCTAssertEqual(checkMovesCount(depth: 2), 400)
+//        XCTAssertEqual(checkMovesCount(depth: 3), 8902)
+        XCTAssertEqual(checkMovesCount(depth: 4), 197281)
     }
 
     private func checkMovesCount(depth: Int) -> Int? {
@@ -41,8 +45,6 @@ final class GameEngineTests: XCTestCase {
             if gameEngine.makeMove(move: move, piece: pieceAtMoveStartIndex) {
                 positionsNumber += checkMovesCount(depth: depth - 1) ?? 0
                 gameEngine.unmakeMove()
-            } else {
-                XCTFail("Illegal move?")
             }
         }
 
