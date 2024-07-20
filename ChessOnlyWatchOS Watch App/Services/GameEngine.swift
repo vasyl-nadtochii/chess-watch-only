@@ -43,6 +43,7 @@ class GameEngine {
     var squares: [Int]
     var playerSide: Int
     var onResult: ((Result) -> Void)?
+    var movesHistory: [Move] = []
     let gameMode: GameMode = .playerVsAI
 
     private var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
@@ -51,11 +52,11 @@ class GameEngine {
     private var castlingRights: [Int: [CastlingSide: Bool]]
 
     // initial position
-    // private let fenString = Constants.initialChessPosition
-    private let fenString = "6k1/2P5/8/8/8/8/6p1/2K5 w -" // just for test
-    private let defaults: Defaults
+    private let fenString = Constants.initialChessPosition
+    // private let fenString = "6k1/2P5/8/8/8/8/6p1/2K5 w -" // just for test
+    private let defaults: IDefaults
 
-    init(defaults: Defaults) {
+    init(defaults: IDefaults) {
         self.defaults = defaults
         self.squares = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
@@ -341,14 +342,18 @@ class GameEngine {
         return Array(Set(moves))
     }
 
-    private func getAllAvailableMoves(forSide colorToPickMovesFor: Int) -> [Move] {
+    func getAllAvailableMoves(forSide colorToPickMovesFor: Int?) -> [Move] {
         var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
 
         for index in 0..<squares.count {
             if let pieceAtIndex = squares[safe: index],
-                pieceAtIndex != 0,
-                Piece.pieceColor(from: pieceAtIndex) == colorToPickMovesFor {
-                piecesToPickMovesFor.append((index, pieceAtIndex))
+                pieceAtIndex != 0 {
+                if let colorToPickMovesForUnwrapped = colorToPickMovesFor,
+                   Piece.pieceColor(from: pieceAtIndex) == colorToPickMovesForUnwrapped {
+                    piecesToPickMovesFor.append((index, pieceAtIndex))
+                } else if colorToPickMovesFor == nil {
+                    piecesToPickMovesFor.append((index, pieceAtIndex))
+                }
             }
         }
 
@@ -398,10 +403,19 @@ class GameEngine {
             return false
         }
 
+        var moveCopy = move
+        moveCopy.pieceThatMoved = piece
+
         var capturedPiece = squares[move.targetSquare] != 0
+        if capturedPiece {
+            moveCopy.capturedPiece = .init(piece: squares[move.targetSquare], cellIndex: move.targetSquare)
+        }
 
         let madeCastleMove = performCastleMoveIfNeed(piece: piece, move: move)
-        removeCastlingRightIfNeed(move: move, piece: piece)
+        let sidesWithRemovedCastlingRight = removeCastlingRightIfNeed(move: move, piece: piece)
+        if !sidesWithRemovedCastlingRight.isEmpty {
+            moveCopy.removedCastlingRightSides = sidesWithRemovedCastlingRight
+        }
 
         squares[move.startSquare] = 0
         squares[move.targetSquare] = piece
@@ -409,9 +423,11 @@ class GameEngine {
         if let enPassantSquareIndex = enPassantSquareIndex,
            checkIfUserUsedEnPassantMove(enPassantSquareIndex: enPassantSquareIndex, move: move, piece: piece) {
             squares[enPassantSquareIndex] = 0
+            moveCopy.capturedPiece = .init(piece: squares[enPassantSquareIndex], cellIndex: enPassantSquareIndex)
             capturedPiece = true
         }
         
+        moveCopy.enPassantSquareIndex = enPassantSquareIndex
         self.enPassantSquareIndex = nil
 
         if Piece.pieceType(from: piece) == Piece.pawn {
@@ -421,6 +437,7 @@ class GameEngine {
                 } else {
                     promoteComputerPawn(at: move.targetSquare)
                 }
+                moveCopy.promotedPawn = true
                 // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion
             } else if checkEnPassantStartScenario(move: move, piece: piece) {
                 self.enPassantSquareIndex = move.targetSquare
@@ -436,10 +453,45 @@ class GameEngine {
         }
 
         // TODO: Check for check/checkmate
-
+        
+        movesHistory.append(moveCopy)
         toggleSideToMove()
 
         return true
+    }
+
+    func unmakeMove() {
+        guard let lastMove = movesHistory.last else {
+            print("No moves recorded")
+            return
+        }
+        guard let pieceThatMoved = lastMove.pieceThatMoved,
+            let pieceColor = Piece.pieceColor(from: pieceThatMoved) else {
+            print("No piece recorded for the move")
+            return
+        }
+        squares[lastMove.startSquare] = pieceThatMoved
+        squares[lastMove.targetSquare] = 0
+
+        if let capturedPiece = lastMove.capturedPiece {
+            squares[capturedPiece.cellIndex] = capturedPiece.piece
+        }
+        if let removedCastlingRightSides = lastMove.removedCastlingRightSides,
+           let sideForWhichCastlingRightsRemoved = removedCastlingRightSides.keys.first,
+           let sides = removedCastlingRightSides[sideForWhichCastlingRightsRemoved] {
+            for side in sides {
+                castlingRights[sideForWhichCastlingRightsRemoved]?[side] = true
+            }
+        }
+        if lastMove.promotedPawn {
+            squares[lastMove.startSquare] = Piece.pawn | pieceColor
+        }
+        if let enPassantSquareIndex = lastMove.enPassantSquareIndex {
+            self.enPassantSquareIndex = enPassantSquareIndex
+        }
+        
+        movesHistory.removeLast()
+        toggleSideToMove()
     }
 
     func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
@@ -585,11 +637,11 @@ class GameEngine {
 
     // MARK: Castle moves handlers
 
-    private func removeCastlingRightIfNeed(move: Move, piece: Int) {
+    private func removeCastlingRightIfNeed(move: Move, piece: Int) -> [Int: [CastlingSide]] {
         guard let pieceType = Piece.pieceType(from: piece),
             let pieceColor = Piece.pieceColor(from: piece)
         else {
-            return
+            return [:]
         }
 
         let moveStartIndex = move.startSquare
@@ -607,22 +659,28 @@ class GameEngine {
             // MARK: Handle scenario when someone takes rook of opposite side
             if move.targetSquare == queenSideRookStartMoveIndexForOppositeSide {
                 castlingRights[oppositeColorToPiece]?[.queenSide] = false
+                return [oppositeColorToPiece: [.queenSide]]
             } else if move.targetSquare == kingSideRookStartMoveIndexForOppositeSide {
                 castlingRights[oppositeColorToPiece]?[.kingSide] = false
+                return [oppositeColorToPiece: [.kingSide]]
             }
         } else {
             // MARK: Handle scenario when someone moves king/rook
             if pieceType == Piece.rook {
                 if moveStartIndex == queenSideRookStartMoveIndex {
                     castlingRights[pieceColor]?[.queenSide] = false
+                    return [pieceColor: [.queenSide]]
                 } else if moveStartIndex == kingSideRookStartMoveIndex {
                     castlingRights[pieceColor]?[.kingSide] = false
+                    return [pieceColor: [.kingSide]]
                 }
             } else if pieceType == Piece.king {
                 castlingRights[pieceColor]?[.queenSide] = false
                 castlingRights[pieceColor]?[.kingSide] = false
+                return [pieceColor: [.queenSide, .kingSide]]
             }
         }
+        return [:]
     }
 
     private func performCastleMoveIfNeed(piece: Int, move: Move) -> Bool {
@@ -715,6 +773,7 @@ class GameEngine {
 
     private func promoteComputerPawn(at index: Int) {
         let pieces = [Piece.queen, Piece.bishop, Piece.knight, Piece.rook]
-        squares[index] = opponentToPlayerSide | (pieces.randomElement() ?? Piece.queen)
+        let promotionPiece = pieces.randomElement() ?? Piece.queen
+        promotePawn(at: index, from: (opponentToPlayerSide | Piece.pawn), to: promotionPiece)
     }
 }

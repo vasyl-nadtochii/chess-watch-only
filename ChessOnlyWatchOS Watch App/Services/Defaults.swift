@@ -7,7 +7,14 @@
 
 import Foundation
 
-class Defaults {
+protocol IDefaults {
+    
+    var playerSide: Int { get set }
+    var boardColorTheme: BoardColorTheme { get set }
+    var soundEnabled: Bool { get set }
+}
+
+class Defaults: IDefaults {
 
     private let playerSideKey: String = "playerSideKey"
     var playerSide: Int {

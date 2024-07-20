@@ -7,8 +7,20 @@
 
 import Foundation
 
-struct Move: Hashable {
+struct Move: Hashable, Identifiable {
 
+    struct CapturedPiece: Hashable {
+        let piece: Int
+        let cellIndex: Int
+    }
+
+    let id: String = UUID().uuidString
     let startSquare: Int
     let targetSquare: Int
+
+    var pieceThatMoved: Int?
+    var enPassantSquareIndex: Int?
+    var promotedPawn: Bool = false
+    var removedCastlingRightSides: [Int: [CastlingSide]]?
+    var capturedPiece: CapturedPiece?
 }

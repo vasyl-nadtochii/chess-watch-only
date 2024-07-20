@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A20C95B2C4B147900533CFB /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20C95A2C4B147900533CFB /* GameEngineTests.swift */; };
+		2A20C95E2C4B16A400533CFB /* MockDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20C95D2C4B16A400533CFB /* MockDefaults.swift */; };
 		2A2EC7A62C3F1E1E00F0AFBE /* BoardColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */; };
 		2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */; };
 		2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -14,7 +16,6 @@
 		2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137742C3AD91200B68401 /* GameFieldView.swift */; };
 		2A3137772C3AD91400B68401 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137762C3AD91400B68401 /* Assets.xcassets */; };
 		2A31377A2C3AD91400B68401 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137792C3AD91400B68401 /* Preview Assets.xcassets */; };
-		2A3137842C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */; };
 		2A31378E2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */; };
 		2A3137902C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */; };
 		2A3137A22C3AE57200B68401 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137A12C3AE57200B68401 /* StartView.swift */; };
@@ -78,6 +79,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2A20C95A2C4B147900533CFB /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
+		2A20C95D2C4B16A400533CFB /* MockDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaults.swift; sourceTree = "<group>"; };
 		2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColorTheme.swift; sourceTree = "<group>"; };
 		2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessOnlyWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,7 +90,6 @@
 		2A3137762C3AD91400B68401 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A3137792C3AD91400B68401 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A31377F2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChessOnlyWatchOS Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppTests.swift; sourceTree = "<group>"; };
 		2A3137892C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChessOnlyWatchOS Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A31378D2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		2A31378F2C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOS_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -138,6 +140,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A20C95C2C4B169600533CFB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2A20C95D2C4B16A400533CFB /* MockDefaults.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		2A3137602C3AD91100B68401 = {
 			isa = PBXGroup;
 			children = (
@@ -185,7 +195,8 @@
 		2A3137822C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests */ = {
 			isa = PBXGroup;
 			children = (
-				2A3137832C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift */,
+				2A20C95C2C4B169600533CFB /* Helpers */,
+				2A20C95A2C4B147900533CFB /* GameEngineTests.swift */,
 			);
 			path = "ChessOnlyWatchOS Watch AppTests";
 			sourceTree = "<group>";
@@ -486,7 +497,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A3137842C3AD91400B68401 /* ChessOnlyWatchOS_Watch_AppTests.swift in Sources */,
+				2A20C95B2C4B147900533CFB /* GameEngineTests.swift in Sources */,
+				2A20C95E2C4B16A400533CFB /* MockDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
