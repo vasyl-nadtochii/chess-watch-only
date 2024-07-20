@@ -40,7 +40,7 @@ class GameEngine {
         return (playerSide == Piece.white) ? Piece.black : Piece.white
     }
 
-    var squares: [Int]
+    var board: [Int]
     var playerSide: Int
     var onResult: ((Result) -> Void)?
     var movesHistory: [Move] = []
@@ -58,7 +58,7 @@ class GameEngine {
 
     init(defaults: IDefaults) {
         self.defaults = defaults
-        self.squares = Array(repeating: 0, count: 64)
+        self.board = Array(repeating: 0, count: 64)
         self.playerSide = defaults.playerSide
         self.sideToMove = defaults.playerSide
         self.castlingRights = [
@@ -129,7 +129,7 @@ class GameEngine {
         for directionIndex in startDirectionIndex..<endDirectionIndex {
             for n in 0..<numberOfSquaresToEdge[startIndex][directionIndex] {
                 let targetSquareIndex = startIndex + directionOffsets[directionIndex] * (n + 1)
-                let pieceOnTargetSquare = squares[targetSquareIndex]
+                let pieceOnTargetSquare = board[targetSquareIndex]
                 
                 if Piece.pieceColor(from: pieceOnTargetSquare) == pieceColorOfSelectedPiece {
                     if onlyAttackMoves {
@@ -181,7 +181,7 @@ class GameEngine {
         }
 
         for availableOffset in availableOffsets {
-            if pieceColor != Piece.pieceColor(from: squares[safe: startIndex + availableOffset] ?? 0) {
+            if pieceColor != Piece.pieceColor(from: board[safe: startIndex + availableOffset] ?? 0) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + availableOffset))
             }
         }
@@ -212,7 +212,7 @@ class GameEngine {
 
         for directionOffset in directionOffsets {
             if (startIndex + directionOffset >= 0 && startIndex + directionOffset < 64)
-                && pieceColor != Piece.pieceColor(from: squares[safe: startIndex + directionOffset] ?? 0)
+                && pieceColor != Piece.pieceColor(from: board[safe: startIndex + directionOffset] ?? 0)
                 && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + directionOffset }) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
@@ -222,14 +222,14 @@ class GameEngine {
         if !onlyAttackMoves && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex }) {
             let castlingRightsForSelectedColor = castlingRights[pieceColor]
             if castlingRightsForSelectedColor?[.kingSide] == true {
-                if squares[startIndex + 1] == 0 && squares[startIndex + 2] == 0
+                if board[startIndex + 1] == 0 && board[startIndex + 2] == 0
                     && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + 1 })
                     && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + 2 }) {
                     moves.append(.init(startSquare: startIndex, targetSquare: startIndex + 2))
                 }
             }
             if castlingRightsForSelectedColor?[.queenSide] == true {
-                if squares[startIndex - 1] == 0 && squares[startIndex - 2] == 0 && squares[startIndex - 3] == 0
+                if board[startIndex - 1] == 0 && board[startIndex - 2] == 0 && board[startIndex - 3] == 0
                     && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 1 })
                     && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 2 })
                     && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 3 }) {
@@ -278,7 +278,7 @@ class GameEngine {
         // MARK: Handle one step forward (regular move)
         if startIndex + oneStepForward < 64
             && startIndex + oneStepForward >= 0
-            && squares[startIndex + oneStepForward] == 0 {
+            && board[startIndex + oneStepForward] == 0 {
             moves.append(.init(startSquare: startIndex, targetSquare: startIndex + oneStepForward))
         }
 
@@ -286,13 +286,13 @@ class GameEngine {
         if moves.count > 1 && (
             (pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
                 || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56))
-        ) && squares[startIndex + twoStepForward] == 0 {
+        ) && board[startIndex + twoStepForward] == 0 {
             moves.append(.init(startSquare: startIndex, targetSquare: startIndex + twoStepForward))
         }
 
         // MARK: Handle attack steps
         for attackStep in attackSteps {
-            if let pieceAtTargetSquare = squares[safe: startIndex + attackStep],
+            if let pieceAtTargetSquare = board[safe: startIndex + attackStep],
                let pieceColorAtTargetSquare = Piece.pieceColor(from: pieceAtTargetSquare),
                pieceColorAtTargetSquare != Piece.pieceColor(from: piece) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + attackStep))
@@ -302,7 +302,7 @@ class GameEngine {
         // MARK: Handle En Passant scenario
         if let enPassantSquareIndex = enPassantSquareIndex,
            (startIndex - 1 == enPassantSquareIndex || startIndex + 1 == enPassantSquareIndex),
-           let pieceColorAtEnPassantSquareIndex = Piece.pieceColor(from: squares[enPassantSquareIndex]),
+           let pieceColorAtEnPassantSquareIndex = Piece.pieceColor(from: board[enPassantSquareIndex]),
            pieceColorAtEnPassantSquareIndex == oppositeColorToPiece {
             var step: Int = 0
             if startIndex - 1 == enPassantSquareIndex {
@@ -310,7 +310,7 @@ class GameEngine {
             } else if startIndex + 1 == enPassantSquareIndex {
                 step = pieceColor == Piece.white ? 9 : -7
             }
-            if squares[startIndex + step] == 0 {
+            if board[startIndex + step] == 0 {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + step))
             }
         }
@@ -323,8 +323,8 @@ class GameEngine {
     
     private func getAllAvailableAttackMoves(forSide colorToPickMoves: Int) -> [Move] {
         var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
-        for index in 0..<squares.count {
-            if let pieceAtIndex = squares[safe: index],
+        for index in 0..<board.count {
+            if let pieceAtIndex = board[safe: index],
                 pieceAtIndex != 0,
                 Piece.pieceColor(from: pieceAtIndex) == colorToPickMoves {
                 piecesToPickMovesFor.append((index, pieceAtIndex))
@@ -345,8 +345,8 @@ class GameEngine {
     func getAllAvailableMoves(forSide colorToPickMovesFor: Int?) -> [Move] {
         var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
 
-        for index in 0..<squares.count {
-            if let pieceAtIndex = squares[safe: index],
+        for index in 0..<board.count {
+            if let pieceAtIndex = board[safe: index],
                 pieceAtIndex != 0 {
                 if let colorToPickMovesForUnwrapped = colorToPickMovesFor,
                    Piece.pieceColor(from: pieceAtIndex) == colorToPickMovesForUnwrapped {
@@ -406,9 +406,9 @@ class GameEngine {
         var moveCopy = move
         moveCopy.pieceThatMoved = piece
 
-        var capturedPiece = squares[move.targetSquare] != 0
+        var capturedPiece = board[move.targetSquare] != 0
         if capturedPiece {
-            moveCopy.capturedPiece = .init(piece: squares[move.targetSquare], cellIndex: move.targetSquare)
+            moveCopy.capturedPiece = .init(piece: board[move.targetSquare], cellIndex: move.targetSquare)
         }
 
         let madeCastleMove = performCastleMoveIfNeed(piece: piece, move: move)
@@ -417,13 +417,13 @@ class GameEngine {
             moveCopy.removedCastlingRightSides = sidesWithRemovedCastlingRight
         }
 
-        squares[move.startSquare] = 0
-        squares[move.targetSquare] = piece
+        board[move.startSquare] = 0
+        board[move.targetSquare] = piece
 
         if let enPassantSquareIndex = enPassantSquareIndex,
            checkIfUserUsedEnPassantMove(enPassantSquareIndex: enPassantSquareIndex, move: move, piece: piece) {
-            squares[enPassantSquareIndex] = 0
-            moveCopy.capturedPiece = .init(piece: squares[enPassantSquareIndex], cellIndex: enPassantSquareIndex)
+            board[enPassantSquareIndex] = 0
+            moveCopy.capturedPiece = .init(piece: board[enPassantSquareIndex], cellIndex: enPassantSquareIndex)
             capturedPiece = true
         }
         
@@ -470,11 +470,11 @@ class GameEngine {
             print("No piece recorded for the move")
             return
         }
-        squares[lastMove.startSquare] = pieceThatMoved
-        squares[lastMove.targetSquare] = 0
+        board[lastMove.startSquare] = pieceThatMoved
+        board[lastMove.targetSquare] = 0
 
         if let capturedPiece = lastMove.capturedPiece {
-            squares[capturedPiece.cellIndex] = capturedPiece.piece
+            board[capturedPiece.cellIndex] = capturedPiece.piece
         }
         if let removedCastlingRightSides = lastMove.removedCastlingRightSides,
            let sideForWhichCastlingRightsRemoved = removedCastlingRightSides.keys.first,
@@ -484,7 +484,7 @@ class GameEngine {
             }
         }
         if lastMove.promotedPawn {
-            squares[lastMove.startSquare] = Piece.pawn | pieceColor
+            board[lastMove.startSquare] = Piece.pawn | pieceColor
         }
         if let enPassantSquareIndex = lastMove.enPassantSquareIndex {
             self.enPassantSquareIndex = enPassantSquareIndex
@@ -496,7 +496,7 @@ class GameEngine {
 
     func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
         guard let pawnColor = Piece.pieceColor(from: pawn) else { return }
-        squares[squareIndex] = newPieceType | pawnColor
+        board[squareIndex] = newPieceType | pawnColor
     }
 
     private func loadPositionsFromFEN(_ fenString: String) {
@@ -558,7 +558,7 @@ class GameEngine {
                 } else {
                     let pieceColor = symbol.isUppercase ? Piece.white : Piece.black
                     let pieceType = pieceTypeFromSymbol[Character(symbol.lowercased())]
-                    squares[rank * 8 + file] = (pieceType ?? 0) | pieceColor
+                    board[rank * 8 + file] = (pieceType ?? 0) | pieceColor
                     file += 1
                 }
             }
@@ -590,8 +590,8 @@ class GameEngine {
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
         if abs(move.targetSquare - move.startSquare) == 16 {
-            let pieceOnLeft = squares[safe: move.targetSquare - 1] ?? 0
-            let pieceOnRight = squares[safe: move.targetSquare + 1] ?? 0
+            let pieceOnLeft = board[safe: move.targetSquare - 1] ?? 0
+            let pieceOnRight = board[safe: move.targetSquare + 1] ?? 0
             
             let pieceColorOnLeft = Piece.pieceColor(from: pieceOnLeft)
             let pieceColorOnRight = Piece.pieceColor(from: pieceOnRight)
@@ -618,7 +618,7 @@ class GameEngine {
         let pieceColor = Piece.pieceColor(from: piece)
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
         guard Piece.pieceType(from: piece) == Piece.pawn,
-            let pieceAtEnPassantSquareIndex = squares[safe: enPassantSquareIndex],
+            let pieceAtEnPassantSquareIndex = board[safe: enPassantSquareIndex],
             Piece.pieceType(from: pieceAtEnPassantSquareIndex) == Piece.pawn,
             Piece.pieceColor(from: pieceAtEnPassantSquareIndex) == oppositeColorToPiece
         else {
@@ -655,7 +655,7 @@ class GameEngine {
 
         if (move.targetSquare == queenSideRookStartMoveIndexForOppositeSide
             || move.targetSquare == kingSideRookStartMoveIndexForOppositeSide)
-            && Piece.pieceColor(from: squares[move.targetSquare]) == oppositeColorToPiece {
+            && Piece.pieceColor(from: board[move.targetSquare]) == oppositeColorToPiece {
             // MARK: Handle scenario when someone takes rook of opposite side
             if move.targetSquare == queenSideRookStartMoveIndexForOppositeSide {
                 castlingRights[oppositeColorToPiece]?[.queenSide] = false
@@ -696,15 +696,15 @@ class GameEngine {
 
         if move.targetSquare - move.startSquare == 2 
             && castlingRights[pieceColor]?[.kingSide] == true {
-            let rookPiece = squares[kingSideRookIndex]
-            squares[kingSideRookIndex] = 0
-            squares[kingSideRookIndex - 2] = rookPiece
+            let rookPiece = board[kingSideRookIndex]
+            board[kingSideRookIndex] = 0
+            board[kingSideRookIndex - 2] = rookPiece
             return true
         } else if move.targetSquare - move.startSquare == -2
             && castlingRights[pieceColor]?[.queenSide] == true {
-            let rookPiece = squares[queenSideRookIndex]
-            squares[queenSideRookIndex] = 0
-            squares[queenSideRookIndex + 3] = rookPiece
+            let rookPiece = board[queenSideRookIndex]
+            board[queenSideRookIndex] = 0
+            board[queenSideRookIndex + 3] = rookPiece
             return true
         }
         return false
@@ -722,31 +722,31 @@ class GameEngine {
             return true
         }
 
-        squares[move.startSquare] = 0
+        board[move.startSquare] = 0
 
-        let pieceAtTargetSquare = squares[move.targetSquare]
-        squares[move.targetSquare] = piece
+        let pieceAtTargetSquare = board[move.targetSquare]
+        board[move.targetSquare] = piece
 
         var pieceTookByEnPassantMove: Int?
 
         if let enPassantSquareIndex = enPassantSquareIndex, Piece.pieceType(from: piece) == Piece.pawn {
             let expectedEnPassantTargetSquare = enPassantSquareIndex + (pieceColor == Piece.white ? 8 : -8)
             if move.targetSquare == expectedEnPassantTargetSquare {
-                pieceTookByEnPassantMove = squares[enPassantSquareIndex]
-                squares[enPassantSquareIndex] = 0
+                pieceTookByEnPassantMove = board[enPassantSquareIndex]
+                board[enPassantSquareIndex] = 0
             }
         }
 
         let allAttackMovesForOppositeSide = getAllAvailableAttackMoves(forSide: oppositeColor)
-        guard let kingPosition = squares.firstIndex(where: { $0 == Piece.king | pieceColor }) else {
+        guard let kingPosition = board.firstIndex(where: { $0 == Piece.king | pieceColor }) else {
             print("Error: is there no king at board?")
             return false
         }
 
-        squares[move.startSquare] = piece
-        squares[move.targetSquare] = pieceAtTargetSquare
+        board[move.startSquare] = piece
+        board[move.targetSquare] = pieceAtTargetSquare
         if let pieceTookByEnPassantMoveUnwrapped = pieceTookByEnPassantMove, let enPassantSquareIndex = enPassantSquareIndex {
-            squares[enPassantSquareIndex] = pieceTookByEnPassantMoveUnwrapped
+            board[enPassantSquareIndex] = pieceTookByEnPassantMoveUnwrapped
         }
 
         if allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == kingPosition }) {
@@ -762,7 +762,7 @@ class GameEngine {
             print("Computer doesn't have available moves to pick")
             return
         }
-        let pieceThatComputerPicked = squares[move.startSquare]
+        let pieceThatComputerPicked = board[move.startSquare]
         _ = makeMove(move: move, piece: pieceThatComputerPicked)
     }
 

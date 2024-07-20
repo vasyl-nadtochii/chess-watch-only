@@ -158,7 +158,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     func getPieceAtCell(index: Int) -> Int? {
-        let valueAtCell = gameEngine.squares[safe: index]
+        let valueAtCell = gameEngine.board[safe: index]
         if valueAtCell == 0 {
             return nil
         }
@@ -245,7 +245,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     private func updateAvailableCellsToPickMove() {
-        let allCells = Array(0...(gameEngine.squares.count - 1))
+        let allCells = Array(0...(gameEngine.board.count - 1))
         switch selectButtonAction {
         case .select:
             self.availableCellsIndiciesToPick = allCells.filter({

@@ -15,6 +15,16 @@ final class GameEngineTests: XCTestCase {
     override func setUpWithError() throws {
         gameEngine = .init(defaults: MockDefaults())
         gameEngine.gameMode = .playerVsPlayer
+        gameEngine.onResult = { result in
+            switch result {
+            case .pawnShouldBePromoted(pawn: let pawn, pawnIndex: let pawnIndex):
+                if let color = Piece.pieceColor(from: pawn) {
+                    self.gameEngine.promotePawn(at: pawnIndex, from: pawn, to: Piece.queen | color)
+                }
+            default:
+                break
+            }
+        }
     }
 
     override func tearDownWithError() throws {
@@ -49,7 +59,7 @@ final class GameEngineTests: XCTestCase {
         var positionsNumber = 0
 
         for move in moves {
-            guard let pieceAtMoveStartIndex = gameEngine.squares[safe: move.startSquare] else {
+            guard let pieceAtMoveStartIndex = gameEngine.board[safe: move.startSquare] else {
                 XCTFail("Couldn't get piece at move start index for \(move.startSquare)")
                 return nil
             }
