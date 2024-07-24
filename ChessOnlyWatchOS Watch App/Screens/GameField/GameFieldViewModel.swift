@@ -146,6 +146,9 @@ class GameFieldViewModel: ObservableObject {
                 self.playSoundIfNeed(type: .capture)
             case .madeCastleMove:
                 self.playSoundIfNeed(type: .castle)
+            case .pawnPromoted:
+                self.updateAvailableCellsToPickMove()
+                self.setInitialCursorPosition()
             }
         }
 

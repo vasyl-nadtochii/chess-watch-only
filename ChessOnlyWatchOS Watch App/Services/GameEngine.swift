@@ -11,6 +11,7 @@ class GameEngine {
 
     enum Result {
         case pawnShouldBePromoted(pawn: Int, pawnIndex: Int)
+        case pawnPromoted
         case playerSideUpdated
         case sideToMoveChanged
         
@@ -52,12 +53,13 @@ class GameEngine {
     private var castlingRights: [Int: [CastlingSide: Bool]]
 
     // initial position
-    private let fenString = Constants.initialChessPosition
-    // private let fenString = "6k1/2P5/8/8/8/8/6p1/2K5 w -" // just for test
+    private let fenString: String
+//    private let fenString = "4k3/8/8/2Q3B1/8/8/8/3K1R2 w -" // just for test
     private let defaults: IDefaults
 
-    init(defaults: IDefaults) {
+    init(defaults: IDefaults, fenString: String = Constants.initialChessPosition) {
         self.defaults = defaults
+        self.fenString = fenString
         self.board = [:]
         self.playerSide = defaults.playerSide
         self.sideToMove = defaults.playerSide
@@ -324,7 +326,7 @@ class GameEngine {
     
     private func getAllAvailableAttackMoves(forSide colorToPickMoves: Int) -> [Move] {
         var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
-        for index in 0..<board.count {
+        for index in board.keys {
             if let pieceAtIndex = board[index],
                 pieceAtIndex != 0,
                 Piece.pieceColor(from: pieceAtIndex) == colorToPickMoves {
@@ -430,10 +432,13 @@ class GameEngine {
         moveCopy.enPassantSquareIndex = enPassantSquareIndex
         self.enPassantSquareIndex = nil
 
+        var playerSidePromotion = false
+
         if Piece.pieceType(from: piece) == Piece.pawn {
             if checkPawnPromotion(move: move, piece: piece) {
                 if sideToMove == playerSide {
                     onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
+                    playerSidePromotion = true
                 } else {
                     promoteComputerPawn(at: move.targetSquare)
                 }
@@ -455,7 +460,10 @@ class GameEngine {
         // TODO: Check for check/checkmate
         
         movesHistory.append(moveCopy)
-        toggleSideToMove()
+
+        if !playerSidePromotion {
+            toggleSideToMove()
+        }
 
         return true
     }
@@ -497,6 +505,10 @@ class GameEngine {
     func promotePawn(at squareIndex: Int, from pawn: Int, to newPieceType: Int) {
         guard let pawnColor = Piece.pieceColor(from: pawn) else { return }
         board[squareIndex] = newPieceType | pawnColor
+        if pawnColor == playerSide {
+            toggleSideToMove()
+            onResult?(.pawnPromoted)
+        }
     }
 
     private func loadPositionsFromFEN(_ fenString: String) {

@@ -13,7 +13,7 @@ final class GameEngineTests: XCTestCase {
     private var gameEngine: GameEngine!
 
     override func setUpWithError() throws {
-        gameEngine = .init(defaults: MockDefaults())
+        gameEngine = .init(defaults: MockDefaults(), fenString: Constants.initialChessPosition)
         gameEngine.gameMode = .playerVsPlayer
         gameEngine.onResult = { result in
             switch result {

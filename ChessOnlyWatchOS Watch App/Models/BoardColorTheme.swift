@@ -13,6 +13,7 @@ enum BoardColorTheme: Int, CaseIterable {
     case brown = 1
     case blue = 2
     case green = 3
+    case red = 4
 }
 
 extension BoardColorTheme {
@@ -27,6 +28,8 @@ extension BoardColorTheme {
             return "Blue"
         case .green:
             return "Green"
+        case .red:
+            return "Red"
         }
     }
 }
