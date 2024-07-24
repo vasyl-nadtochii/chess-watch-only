@@ -167,7 +167,7 @@ extension GameEngine {
                 onlyAttackMoves: true
             ))
         }
-        return Array(Set(moves))
+        return moves
     }
 
     internal func getAllAvailableMoves(forSide colorToPickMovesFor: Int?) -> [Move] {
