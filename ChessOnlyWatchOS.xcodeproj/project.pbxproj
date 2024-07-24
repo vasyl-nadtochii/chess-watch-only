@@ -26,6 +26,14 @@
 		2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B12C3AFBE600B68401 /* Collection.swift */; };
 		2A3137B42C3AFCF500B68401 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B32C3AFCF500B68401 /* View.swift */; };
 		2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B62C3B166200B68401 /* CellPicker.swift */; };
+		2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */; };
+		2ABBCBC02C51A9D3002609AF /* GameEngine+KnightMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */; };
+		2ABBCBC22C51AA53002609AF /* GameEngine+KingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */; };
+		2ABBCBC42C51AAF9002609AF /* GameEngine+PawnMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC32C51AAF9002609AF /* GameEngine+PawnMoves.swift */; };
+		2ABBCBC62C51ABDA002609AF /* GameEngine+FENLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC52C51ABDA002609AF /* GameEngine+FENLoader.swift */; };
+		2ABBCBC82C51AC38002609AF /* GameEngine+MoveValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC72C51AC38002609AF /* GameEngine+MoveValidation.swift */; };
+		2ABBCBCA2C51ACDC002609AF /* GameEngine+Castling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC92C51ACDC002609AF /* GameEngine+Castling.swift */; };
+		2ABBCBCC2C51AEFB002609AF /* GameEngine+Moves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBCB2C51AEFB002609AF /* GameEngine+Moves.swift */; };
 		2AC0C0392C3BB31300C1B9F4 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0C0382C3BB31300C1B9F4 /* Move.swift */; };
 		2AC0C03B2C3C44FF00C1B9F4 /* BoardPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0C03A2C3C44FF00C1B9F4 /* BoardPosition.swift */; };
 		2AC221FB2C486DD200AB462F /* CastlingSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC221FA2C486DD200AB462F /* CastlingSide.swift */; };
@@ -101,6 +109,14 @@
 		2A3137B12C3AFBE600B68401 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		2A3137B32C3AFCF500B68401 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		2A3137B62C3B166200B68401 /* CellPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellPicker.swift; sourceTree = "<group>"; };
+		2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+SlidingMoves.swift"; sourceTree = "<group>"; };
+		2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KnightMoves.swift"; sourceTree = "<group>"; };
+		2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KingMoves.swift"; sourceTree = "<group>"; };
+		2ABBCBC32C51AAF9002609AF /* GameEngine+PawnMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+PawnMoves.swift"; sourceTree = "<group>"; };
+		2ABBCBC52C51ABDA002609AF /* GameEngine+FENLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+FENLoader.swift"; sourceTree = "<group>"; };
+		2ABBCBC72C51AC38002609AF /* GameEngine+MoveValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+MoveValidation.swift"; sourceTree = "<group>"; };
+		2ABBCBC92C51ACDC002609AF /* GameEngine+Castling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+Castling.swift"; sourceTree = "<group>"; };
+		2ABBCBCB2C51AEFB002609AF /* GameEngine+Moves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+Moves.swift"; sourceTree = "<group>"; };
 		2AC0C0382C3BB31300C1B9F4 /* Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		2AC0C03A2C3C44FF00C1B9F4 /* BoardPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPosition.swift; sourceTree = "<group>"; };
 		2AC221FA2C486DD200AB462F /* CastlingSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastlingSide.swift; sourceTree = "<group>"; };
@@ -282,10 +298,34 @@
 		2A3137B52C3B15F400B68401 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2A3137AE2C3AF47800B68401 /* GameEngine.swift */,
+				2ABBCBBB2C51A4E5002609AF /* GameEngine */,
 				2ACFF3A62C3B341000E9F05F /* Defaults.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2ABBCBBB2C51A4E5002609AF /* GameEngine */ = {
+			isa = PBXGroup;
+			children = (
+				2ABBCBBE2C51A871002609AF /* Helpers */,
+				2A3137AE2C3AF47800B68401 /* GameEngine.swift */,
+			);
+			path = GameEngine;
+			sourceTree = "<group>";
+		};
+		2ABBCBBE2C51A871002609AF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */,
+				2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */,
+				2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */,
+				2ABBCBC32C51AAF9002609AF /* GameEngine+PawnMoves.swift */,
+				2ABBCBC52C51ABDA002609AF /* GameEngine+FENLoader.swift */,
+				2ABBCBC72C51AC38002609AF /* GameEngine+MoveValidation.swift */,
+				2ABBCBC92C51ACDC002609AF /* GameEngine+Castling.swift */,
+				2ABBCBCB2C51AEFB002609AF /* GameEngine+Moves.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		2ACFF3A32C3B32BA00E9F05F /* Settings */ = {
@@ -470,20 +510,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2ABBCBC42C51AAF9002609AF /* GameEngine+PawnMoves.swift in Sources */,
 				2A3137A22C3AE57200B68401 /* StartView.swift in Sources */,
+				2ABBCBC02C51A9D3002609AF /* GameEngine+KnightMoves.swift in Sources */,
 				2ACFF3A72C3B341000E9F05F /* Defaults.swift in Sources */,
+				2ABBCBC22C51AA53002609AF /* GameEngine+KingMoves.swift in Sources */,
 				2A3137AC2C3AF41300B68401 /* GameFieldViewModel.swift in Sources */,
 				2A2EC7A62C3F1E1E00F0AFBE /* BoardColorTheme.swift in Sources */,
 				2A3137A52C3AE59700B68401 /* CompactButton.swift in Sources */,
 				2A3137A82C3AF38700B68401 /* Piece.swift in Sources */,
 				2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */,
+				2ABBCBCC2C51AEFB002609AF /* GameEngine+Moves.swift in Sources */,
 				2A3137AF2C3AF47800B68401 /* GameEngine.swift in Sources */,
 				2A3137B42C3AFCF500B68401 /* View.swift in Sources */,
 				2AC0C03B2C3C44FF00C1B9F4 /* BoardPosition.swift in Sources */,
 				2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */,
 				2AC221FB2C486DD200AB462F /* CastlingSide.swift in Sources */,
 				2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */,
+				2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */,
+				2ABBCBCA2C51ACDC002609AF /* GameEngine+Castling.swift in Sources */,
+				2ABBCBC62C51ABDA002609AF /* GameEngine+FENLoader.swift in Sources */,
 				2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */,
+				2ABBCBC82C51AC38002609AF /* GameEngine+MoveValidation.swift in Sources */,
 				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
 				2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */,
 				2AC0C0392C3BB31300C1B9F4 /* Move.swift in Sources */,
