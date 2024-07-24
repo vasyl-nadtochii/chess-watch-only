@@ -24,6 +24,11 @@ struct GameFieldView: View {
             cellPicker
         }
         .background(Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme))
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                viewModel.makeComputerMoveIfNeed()
+            }
+        }
         .alert(
             "Promote your pawn to:",
             isPresented: $viewModel.isShowingPawnPromotionOptions,

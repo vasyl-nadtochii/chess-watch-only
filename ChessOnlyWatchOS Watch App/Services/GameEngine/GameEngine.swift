@@ -45,7 +45,7 @@ class GameEngine {
     var playerSide: Int
     var onResult: ((Result) -> Void)?
     var movesHistory: [Move] = []
-    var gameMode: GameMode = .playerVsPlayer
+    var gameMode: GameMode = .playerVsAI
 
     internal var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     internal var numberOfSquaresToEdge: [[Int]] = []

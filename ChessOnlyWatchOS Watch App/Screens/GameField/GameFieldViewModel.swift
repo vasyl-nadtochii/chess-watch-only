@@ -220,8 +220,22 @@ class GameFieldViewModel: ObservableObject {
         pawnToPromote = nil
     }
 
+    func makeComputerMoveIfNeed() {
+        guard gameEngine.gameMode == .playerVsAI,
+            sideToMove == gameEngine.opponentToPlayerSide
+        else { return }
+
+        gameEngine.makeComputerMove()
+        selectedCellIndex = nil
+        updateAvailableCellsToPickMove()
+        setInitialCursorPosition()
+    }
+
     private func setInitialCursorPosition() {
-        cursorCellIndex = availableCellsIndiciesToPick.min() ?? 0
+        let initialPosition = sideToMove == Piece.white
+            ? availableCellsIndiciesToPick.min()
+            : availableCellsIndiciesToPick.max()
+        cursorCellIndex = initialPosition ?? 0
     }
     
     private func playSoundIfNeed(type: SoundType) {
