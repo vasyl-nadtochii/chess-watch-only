@@ -59,7 +59,7 @@ final class GameEngineTests: XCTestCase {
         var positionsNumber = 0
 
         for move in moves {
-            guard let pieceAtMoveStartIndex = gameEngine.board[safe: move.startSquare] else {
+            guard let pieceAtMoveStartIndex = gameEngine.board[move.startSquare] else {
                 XCTFail("Couldn't get piece at move start index for \(move.startSquare)")
                 return nil
             }

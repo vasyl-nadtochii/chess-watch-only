@@ -158,7 +158,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     func getPieceAtCell(index: Int) -> Int? {
-        let valueAtCell = gameEngine.board[safe: index]
+        let valueAtCell = gameEngine.board[index]
         if valueAtCell == 0 {
             return nil
         }
@@ -245,7 +245,7 @@ class GameFieldViewModel: ObservableObject {
     }
 
     private func updateAvailableCellsToPickMove() {
-        let allCells = Array(0...(gameEngine.board.count - 1))
+        let allCells = gameEngine.board.keys
         switch selectButtonAction {
         case .select:
             self.availableCellsIndiciesToPick = allCells.filter({
@@ -254,6 +254,7 @@ class GameFieldViewModel: ObservableObject {
                 }
                 return Piece.pieceColor(from: piece) == sideToMove
             })
+            .sorted(by: { self.sideToMove == Piece.black ? $0 > $1 : $0 < $1 })
         case .makeMove:
             guard let selectedCellIndex = selectedCellIndex else {
                 self.availableCellsIndiciesToPick = []
@@ -261,7 +262,7 @@ class GameFieldViewModel: ObservableObject {
             }
             self.availableCellsIndiciesToPick = gameEngine.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
                 .map { $0.targetSquare }
-                .sorted(by: { $0 > $1 })
+                .sorted(by: { self.sideToMove == Piece.black ? $0 > $1 : $0 < $1 })
         }
     }
 }
