@@ -26,31 +26,29 @@ extension GameEngine {
             directionOffsets.removeAll(where: { $0 == 9 || $0 == 1 || $0 == -7 })
         }
 
-        let allAttackMovesForOppositeSide: [Move] = onlyAttackMoves ? [] : getAllAvailableAttackMoves(forSide: oppositeColorToPiece)
-
         for directionOffset in directionOffsets {
             if (startIndex + directionOffset >= 0 && startIndex + directionOffset < 64)
                 && pieceColor != Piece.pieceColor(from: board[startIndex + directionOffset] ?? 0)
-                && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + directionOffset }) {
+                && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex + directionOffset)) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
         }
 
         // MARK: Handle castle scenario
-        if !onlyAttackMoves && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex }) {
+        if !onlyAttackMoves && !checkIfKingIsUnderAttack(kingSide: pieceColor, kingPosition: startIndex) {
             let castlingRightsForSelectedColor = castlingRights[pieceColor]
             if castlingRightsForSelectedColor?[.kingSide] == true {
                 if board[startIndex + 1] == nil && board[startIndex + 2] == nil
-                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + 1 })
-                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex + 2 }) {
+                    && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex + 1))
+                    && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex + 2)) {
                     moves.append(.init(startSquare: startIndex, targetSquare: startIndex + 2))
                 }
             }
             if castlingRightsForSelectedColor?[.queenSide] == true {
                 if board[startIndex - 1] == nil && board[startIndex - 2] == nil && board[startIndex - 3] == nil
-                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 1 })
-                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 2 })
-                    && !allAttackMovesForOppositeSide.contains(where: { $0.targetSquare == startIndex - 3 }) {
+                    && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex - 1))
+                    && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex - 2))
+                    && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex - 3)) {
                     moves.append(.init(startSquare: startIndex, targetSquare: startIndex - 2))
                 }
             }
