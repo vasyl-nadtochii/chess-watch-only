@@ -18,6 +18,12 @@ class Piece {
 
     static let white = 8
     static let black = 16
+
+    static let pawnValue = 100
+    static let knightValue = 300
+    static let bishopValue = 300
+    static let rookValue = 500
+    static let queenValue = 900
 }
 
 extension Piece {

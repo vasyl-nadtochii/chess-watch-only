@@ -41,6 +41,12 @@ class GameEngine {
         return (playerSide == Piece.white) ? Piece.black : Piece.white
     }
 
+    var playerIsChecked: Bool {
+        let playerKing = Piece.king | playerSide
+        return getAllAvailableAttackMoves(forSide: opponentToPlayerSide)
+            .contains(where: { board[$0.targetSquare] == playerKing })
+    }
+
     var board: [Int: Int]
     var playerSide: Int
     var onResult: ((Result) -> Void)?
@@ -118,28 +124,55 @@ class GameEngine {
         }
     }
 
-    // MARK: Computer
+    internal func evaluate() -> Int {
+        let whiteEvaluation = countMaterial(forSide: Piece.white)
+        let blackEvaluation = countMaterial(forSide: Piece.black)
 
-    internal func makeComputerMove() {
-        guard let move = chooseComputerMove() else {
-            print("Computer doesn't have available moves to pick")
-            return
-        }
-        guard let pieceThatComputerPicked = board[move.startSquare] else {
-            print("Computer picked empty cell")
-            return
-        }
-        _ = makeMove(move: move, piece: pieceThatComputerPicked)
+        let evaluation = whiteEvaluation - blackEvaluation
+        let perspective = (sideToMove == Piece.white) ? 1 : -1
+
+        return evaluation * perspective
     }
 
-    internal func chooseComputerMove() -> Move? {
-        let moves = getAllAvailableMoves(forSide: opponentToPlayerSide).filter({ $0.startSquare != $0.targetSquare })
-        return moves.randomElement()
+    internal func countMaterial(forSide side: Int) -> Int {
+        var material = 0
+        material += board.values.filter({ $0 == Piece.pawn | side }).count * Piece.pawnValue
+        material += board.values.filter({ $0 == Piece.knight | side }).count * Piece.knightValue
+        material += board.values.filter({ $0 == Piece.bishop | side }).count * Piece.bishopValue
+        material += board.values.filter({ $0 == Piece.rook | side }).count * Piece.rookValue
+        material += board.values.filter({ $0 == Piece.queen | side }).count * Piece.queenValue
+        return material
     }
 
-    internal func promoteComputerPawn(at index: Int) {
-        let pieces = [Piece.queen, Piece.bishop, Piece.knight, Piece.rook]
-        let promotionPiece = pieces.randomElement() ?? Piece.queen
-        promotePawn(at: index, from: (opponentToPlayerSide | Piece.pawn), to: promotionPiece)
+    internal func search(depth: Int) -> Int? {
+        guard depth >= 0 else { return nil }
+        if depth == 0 {
+            return evaluate()
+        }
+
+        let moves = getAllAvailableMoves(forSide: nil).filter({ $0.startSquare != $0.targetSquare })
+
+        if moves.isEmpty {
+            if playerIsChecked {
+                return Int.min
+            }
+            return 0
+        }
+
+        var bestEvaluation = Int.min
+
+        for move in moves {
+            guard let pieceAtMoveStartIndex = board[move.startSquare] else {
+                print("Couldn't get piece at move start index for \(move.startSquare)")
+                return nil
+            }
+            if makeMove(move: move, piece: pieceAtMoveStartIndex) {
+                let evaluation = -(search(depth: depth - 1) ?? 0)
+                bestEvaluation = max(evaluation, bestEvaluation)
+                unmakeMove()
+            }
+        }
+
+        return bestEvaluation
     }
 }

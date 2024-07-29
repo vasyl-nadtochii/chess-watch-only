@@ -26,6 +26,7 @@
 		2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B12C3AFBE600B68401 /* Collection.swift */; };
 		2A3137B42C3AFCF500B68401 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B32C3AFCF500B68401 /* View.swift */; };
 		2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B62C3B166200B68401 /* CellPicker.swift */; };
+		2AA17F9A2C5681C300E1CD05 /* GameEngine+AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */; };
 		2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */; };
 		2ABBCBC02C51A9D3002609AF /* GameEngine+KnightMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */; };
 		2ABBCBC22C51AA53002609AF /* GameEngine+KingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */; };
@@ -109,6 +110,7 @@
 		2A3137B12C3AFBE600B68401 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		2A3137B32C3AFCF500B68401 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		2A3137B62C3B166200B68401 /* CellPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellPicker.swift; sourceTree = "<group>"; };
+		2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+AI.swift"; sourceTree = "<group>"; };
 		2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+SlidingMoves.swift"; sourceTree = "<group>"; };
 		2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KnightMoves.swift"; sourceTree = "<group>"; };
 		2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KingMoves.swift"; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				2ABBCBC72C51AC38002609AF /* GameEngine+MoveValidation.swift */,
 				2ABBCBC92C51ACDC002609AF /* GameEngine+Castling.swift */,
 				2ABBCBCB2C51AEFB002609AF /* GameEngine+Moves.swift */,
+				2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */,
 				2ABBCBCA2C51ACDC002609AF /* GameEngine+Castling.swift in Sources */,
 				2ABBCBC62C51ABDA002609AF /* GameEngine+FENLoader.swift in Sources */,
+				2AA17F9A2C5681C300E1CD05 /* GameEngine+AI.swift in Sources */,
 				2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */,
 				2ABBCBC82C51AC38002609AF /* GameEngine+MoveValidation.swift in Sources */,
 				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
@@ -807,7 +811,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessOnlyWatchOS Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessOnlyWatchOS Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -829,7 +833,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessOnlyWatchOS Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessOnlyWatchOS Watch App";
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -849,7 +853,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_TARGET_NAME = "ChessOnlyWatchOS Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -870,7 +874,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_TARGET_NAME = "ChessOnlyWatchOS Watch App";
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
