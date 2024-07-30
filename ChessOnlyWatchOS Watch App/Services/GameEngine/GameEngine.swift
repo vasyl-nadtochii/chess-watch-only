@@ -60,7 +60,6 @@ class GameEngine {
 
     // initial position
     internal let fenString: String
-//    private let fenString = "4k3/8/8/2Q3B1/8/8/8/3K1R2 w -" // just for test
     internal let defaults: IDefaults
 
     init(defaults: IDefaults, fenString: String = Constants.initialChessPosition) {

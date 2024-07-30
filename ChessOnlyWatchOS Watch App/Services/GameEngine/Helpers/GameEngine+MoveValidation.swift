@@ -138,7 +138,7 @@ extension GameEngine {
                 let targetSquareIndex = kingPosition + directionOffsets[directionIndex] * (n + 1)
                 let pieceOnTargetSquare = board[targetSquareIndex] ?? 0
 
-                if Piece.pieceColor(from: pieceOnTargetSquare) == kingPosition {
+                if Piece.pieceColor(from: pieceOnTargetSquare) == kingSide {
                     break
                 } else if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToKing {
                     if pieceOnTargetSquare == Piece.queen | oppositeColorToKing {
