@@ -30,7 +30,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading) {
                     Text("Color theme")
                         .font(.title3)
-                    Text(viewModel.boardColorTheme.stringRepresentation)
+                    Text(viewModel.boardColorTheme.localizedString)
                         .foregroundColor(.secondary)
                 }
             }

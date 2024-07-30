@@ -124,8 +124,8 @@ class GameFieldViewModel: ObservableObject {
             self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
         }
 
-        // self.gameEngine = .init(defaults: defaults)
-        self.gameEngine = .init(defaults: defaults, fenString: "4k3/4r3/8/8/2n5/4P3/8/4K3 w -") // just for test
+        self.gameEngine = .init(defaults: defaults)
+        // self.gameEngine = .init(defaults: defaults, fenString: "4k3/4r3/8/8/2n5/4P3/8/4K3 w -") // just for test
         self.boardPosition = gameEngine.boardPosition
         self.sideToMove = gameEngine.sideToMove
         self.currentColorTheme = defaults.boardColorTheme
