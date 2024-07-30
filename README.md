@@ -18,4 +18,5 @@ Chess game developed specifically for Apple Watch. Inspired by [this video](http
 
   <img src="https://github.com/user-attachments/assets/2542911e-e62e-4dde-8c2f-b0f450033e6a" width=250/>
   <img src="https://github.com/user-attachments/assets/bd56f149-c9f2-43b6-b339-637dbe23e4af" width=250/>
+  <img src="https://github.com/user-attachments/assets/c3550ce7-4757-47b6-a7be-a8257c55bb32" width=250/>
 </p>
