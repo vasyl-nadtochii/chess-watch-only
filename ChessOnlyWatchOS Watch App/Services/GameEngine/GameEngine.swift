@@ -149,7 +149,11 @@ class GameEngine {
             return evaluate()
         }
 
-        let moves = getAllAvailableMoves(forSide: nil).filter({ $0.startSquare != $0.targetSquare })
+        let moves = getAllAvailableMoves(
+            forSide: nil,
+            shouldIncludeInitialMove: false,
+            shouldValidateMoves: false
+        )
 
         if moves.isEmpty {
             if playerIsChecked {
@@ -165,7 +169,11 @@ class GameEngine {
                 print("Couldn't get piece at move start index for \(move.startSquare)")
                 return nil
             }
-            if makeMove(move: move, piece: pieceAtMoveStartIndex) {
+            if makeMove(
+                move: move,
+                piece: pieceAtMoveStartIndex,
+                shouldValidateMove: true
+            ) {
                 let evaluation = -(search(depth: depth - 1) ?? 0)
                 bestEvaluation = max(evaluation, bestEvaluation)
                 unmakeMove()

@@ -41,7 +41,19 @@ final class GameEngineTests: XCTestCase {
         XCTAssertEqual(checkMovesCount(depth: 4), 197281)
     }
 
-    func testCalculationTime() {
+    func testCalculationTimeForDepth1() {
+        measure {
+            XCTAssertEqual(checkMovesCount(depth: 1), 20)
+        }
+    }
+
+    func testCalculationTimeForDepth2() {
+        measure {
+            XCTAssertEqual(checkMovesCount(depth: 2), 400)
+        }
+    }
+
+    func testCalculationTimeForDepth3() {
         measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
             startMeasuring()
             XCTAssertEqual(checkMovesCount(depth: 3), 8902)
