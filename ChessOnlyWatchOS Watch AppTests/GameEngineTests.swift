@@ -49,6 +49,12 @@ final class GameEngineTests: XCTestCase {
         }
     }
 
+    func testCalculationTimeForDepth4() {
+        measure {
+            XCTAssertEqual(checkMovesCount(depth: 4), 197281)
+        }
+    }
+
     private func checkMovesCount(depth: Int) -> Int? {
         guard depth >= 0 else { return nil }
         if depth == 0 {
