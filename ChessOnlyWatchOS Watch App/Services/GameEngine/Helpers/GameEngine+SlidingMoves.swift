@@ -10,14 +10,20 @@ import Foundation
 extension GameEngine {
 
     // MARK: Sliding Moves Handler
-    internal func getAvailableSlidingMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool) -> [Move] {
+    internal func getAvailableSlidingMoves(
+        at startIndex: Int,
+        for piece: Int,
+        onlyAttackMoves: Bool,
+        shouldIncludeInitialMove: Bool = true,
+        shouldValidateMoves: Bool = true
+    ) -> [Move] {
         let startDirectionIndex = (Piece.pieceType(from: piece) == Piece.bishop) ? 4 : 0
         let endDirectionIndex = (Piece.pieceType(from: piece) == Piece.rook) ? 4 : 8
 
         let pieceColorOfSelectedPiece = Piece.pieceColor(from: piece)
         let oppositeColorToSelected = pieceColorOfSelectedPiece == Piece.white ? Piece.black : Piece.white
 
-        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
+        var moves: [Move] = (onlyAttackMoves || !shouldIncludeInitialMove) ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
 
         for directionIndex in startDirectionIndex..<endDirectionIndex {
             for n in 0..<numberOfSquaresToEdge[startIndex][directionIndex] {
@@ -46,7 +52,7 @@ extension GameEngine {
             }
         }
 
-        if onlyAttackMoves {
+        if onlyAttackMoves || !shouldValidateMoves {
             return moves
         }
         return moves.filter({ checkIfMoveIsValid(piece: piece, move: $0) })

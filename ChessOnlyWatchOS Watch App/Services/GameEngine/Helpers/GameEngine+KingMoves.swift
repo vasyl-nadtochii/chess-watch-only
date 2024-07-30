@@ -10,8 +10,13 @@ import Foundation
 extension GameEngine {
 
     // MARK: King Moves Handler
-    internal func getAvailableKingMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
-        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
+    internal func getAvailableKingMoves(
+        at startIndex: Int,
+        for piece: Int,
+        onlyAttackMoves: Bool = false,
+        shouldIncludeInitialMove: Bool = true
+    ) -> [Move] {
+        var moves: [Move] = (onlyAttackMoves || !shouldIncludeInitialMove) ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         var directionOffsets = self.directionOffsets
 
         guard let pieceColor = Piece.pieceColor(from: piece) else {

@@ -61,7 +61,11 @@ final class GameEngineTests: XCTestCase {
             return 1
         }
 
-        let moves = gameEngine.getAllAvailableMoves(forSide: nil).filter({ $0.startSquare != $0.targetSquare })
+        let moves = gameEngine.getAllAvailableMoves(
+            forSide: nil,
+            shouldIncludeInitialMove: false,
+            shouldValidateMoves: false
+        )
         var positionsNumber = 0
 
         for move in moves {
@@ -69,7 +73,7 @@ final class GameEngineTests: XCTestCase {
                 XCTFail("Couldn't get piece at move start index for \(move.startSquare)")
                 return nil
             }
-            if gameEngine.makeMove(move: move, piece: pieceAtMoveStartIndex) {
+            if gameEngine.makeMove(move: move, piece: pieceAtMoveStartIndex, shouldValidateMove: true) {
                 positionsNumber += checkMovesCount(depth: depth - 1) ?? 0
                 gameEngine.unmakeMove()
             }

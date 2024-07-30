@@ -10,8 +10,14 @@ import Foundation
 extension GameEngine {
 
     // MARK: Knight Moves Handler
-    internal func getAvailableKnightMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
-        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
+    internal func getAvailableKnightMoves(
+        at startIndex: Int,
+        for piece: Int,
+        onlyAttackMoves: Bool = false,
+        shouldIncludeInitialMove: Bool = true,
+        shouldValidateMoves: Bool = true
+    ) -> [Move] {
+        var moves: [Move] = (onlyAttackMoves || !shouldIncludeInitialMove) ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         var availableOffsets = [15, 17, -15, -17, 10, 6, -10, -6]
         let pieceColor = Piece.pieceColor(from: piece)
 
@@ -37,7 +43,7 @@ extension GameEngine {
             }
         }
 
-        if onlyAttackMoves {
+        if onlyAttackMoves || !shouldValidateMoves {
             return moves
         }
         return moves.filter({ checkIfMoveIsValid(piece: piece, move: $0) })

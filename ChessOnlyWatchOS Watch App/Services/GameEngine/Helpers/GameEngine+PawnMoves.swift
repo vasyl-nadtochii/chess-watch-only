@@ -19,8 +19,14 @@ extension GameEngine {
         }
     }
 
-    internal func getAvailablePawnMoves(at startIndex: Int, for piece: Int, onlyAttackMoves: Bool = false) -> [Move] {
-        var moves: [Move] = onlyAttackMoves ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
+    internal func getAvailablePawnMoves(
+        at startIndex: Int,
+        for piece: Int,
+        onlyAttackMoves: Bool = false,
+        shouldIncludeInitialMove: Bool = true,
+        shouldValidateMoves: Bool = true
+    ) -> [Move] {
+        var moves: [Move] = (onlyAttackMoves || !shouldIncludeInitialMove) ? [] : [.init(startSquare: startIndex, targetSquare: startIndex)]
         let pieceColor = Piece.pieceColor(from: piece)
         let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
@@ -61,7 +67,7 @@ extension GameEngine {
         }
 
         // MARK: Handle two steps forward (initial move)
-        if moves.count > 1 && (
+        if moves.count > (shouldIncludeInitialMove ? 1 : 0) && (
             (pieceColor == Piece.white && (startIndex >= 8 && startIndex < 16))
                 || (pieceColor == Piece.black && (startIndex >= 48 && startIndex < 56))
         ) && board[startIndex + twoStepForward] == nil {
@@ -94,7 +100,7 @@ extension GameEngine {
             }
         }
 
-        if onlyAttackMoves {
+        if onlyAttackMoves || !shouldValidateMoves {
             return moves
         }
         return moves.filter({ checkIfMoveIsValid(piece: piece, move: $0) })

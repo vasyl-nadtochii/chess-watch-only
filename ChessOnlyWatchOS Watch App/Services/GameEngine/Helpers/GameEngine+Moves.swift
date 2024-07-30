@@ -10,9 +10,13 @@ import Foundation
 extension GameEngine {
 
     // MARK: Moves Handler
-    func makeMove(move: Move, piece: Int) -> Bool {
+    func makeMove(move: Move, piece: Int, shouldValidateMove: Bool = false) -> Bool {
         guard move.startSquare != move.targetSquare else { return false }
         guard sideToMove == Piece.pieceColor(from: piece) else {
+            return false
+        }
+
+        if shouldValidateMove && !checkIfMoveIsValid(piece: piece, move: move) {
             return false
         }
 
@@ -113,7 +117,13 @@ extension GameEngine {
         toggleSideToMove()
     }
 
-    func getAvailableMoves(at startIndex: Int?, for piece: Int?, onlyAttackMoves: Bool = false) -> [Move] {
+    func getAvailableMoves(
+        at startIndex: Int?,
+        for piece: Int?,
+        onlyAttackMoves: Bool = false,
+        shouldIncludeInitialMove: Bool = true,
+        shouldValidateMoves: Bool = true
+    ) -> [Move] {
         guard let selectedCellIndex = startIndex,
               let pieceAtCell = piece,
               let selectedPieceType = Piece.pieceType(from: pieceAtCell)
@@ -124,25 +134,32 @@ extension GameEngine {
             return getAvailableKingMoves(
                 at: selectedCellIndex,
                 for: pieceAtCell,
-                onlyAttackMoves: onlyAttackMoves
+                onlyAttackMoves: onlyAttackMoves,
+                shouldIncludeInitialMove: shouldIncludeInitialMove
             )
         case Piece.pawn:
             return getAvailablePawnMoves(
                 at: selectedCellIndex,
                 for: pieceAtCell,
-                onlyAttackMoves: onlyAttackMoves
+                onlyAttackMoves: onlyAttackMoves,
+                shouldIncludeInitialMove: shouldIncludeInitialMove,
+                shouldValidateMoves: shouldValidateMoves
             )
         case Piece.bishop, Piece.queen, Piece.rook:
             return getAvailableSlidingMoves(
                 at: selectedCellIndex,
                 for: pieceAtCell,
-                onlyAttackMoves: onlyAttackMoves
+                onlyAttackMoves: onlyAttackMoves,
+                shouldIncludeInitialMove: shouldIncludeInitialMove,
+                shouldValidateMoves: shouldValidateMoves
             )
         case Piece.knight:
             return getAvailableKnightMoves(
                 at: selectedCellIndex,
                 for: pieceAtCell,
-                onlyAttackMoves: onlyAttackMoves
+                onlyAttackMoves: onlyAttackMoves,
+                shouldIncludeInitialMove: shouldIncludeInitialMove,
+                shouldValidateMoves: shouldValidateMoves
             )
         default:
             return []
@@ -170,7 +187,11 @@ extension GameEngine {
         return moves
     }
 
-    internal func getAllAvailableMoves(forSide colorToPickMovesFor: Int?) -> [Move] {
+    internal func getAllAvailableMoves(
+        forSide colorToPickMovesFor: Int?,
+        shouldIncludeInitialMove: Bool = true,
+        shouldValidateMoves: Bool = true
+    ) -> [Move] {
         var piecesToPickMovesFor: [(startIndex: Int, piece: Int)] = []
 
         for index in board.keys {
@@ -189,7 +210,9 @@ extension GameEngine {
             moves.append(contentsOf: getAvailableMoves(
                 at: piece.startIndex,
                 for: piece.piece,
-                onlyAttackMoves: false
+                onlyAttackMoves: false,
+                shouldIncludeInitialMove: shouldIncludeInitialMove,
+                shouldValidateMoves: shouldValidateMoves
             ))
         }
 
