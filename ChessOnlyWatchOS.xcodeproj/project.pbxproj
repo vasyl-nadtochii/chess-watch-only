@@ -27,6 +27,7 @@
 		2A3137B42C3AFCF500B68401 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B32C3AFCF500B68401 /* View.swift */; };
 		2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B62C3B166200B68401 /* CellPicker.swift */; };
 		2AA17F9A2C5681C300E1CD05 /* GameEngine+AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */; };
+		2AA2D9462C5D77FD004E7EB9 /* MeasureTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */; };
 		2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */; };
 		2ABBCBC02C51A9D3002609AF /* GameEngine+KnightMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */; };
 		2ABBCBC22C51AA53002609AF /* GameEngine+KingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */; };
@@ -111,6 +112,7 @@
 		2A3137B32C3AFCF500B68401 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		2A3137B62C3B166200B68401 /* CellPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellPicker.swift; sourceTree = "<group>"; };
 		2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+AI.swift"; sourceTree = "<group>"; };
+		2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTime.swift; sourceTree = "<group>"; };
 		2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+SlidingMoves.swift"; sourceTree = "<group>"; };
 		2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KnightMoves.swift"; sourceTree = "<group>"; };
 		2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KingMoves.swift"; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				2A20C95C2C4B169600533CFB /* Helpers */,
+				2AA2D9442C5D77E4004E7EB9 /* Extensions & Utils */,
 				2A20C95A2C4B147900533CFB /* GameEngineTests.swift */,
 			);
 			path = "ChessOnlyWatchOS Watch AppTests";
@@ -304,6 +307,14 @@
 				2ACFF3A62C3B341000E9F05F /* Defaults.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2AA2D9442C5D77E4004E7EB9 /* Extensions & Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */,
+			);
+			path = "Extensions & Utils";
 			sourceTree = "<group>";
 		};
 		2ABBCBBB2C51A4E5002609AF /* GameEngine */ = {
@@ -550,6 +561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A20C95B2C4B147900533CFB /* GameEngineTests.swift in Sources */,
+				2AA2D9462C5D77FD004E7EB9 /* MeasureTime.swift in Sources */,
 				2A20C95E2C4B16A400533CFB /* MockDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
