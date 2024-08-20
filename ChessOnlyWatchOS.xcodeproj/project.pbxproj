@@ -44,6 +44,7 @@
 		2ACFF3A72C3B341000E9F05F /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A62C3B341000E9F05F /* Defaults.swift */; };
 		2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A82C3B379C00E9F05F /* Notification.swift */; };
 		2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */; };
+		2AFA6EAA2C748AD10083857E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFA6EA92C748AD10083857E /* Images.swift */; };
 		84F46A002C44785300D2FB5B /* capture.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84F469FC2C44785300D2FB5B /* capture.mp3 */; };
 		84F46A012C44785300D2FB5B /* move-check.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84F469FD2C44785300D2FB5B /* move-check.mp3 */; };
 		84F46A022C44785300D2FB5B /* move-self.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84F469FE2C44785300D2FB5B /* move-self.mp3 */; };
@@ -129,6 +130,7 @@
 		2ACFF3A62C3B341000E9F05F /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		2ACFF3A82C3B379C00E9F05F /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2AFA6EA92C748AD10083857E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		84F469FC2C44785300D2FB5B /* capture.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = capture.mp3; sourceTree = "<group>"; };
 		84F469FD2C44785300D2FB5B /* move-check.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "move-check.mp3"; sourceTree = "<group>"; };
 		84F469FE2C44785300D2FB5B /* move-self.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "move-self.mp3"; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				84E3DCEF2C4441BD006CFD62 /* Sounds */,
 				2A3137762C3AD91400B68401 /* Assets.xcassets */,
 				2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */,
+				2AFA6EA92C748AD10083857E /* Images.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				2ABBCBC22C51AA53002609AF /* GameEngine+KingMoves.swift in Sources */,
 				2A3137AC2C3AF41300B68401 /* GameFieldViewModel.swift in Sources */,
 				2A2EC7A62C3F1E1E00F0AFBE /* BoardColorTheme.swift in Sources */,
+				2AFA6EAA2C748AD10083857E /* Images.swift in Sources */,
 				2A3137A52C3AE59700B68401 /* CompactButton.swift in Sources */,
 				2A3137A82C3AF38700B68401 /* Piece.swift in Sources */,
 				2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */,

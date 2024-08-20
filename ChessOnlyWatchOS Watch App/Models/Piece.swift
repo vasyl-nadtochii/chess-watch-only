@@ -134,6 +134,25 @@ extension Piece {
         }
     }
 
+    static func pieceValue(fromType pieceType: Int) -> Int {
+        switch pieceType {
+        case Piece.pawn:
+            return pawnValue
+        case Piece.king:
+            return 0
+        case Piece.queen:
+            return queenValue
+        case Piece.bishop:
+            return bishopValue
+        case Piece.knight:
+            return knightValue
+        case Piece.rook:
+            return rookValue
+        default:
+            return 0
+        }
+    }
+
     static func isSlidingPiece(_ piece: Int) -> Bool {
         let slidingPieces = [Piece.bishop, Piece.rook, Piece.queen]
         return slidingPieces.contains(where: { $0 == pieceType(from: piece) })

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "wood_texture.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

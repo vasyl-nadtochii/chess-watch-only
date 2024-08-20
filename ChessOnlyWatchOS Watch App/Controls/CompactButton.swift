@@ -18,8 +18,9 @@ struct CompactButton: View {
             action()
         } label: {
             RoundedRectangle(cornerRadius: 8)
-                .fill(color.opacity(0.3))
+                .fill(color)
                 .frame(height: 26)
+                .shadow(radius: 4)
                 .overlay {
                     Text(text)
                 }

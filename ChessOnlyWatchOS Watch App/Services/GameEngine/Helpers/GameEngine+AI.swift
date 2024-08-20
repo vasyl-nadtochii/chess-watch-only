@@ -33,4 +33,83 @@ extension GameEngine {
         let promotionPiece = pieces.randomElement() ?? Piece.queen
         promotePawn(at: index, from: (opponentToPlayerSide | Piece.pawn), to: promotionPiece)
     }
+
+    internal func evaluate() -> Int {
+        let whiteEvaluation = countMaterial(forSide: Piece.white)
+        let blackEvaluation = countMaterial(forSide: Piece.black)
+
+        let evaluation = whiteEvaluation - blackEvaluation
+        let perspective = (sideToMove == Piece.white) ? 1 : -1
+
+        return evaluation * perspective
+    }
+
+    internal func countMaterial(forSide side: Int) -> Int {
+        var material = 0
+        material += board.values.filter({ $0 == Piece.pawn | side }).count * Piece.pawnValue
+        material += board.values.filter({ $0 == Piece.knight | side }).count * Piece.knightValue
+        material += board.values.filter({ $0 == Piece.bishop | side }).count * Piece.bishopValue
+        material += board.values.filter({ $0 == Piece.rook | side }).count * Piece.rookValue
+        material += board.values.filter({ $0 == Piece.queen | side }).count * Piece.queenValue
+        return material
+    }
+
+    internal func search(depth: Int, alpha: Int, beta: Int) -> Int? {
+        guard depth >= 0 else { return nil }
+        if depth == 0 {
+            return evaluate()
+        }
+
+        var alpha = 0
+
+        let moves = getAllAvailableMoves(
+            forSide: nil,
+            shouldIncludeInitialMove: false,
+            shouldValidateMoves: false
+        )
+
+        if moves.isEmpty {
+            if playerIsChecked {
+                return Int.min
+            }
+            return 0
+        }
+
+        for move in moves {
+            guard let pieceAtMoveStartIndex = board[move.startSquare] else {
+                print("Couldn't get piece at move start index for \(move.startSquare)")
+                return nil
+            }
+            if makeMove(
+                move: move,
+                piece: pieceAtMoveStartIndex,
+                shouldValidateMove: true
+            ) {
+                let evaluation = -(search(depth: depth - 1, alpha: -beta, beta: -alpha) ?? 0)
+                unmakeMove()
+                if evaluation >= beta {
+                    return beta
+                }
+                alpha = max(alpha, evaluation)
+            }
+        }
+
+        return alpha
+    }
+
+    internal func orderMoves(moves: [Move]) {
+        for move in moves {
+            var moveScoreGuess = 0
+            let movePieceType = Piece.pieceType(from: board[move.startSquare] ?? 0) ?? 0 // TODO: ???
+            let capturePieceType = Piece.pieceType(from: board[move.targetSquare] ?? 0)
+
+            if let capturePieceType = capturePieceType {
+                moveScoreGuess = 10
+                    * Piece.pieceValue(fromType: capturePieceType)
+                    - Piece.pieceValue(fromType: movePieceType)
+            }
+
+            
+        }
+    }
 }

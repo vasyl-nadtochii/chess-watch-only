@@ -32,9 +32,9 @@ class GameFieldViewModel: ObservableObject {
     var selectButtonColor: Color {
         switch selectButtonAction {
         case .select:
-            return .blue
+            return .selectPieceButtonColor
         case .makeMove:
-            return .green
+            return .makeMoveButtonColor
         }
     }
 

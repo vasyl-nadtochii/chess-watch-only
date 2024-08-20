@@ -23,7 +23,15 @@ struct GameFieldView: View {
             .applySafeAreaOffsetIfNeed()
             cellPicker
         }
-        .background(Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme))
+        .background(
+            Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme)
+                .overlay {
+                    Image.woodTexture
+                        .resizable()
+                        .scaledToFill()
+                }
+                .ignoresSafeArea()
+        )
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 viewModel.makeComputerMoveIfNeed()
@@ -85,7 +93,7 @@ struct GameFieldView: View {
 
     var buttons: some View {
         HStack {
-            CompactButton(text: viewModel.cancelButtonTitle, color: .red) {
+            CompactButton(text: viewModel.cancelButtonTitle, color: .cancelButtonColor) {
                 viewModel.onCancelButtonTapped {
                     isPresented = false
                 }

@@ -72,8 +72,6 @@ extension GameEngine {
             onResult?(.madePlainMove)
         }
 
-        // TODO: Check for check/checkmate
-
         movesHistory.append(moveCopy)
 
         if !playerSidePromotion {

@@ -20,4 +20,16 @@ extension Color {
     static func getBoardBackgroundColor(theme: BoardColorTheme) -> Color {
         return Color("FieldBackgroundColor\(theme.stringRepresentation)")
     }
+
+    static var cancelButtonColor: Color {
+        Color("CancelButtonColor")
+    }
+
+    static var makeMoveButtonColor: Color {
+        Color("MakeMoveButtonColor")
+    }
+
+    static var selectPieceButtonColor: Color {
+        Color("SelectPieceButtonColor")
+    }
 }
