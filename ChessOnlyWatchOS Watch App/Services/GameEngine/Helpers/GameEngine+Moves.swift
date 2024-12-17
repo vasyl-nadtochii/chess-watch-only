@@ -55,7 +55,8 @@ extension GameEngine {
                     onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
                     playerSidePromotion = true
                 } else {
-                    promoteComputerPawn(at: move.targetSquare)
+                    // promoteComputerPawn(at: move.targetSquare)
+                    // TODO: Promote pawn for computer
                 }
                 moveCopy.promotedPawn = true
                 // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion

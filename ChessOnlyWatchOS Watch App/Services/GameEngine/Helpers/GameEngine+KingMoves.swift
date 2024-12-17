@@ -23,7 +23,6 @@ extension GameEngine {
             print("Error: could not determine King color at index \(startIndex)")
             return moves
         }
-        let oppositeColorToPiece = pieceColor == Piece.white ? Piece.black : Piece.white
 
         if startIndex % 8 == 0 {
             directionOffsets.removeAll(where: { $0 == -9 || $0 == -1 || $0 == 7 })

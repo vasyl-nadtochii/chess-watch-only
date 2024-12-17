@@ -15,7 +15,6 @@ extension GameEngine {
             print("Error: couldn't get piece color")
             return false
         }
-        let oppositeColor = pieceColor == Piece.white ? Piece.black : Piece.white
 
         if move.startSquare == move.targetSquare {
             return true
