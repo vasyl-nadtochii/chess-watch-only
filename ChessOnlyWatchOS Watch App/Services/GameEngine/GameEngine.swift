@@ -88,32 +88,12 @@ class GameEngine {
         }
     }
 
-    internal func precomputedMoveData() {
-        self.numberOfSquaresToEdge = Array(
-            repeating: Array(repeating: 0, count: 8),
-            count: 64
-        )
-        for file in 0..<8 {
-            for rank in 0..<8 {
-                let numNorth = 7 - rank
-                let numSouth = rank
-                let numWest = file
-                let numEast = 7 - file
-
-                let squareIndex = rank * 8 + file
-
-                numberOfSquaresToEdge[squareIndex] = [
-                    numNorth,
-                    numSouth,
-                    numWest,
-                    numEast,
-                    min(numNorth, numWest),
-                    min(numSouth, numEast),
-                    min(numNorth, numEast),
-                    min(numSouth, numWest)
-                ]
-            }
+    internal func checkIfSideIsUnderCheck(_ side: Int) -> Bool {
+        guard let kingPositionForSide = board.keys.first(where: { board[$0] == Piece.king | side }) else {
+            print("Error: no king for side \(side)")
+            return false
         }
+        return checkIfPieceIsUnderAttack(pieceSide: side, piecePosition: kingPositionForSide)
     }
 
     internal func toggleSideToMove() {

@@ -40,7 +40,7 @@ extension GameEngine {
             print("Error: is there no king at board?")
             return false
         }
-        let kingIsUnderAttack = checkIfKingIsUnderAttack(kingSide: pieceColor, kingPosition: kingPosition)
+        let kingIsUnderAttack = checkIfPieceIsUnderAttack(pieceSide: pieceColor, piecePosition: kingPosition)
 
         board[move.startSquare] = piece
         board[move.targetSquare] = pieceAtTargetSquare
@@ -51,101 +51,97 @@ extension GameEngine {
         return !kingIsUnderAttack
     }
 
-    internal func checkIfKingIsUnderAttack(kingSide: Int, kingPosition: Int) -> Bool {
-        guard kingSide == Piece.white || kingSide == Piece.black else {
+    internal func checkIfPieceIsUnderAttack(pieceSide: Int, piecePosition: Int) -> Bool {
+        guard pieceSide == Piece.white || pieceSide == Piece.black else {
             print("Invalid side passed")
             return false
         }
-        guard board[kingPosition] == Piece.king | kingSide else {
-            print("Invalid king position passed for \(kingSide == Piece.white ? "White" : "Black") side")
-            return false
-        }
 
-        guard !checkIfKingIsAttackedByPawn(kingSide: kingSide, kingPosition: kingPosition) else {
+        guard !checkIfPieceIsAttackedByPawn(pieceSide: pieceSide, piecePosition: piecePosition) else {
             return true
         }
-        guard !checkIfKingIsAttackedByKnight(kingSide: kingSide, kingPosition: kingPosition) else {
+        guard !checkIfPieceIsAttackedByKnight(pieceSide: pieceSide, piecePosition: piecePosition) else {
             return true
         }
-        guard !checkIfKingIsAttackedBySlidingPiece(kingSide: kingSide, kingPosition: kingPosition) else {
+        guard !checkIfPieceIsAttackedBySlidingPiece(pieceSide: pieceSide, piecePosition: piecePosition) else {
             return true
         }
 
         return false
     }
 
-    private func checkIfKingIsAttackedByPawn(kingSide: Int, kingPosition: Int) -> Bool {
-        let oppositeColorToKing = kingSide == Piece.white ? Piece.black : Piece.white
+    private func checkIfPieceIsAttackedByPawn(pieceSide: Int, piecePosition: Int) -> Bool {
+        let oppositeColorToPiece = pieceSide == Piece.white ? Piece.black : Piece.white
 
         var possiblePawnOffsets = [7, 9]
 
-        if kingPosition == Piece.white {
-            if kingPosition % 8 == 0 {
+        if piecePosition == Piece.white {
+            if piecePosition % 8 == 0 {
                 possiblePawnOffsets.removeAll(where: { abs($0) == 7 })
-            } else if (kingPosition + 1) % 8 == 0 {
+            } else if (piecePosition + 1) % 8 == 0 {
                 possiblePawnOffsets.removeAll(where: { abs($0) == 9 })
             }
-        } else if kingPosition == Piece.black {
-            if kingPosition % 8 == 0 {
+        } else if piecePosition == Piece.black {
+            if piecePosition % 8 == 0 {
                 possiblePawnOffsets.removeAll(where: { abs($0) == 9 })
-            } else if (kingPosition + 1) % 8 == 0 {
+            } else if (piecePosition + 1) % 8 == 0 {
                 possiblePawnOffsets.removeAll(where: { abs($0) == 7 })
             }
         }
 
-        if kingPosition == Piece.black {
+        if piecePosition == Piece.black {
             possiblePawnOffsets = possiblePawnOffsets.map({ $0 * -1 })
         }
 
-        let possiblePawnPositions = possiblePawnOffsets.map { $0 + kingPosition }
+        let possiblePawnPositions = possiblePawnOffsets.map { $0 + piecePosition }
 
-        return possiblePawnPositions.contains(where: { board[$0] == Piece.pawn | oppositeColorToKing })
+        return possiblePawnPositions.contains(where: { board[$0] == Piece.pawn | oppositeColorToPiece })
     }
 
-    private func checkIfKingIsAttackedByKnight(kingSide: Int, kingPosition: Int) -> Bool {
-        let oppositeColorToKing = kingSide == Piece.white ? Piece.black : Piece.white
+    private func checkIfPieceIsAttackedByKnight(pieceSide: Int, piecePosition: Int) -> Bool {
+        let oppositeColorToPiece = pieceSide == Piece.white ? Piece.black : Piece.white
         var possibleKnightOffsets = [15, 17, -15, -17, 10, 6, -10, -6]
 
         for availableOffset in possibleKnightOffsets {
-            if kingPosition + availableOffset < 0 || kingPosition + availableOffset >= 64 {
+            if piecePosition + availableOffset < 0 || piecePosition + availableOffset >= 64 {
                 possibleKnightOffsets.removeAll(where: { $0 == availableOffset })
             }
         }
 
-        if kingPosition % 8 == 0 {
+        if piecePosition % 8 == 0 {
             possibleKnightOffsets.removeAll(where: { $0 == 15 || $0 == 6 || $0 == -17 || $0 == -10 })
-        } else if (kingPosition + 1) % 8 == 0 {
+        } else if (piecePosition + 1) % 8 == 0 {
             possibleKnightOffsets.removeAll(where: { $0 == 17 || $0 == 10 || $0 == -15 || $0 == -6 })
-        } else if kingPosition % 8 == 1 {
+        } else if piecePosition % 8 == 1 {
             possibleKnightOffsets.removeAll(where: { $0 == 6 || $0 == -10 })
-        } else if kingPosition % 8 == 6 {
+        } else if piecePosition % 8 == 6 {
             possibleKnightOffsets.removeAll(where: { $0 == 10 || $0 == -6 })
         }
 
-        let possibleKnightPositions = possibleKnightOffsets.map { $0 + kingPosition }
+        let possibleKnightPositions = possibleKnightOffsets.map { $0 + piecePosition }
 
-        return possibleKnightPositions.contains(where: { board[$0] == Piece.knight | oppositeColorToKing })
+        return possibleKnightPositions.contains(where: { board[$0] == Piece.knight | oppositeColorToPiece })
     }
 
-    private func checkIfKingIsAttackedBySlidingPiece(kingSide: Int, kingPosition: Int) -> Bool {
-        let oppositeColorToKing = kingSide == Piece.white ? Piece.black : Piece.white
+    private func checkIfPieceIsAttackedBySlidingPiece(pieceSide: Int, piecePosition: Int) -> Bool {
+        let oppositeColorToPiece = pieceSide == Piece.white ? Piece.black : Piece.white
 
         let startDirectionIndex = 0
         let endDirectionIndex = 8
 
         for directionIndex in startDirectionIndex..<endDirectionIndex {
-            for n in 0..<numberOfSquaresToEdge[kingPosition][directionIndex] {
-                let targetSquareIndex = kingPosition + directionOffsets[directionIndex] * (n + 1)
+            for n in 0..<numberOfSquaresToEdge[piecePosition][directionIndex] {
+                let targetSquareIndex = piecePosition + directionOffsets[directionIndex] * (n + 1)
                 let pieceOnTargetSquare = board[targetSquareIndex] ?? 0
 
-                if Piece.pieceColor(from: pieceOnTargetSquare) == kingSide {
+                if Piece.pieceColor(from: pieceOnTargetSquare) == pieceSide {
                     break
-                } else if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToKing {
-                    if pieceOnTargetSquare == Piece.queen | oppositeColorToKing {
+                } else if Piece.pieceColor(from: pieceOnTargetSquare) == oppositeColorToPiece {
+                    if pieceOnTargetSquare == Piece.queen | oppositeColorToPiece {
                         return true
-                    } else if (pieceOnTargetSquare == Piece.rook | oppositeColorToKing) && directionIndex < 4 {
+                    } else if (pieceOnTargetSquare == Piece.rook | oppositeColorToPiece) && directionIndex < 4 {
                         return true
-                    } else if (pieceOnTargetSquare == Piece.bishop | oppositeColorToKing) && directionIndex >= 4 {
+                    } else if (pieceOnTargetSquare == Piece.bishop | oppositeColorToPiece) && directionIndex >= 4 {
                         return true
                     } else {
                         break

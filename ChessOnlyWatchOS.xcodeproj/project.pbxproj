@@ -44,6 +44,7 @@
 		2ACFF3A72C3B341000E9F05F /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A62C3B341000E9F05F /* Defaults.swift */; };
 		2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3A82C3B379C00E9F05F /* Notification.swift */; };
 		2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */; };
+		2AEEF34A2C751DE000BFF8DF /* GameEngine+PrecomputedMoveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEF3492C751DE000BFF8DF /* GameEngine+PrecomputedMoveData.swift */; };
 		2AFA6EAA2C748AD10083857E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFA6EA92C748AD10083857E /* Images.swift */; };
 		84F46A002C44785300D2FB5B /* capture.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84F469FC2C44785300D2FB5B /* capture.mp3 */; };
 		84F46A012C44785300D2FB5B /* move-check.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84F469FD2C44785300D2FB5B /* move-check.mp3 */; };
@@ -130,6 +131,7 @@
 		2ACFF3A62C3B341000E9F05F /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		2ACFF3A82C3B379C00E9F05F /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2AEEF3492C751DE000BFF8DF /* GameEngine+PrecomputedMoveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+PrecomputedMoveData.swift"; sourceTree = "<group>"; };
 		2AFA6EA92C748AD10083857E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		84F469FC2C44785300D2FB5B /* capture.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = capture.mp3; sourceTree = "<group>"; };
 		84F469FD2C44785300D2FB5B /* move-check.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "move-check.mp3"; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				2ABBCBC92C51ACDC002609AF /* GameEngine+Castling.swift */,
 				2ABBCBCB2C51AEFB002609AF /* GameEngine+Moves.swift */,
 				2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */,
+				2AEEF3492C751DE000BFF8DF /* GameEngine+PrecomputedMoveData.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				2AA17F9A2C5681C300E1CD05 /* GameEngine+AI.swift in Sources */,
 				2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */,
 				2ABBCBC82C51AC38002609AF /* GameEngine+MoveValidation.swift in Sources */,
+				2AEEF34A2C751DE000BFF8DF /* GameEngine+PrecomputedMoveData.swift in Sources */,
 				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
 				2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */,
 				2AC0C0392C3BB31300C1B9F4 /* Move.swift in Sources */,

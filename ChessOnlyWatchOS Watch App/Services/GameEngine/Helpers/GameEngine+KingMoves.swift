@@ -40,7 +40,7 @@ extension GameEngine {
         }
 
         // MARK: Handle castle scenario
-        if !onlyAttackMoves && !checkIfKingIsUnderAttack(kingSide: pieceColor, kingPosition: startIndex) {
+        if !onlyAttackMoves && !checkIfPieceIsUnderAttack(pieceSide: pieceColor, piecePosition: startIndex) {
             let castlingRightsForSelectedColor = castlingRights[pieceColor]
             if castlingRightsForSelectedColor?[.kingSide] == true {
                 if board[startIndex + 1] == nil && board[startIndex + 2] == nil

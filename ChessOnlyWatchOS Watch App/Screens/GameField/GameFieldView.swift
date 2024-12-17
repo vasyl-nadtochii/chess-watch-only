@@ -69,7 +69,7 @@ struct GameFieldView: View {
                                     if viewModel.isCursorPointingAtCell(file: file, rank: rank) {
                                         Color.clear
                                             .frame(width: gameFieldHeight / 8, height: gameFieldHeight / 8)
-                                            .border(viewModel.selectButtonColor, width: 2)
+                                            .border(viewModel.cursorColor, width: 2)
                                             .opacity(viewModel.pickerDisabled ? 0 : 1)
                                     }
                                     if viewModel.shouldHighlightAvailableCells

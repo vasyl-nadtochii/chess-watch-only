@@ -100,7 +100,11 @@ extension GameEngine {
     internal func orderMoves(moves: [Move]) {
         for move in moves {
             var moveScoreGuess = 0
-            let movePieceType = Piece.pieceType(from: board[move.startSquare] ?? 0) ?? 0 // TODO: ???
+            guard let piece = board[move.startSquare], let pieceColor = Piece.pieceColor(from: piece) else {
+                print("Error: Invalid move. No piece at start index")
+                return
+            }
+            let movePieceType = Piece.pieceType(from: piece) ?? 0 // TODO: ???
             let capturePieceType = Piece.pieceType(from: board[move.targetSquare] ?? 0)
 
             if let capturePieceType = capturePieceType {
@@ -109,7 +113,11 @@ extension GameEngine {
                     - Piece.pieceValue(fromType: movePieceType)
             }
 
-            
+            // TODO: check if move will promote pawn
+
+            if checkIfPieceIsUnderAttack(pieceSide: pieceColor, piecePosition: move.targetSquare) {
+                moveScoreGuess -= Piece.pieceValue(fromType: movePieceType)
+            }
         }
     }
 }
