@@ -51,7 +51,7 @@ class GameEngine {
     var playerSide: Int
     var onResult: ((Result) -> Void)?
     var movesHistory: [Move] = []
-    var gameMode: GameMode = .playerVsPlayer
+    var gameMode: GameMode = .playerVsAI
 
     internal var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     internal var numberOfSquaresToEdge: [[Int]] = []
@@ -90,13 +90,6 @@ class GameEngine {
         }
     }
 
-    func prettyPrintMatrix<T>(_ matrix: [[T]]) {
-        for row in matrix {
-            let rowString = row.map { "\($0)" }.joined(separator: "\t")
-            print(rowString)
-        }
-    }
-
     internal func checkIfSideIsUnderCheck(_ side: Int) -> Bool {
         guard let kingPositionForSide = board.keys.first(where: { board[$0] == Piece.king | side }) else {
             print("Error: no king for side \(side)")
@@ -108,11 +101,11 @@ class GameEngine {
     internal func toggleSideToMove() {
         sideToMove = (sideToMove == Piece.white) ? Piece.black : Piece.white
         if sideToMove == opponentToPlayerSide && gameMode == .playerVsAI {
-            makeComputerMove()
+            self.makeComputerMove()
         }
     }
 
-    private func getPiecesMap() -> [[Int]] {
+    internal func getPiecesMap() -> [[Int]] {
         var matrix = Array(repeating: Array(repeating: 0, count: 8), count: 8)
         for rowIndex in 0...7 {
             for columnIndex in 0...7 {
