@@ -7,7 +7,7 @@
 
 - Language: **Swift 5**
 - UI Framework: **SwiftUI**
-- ML Framework: CoreML
+- ML Framework: **CoreML**
 - Third-party libraries: **None**
 - Min SDK version: **watchOS 8.0**
 
