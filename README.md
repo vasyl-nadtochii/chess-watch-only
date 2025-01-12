@@ -1,11 +1,13 @@
 # WatchOS-only Chess
 
-Chess game developed specifically for Apple Watch. Inspired by [this video](https://youtu.be/U4ogK0MIzqk?si=0BPJ5YUqvyE9shag).
+- Chess game developed specifically for Apple Watch. Inspired by [this video](https://youtu.be/U4ogK0MIzqk?si=0BPJ5YUqvyE9shag).
+- This application uses ML Model from [this tutorial](https://youtu.be/-WDRaRUjRMg?si=QyEVwcoeObjBLJFQ). Model was converted from `PyTorch` to `CoreML` using [this guide](https://apple.github.io/coremltools/docs-guides/source/convert-pytorch-workflow.html)
 
 ## Specifications
 
 - Language: **Swift 5**
 - UI Framework: **SwiftUI**
+- ML Framework: CoreML
 - Third-party libraries: **None**
 - Min SDK version: **watchOS 8.0**
 
