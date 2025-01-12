@@ -9,6 +9,34 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>ChessOnlyWatchOSTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2A3137662C3AD91200B68401</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2A31376C2C3AD91200B68401</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2A31377E2C3AD91400B68401</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2A3137882C3AD91400B68401</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

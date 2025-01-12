@@ -34,7 +34,7 @@ final class GameEngineTests: XCTestCase {
         getAllAvailableMovesCallCount = 0
         getAllAvailableMovesExecutionTimes = []
 
-        gameEngine = .init(defaults: MockDefaults(), fenString: Constants.initialChessPosition)
+        gameEngine = .init(defaults: MockDefaults(), aiEngine: MockAIEngine(), fenString: Constants.initialChessPosition)
         gameEngine.gameMode = .playerVsPlayer
         gameEngine.onResult = { result in
             switch result {
@@ -139,7 +139,11 @@ final class GameEngineTests: XCTestCase {
     // MARK: Pawns tests
 
     func testPawnMovesCount() {
-        gameEngine = .init(defaults: MockDefaults(), fenString: "rnbqkbnr/ppp1pppp/8/8/8/P2p3P/1PPPPPP1/RNBQKBNR")
+        gameEngine = .init(
+            defaults: MockDefaults(),
+            aiEngine: MockAIEngine(),
+            fenString: "rnbqkbnr/ppp1pppp/8/8/8/P2p3P/1PPPPPP1/RNBQKBNR"
+        )
         gameEngine.gameMode = .playerVsPlayer
         let result = measureElapsedTimeAndReturnValue {
             gameEngine.getAvailablePawnMoves(
@@ -159,7 +163,11 @@ final class GameEngineTests: XCTestCase {
     // MARK: Knight tests
 
     func testKnightMovesCount() {
-        gameEngine = .init(defaults: MockDefaults(), fenString: "rnbqkbnr/ppppp1pp/8/8/2P1P3/P4p1P/1P1P1PP1/RNBQKBNR")
+        gameEngine = .init(
+            defaults: MockDefaults(),
+            aiEngine: MockAIEngine(),
+            fenString: "rnbqkbnr/ppppp1pp/8/8/2P1P3/P4p1P/1P1P1PP1/RNBQKBNR"
+        )
         gameEngine.gameMode = .playerVsPlayer
         let result = measureElapsedTimeAndReturnValue {
             gameEngine.getAvailableKnightMoves(
@@ -178,7 +186,11 @@ final class GameEngineTests: XCTestCase {
     // MARK: Bishop tests
 
     func testBishopMovesCount() {
-        gameEngine = .init(defaults: MockDefaults(), fenString: "rnbqkbnr/ppppp2p/1P4p1/8/3BP3/P4p1P/2PP1PP1/RNBQK1NR w -")
+        gameEngine = .init(
+            defaults: MockDefaults(),
+            aiEngine: MockAIEngine(),
+            fenString: "rnbqkbnr/ppppp2p/1P4p1/8/3BP3/P4p1P/2PP1PP1/RNBQK1NR w -"
+        )
         gameEngine.gameMode = .playerVsPlayer
         let result = measureElapsedTimeAndReturnValue {
             gameEngine.getAvailableSlidingMoves(
@@ -198,7 +210,11 @@ final class GameEngineTests: XCTestCase {
     // MARK: Rook tests
 
     func testRookMovesCount() {
-        gameEngine = .init(defaults: MockDefaults(), fenString: "rnbqkbnr/ppp1pp2/1P4p1/8/3R3p/P6P/2P2PP1/RNBQK1N1 w -")
+        gameEngine = .init(
+            defaults: MockDefaults(),
+            aiEngine: MockAIEngine(),
+            fenString: "rnbqkbnr/ppp1pp2/1P4p1/8/3R3p/P6P/2P2PP1/RNBQK1N1 w -"
+        )
         gameEngine.gameMode = .playerVsPlayer
         let result = measureElapsedTimeAndReturnValue {
             gameEngine.getAvailableSlidingMoves(
@@ -218,7 +234,11 @@ final class GameEngineTests: XCTestCase {
     // MARK: Queen tests
 
     func testQueenMovesCount() {
-        gameEngine = .init(defaults: MockDefaults(), fenString: "rnbqkbnr/ppp1pp2/1P4p1/8/3Q3p/P6P/2P2PP1/RNBRK1N1 w -")
+        gameEngine = .init(
+            defaults: MockDefaults(),
+            aiEngine: MockAIEngine(),
+            fenString: "rnbqkbnr/ppp1pp2/1P4p1/8/3Q3p/P6P/2P2PP1/RNBRK1N1 w -"
+        )
         gameEngine.gameMode = .playerVsPlayer
         let result = measureElapsedTimeAndReturnValue {
             gameEngine.getAvailableSlidingMoves(
@@ -238,7 +258,11 @@ final class GameEngineTests: XCTestCase {
     // MARK: King tests
 
     func testKingMovesCount() {
-        gameEngine = .init(defaults: MockDefaults(), fenString: "rnbqkbnr/ppp1p3/1P4p1/8/2R4p/P4p1P/2P3P1/RNB1KN2 w -")
+        gameEngine = .init(
+            defaults: MockDefaults(),
+            aiEngine: MockAIEngine(),
+            fenString: "rnbqkbnr/ppp1p3/1P4p1/8/2R4p/P4p1P/2P3P1/RNB1KN2 w -"
+        )
         gameEngine.gameMode = .playerVsPlayer
         let result = measureElapsedTimeAndReturnValue {
             gameEngine.getAvailableKingMoves(

@@ -26,6 +26,12 @@
 		2A3137B22C3AFBE600B68401 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B12C3AFBE600B68401 /* Collection.swift */; };
 		2A3137B42C3AFCF500B68401 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B32C3AFCF500B68401 /* View.swift */; };
 		2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137B62C3B166200B68401 /* CellPicker.swift */; };
+		2A8F231E2D33E4CC00238175 /* chess_model_from_export.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F231D2D33E4CC00238175 /* chess_model_from_export.mlpackage */; };
+		2A8F23212D33E57F00238175 /* AIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F23202D33E57F00238175 /* AIEngine.swift */; };
+		2A8F23232D33F2A700238175 /* heavy_move_to_int.json in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F23222D33F2A700238175 /* heavy_move_to_int.json */; };
+		2A8F23252D33F47300238175 /* Move+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F23242D33F47300238175 /* Move+Formatting.swift */; };
+		2A8F23282D34039C00238175 /* MoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F23272D34039C00238175 /* MoveTests.swift */; };
+		2A8F232A2D3403B600238175 /* MockAIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F23292D3403B600238175 /* MockAIEngine.swift */; };
 		2AA17F9A2C5681C300E1CD05 /* GameEngine+AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */; };
 		2AA2D9462C5D77FD004E7EB9 /* MeasureTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */; };
 		2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */; };
@@ -113,6 +119,12 @@
 		2A3137B12C3AFBE600B68401 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		2A3137B32C3AFCF500B68401 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		2A3137B62C3B166200B68401 /* CellPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellPicker.swift; sourceTree = "<group>"; };
+		2A8F231D2D33E4CC00238175 /* chess_model_from_export.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = chess_model_from_export.mlpackage; sourceTree = "<group>"; };
+		2A8F23202D33E57F00238175 /* AIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIEngine.swift; sourceTree = "<group>"; };
+		2A8F23222D33F2A700238175 /* heavy_move_to_int.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heavy_move_to_int.json; sourceTree = "<group>"; };
+		2A8F23242D33F47300238175 /* Move+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Move+Formatting.swift"; sourceTree = "<group>"; };
+		2A8F23272D34039C00238175 /* MoveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveTests.swift; sourceTree = "<group>"; };
+		2A8F23292D3403B600238175 /* MockAIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAIEngine.swift; sourceTree = "<group>"; };
 		2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+AI.swift"; sourceTree = "<group>"; };
 		2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTime.swift; sourceTree = "<group>"; };
 		2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+SlidingMoves.swift"; sourceTree = "<group>"; };
@@ -168,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				2A20C95D2C4B16A400533CFB /* MockDefaults.swift */,
+				2A8F23292D3403B600238175 /* MockAIEngine.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -203,6 +216,7 @@
 				2A3137A62C3AF37200B68401 /* Models */,
 				2A3137B02C3AFBD500B68401 /* Extensions & Utils */,
 				2A3137AD2C3AF43700B68401 /* Resources */,
+				2A8F231F2D33E56600238175 /* Supporting Files */,
 				2A3137782C3AD91400B68401 /* Preview Content */,
 			);
 			path = "ChessOnlyWatchOS Watch App";
@@ -222,6 +236,7 @@
 				2A20C95C2C4B169600533CFB /* Helpers */,
 				2AA2D9442C5D77E4004E7EB9 /* Extensions & Utils */,
 				2A20C95A2C4B147900533CFB /* GameEngineTests.swift */,
+				2A8F23272D34039C00238175 /* MoveTests.swift */,
 			);
 			path = "ChessOnlyWatchOS Watch AppTests";
 			sourceTree = "<group>";
@@ -301,6 +316,7 @@
 				2A3137B32C3AFCF500B68401 /* View.swift */,
 				2ACFF3A82C3B379C00E9F05F /* Notification.swift */,
 				2ACFF3AA2C3B3F4A00E9F05F /* Constants.swift */,
+				2A8F23242D33F47300238175 /* Move+Formatting.swift */,
 			);
 			path = "Extensions & Utils";
 			sourceTree = "<group>";
@@ -309,9 +325,27 @@
 			isa = PBXGroup;
 			children = (
 				2ABBCBBB2C51A4E5002609AF /* GameEngine */,
+				2A8F231C2D33E4A000238175 /* AIEngine */,
 				2ACFF3A62C3B341000E9F05F /* Defaults.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2A8F231C2D33E4A000238175 /* AIEngine */ = {
+			isa = PBXGroup;
+			children = (
+				2A8F23202D33E57F00238175 /* AIEngine.swift */,
+			);
+			path = AIEngine;
+			sourceTree = "<group>";
+		};
+		2A8F231F2D33E56600238175 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2A8F23222D33F2A700238175 /* heavy_move_to_int.json */,
+				2A8F231D2D33E4CC00238175 /* chess_model_from_export.mlpackage */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		2AA2D9442C5D77E4004E7EB9 /* Extensions & Utils */ = {
@@ -504,6 +538,7 @@
 				2A31377A2C3AD91400B68401 /* Preview Assets.xcassets in Resources */,
 				84F46A032C44785300D2FB5B /* castle.mp3 in Resources */,
 				84F46A022C44785300D2FB5B /* move-self.mp3 in Resources */,
+				2A8F23232D33F2A700238175 /* heavy_move_to_int.json in Resources */,
 				84F46A012C44785300D2FB5B /* move-check.mp3 in Resources */,
 				2A3137772C3AD91400B68401 /* Assets.xcassets in Resources */,
 			);
@@ -530,6 +565,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A8F23252D33F47300238175 /* Move+Formatting.swift in Sources */,
 				2ABBCBC42C51AAF9002609AF /* GameEngine+PawnMoves.swift in Sources */,
 				2A3137A22C3AE57200B68401 /* StartView.swift in Sources */,
 				2ABBCBC02C51A9D3002609AF /* GameEngine+KnightMoves.swift in Sources */,
@@ -540,7 +576,9 @@
 				2AFA6EAA2C748AD10083857E /* Images.swift in Sources */,
 				2A3137A52C3AE59700B68401 /* CompactButton.swift in Sources */,
 				2A3137A82C3AF38700B68401 /* Piece.swift in Sources */,
+				2A8F231E2D33E4CC00238175 /* chess_model_from_export.mlpackage in Sources */,
 				2ACFF3AB2C3B3F4A00E9F05F /* Constants.swift in Sources */,
+				2A8F23212D33E57F00238175 /* AIEngine.swift in Sources */,
 				2ABBCBCC2C51AEFB002609AF /* GameEngine+Moves.swift in Sources */,
 				2A3137AF2C3AF47800B68401 /* GameEngine.swift in Sources */,
 				2A3137B42C3AFCF500B68401 /* View.swift in Sources */,
@@ -568,9 +606,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A8F23282D34039C00238175 /* MoveTests.swift in Sources */,
 				2A20C95B2C4B147900533CFB /* GameEngineTests.swift in Sources */,
 				2AA2D9462C5D77FD004E7EB9 /* MeasureTime.swift in Sources */,
 				2A20C95E2C4B16A400533CFB /* MockDefaults.swift in Sources */,
+				2A8F232A2D3403B600238175 /* MockAIEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

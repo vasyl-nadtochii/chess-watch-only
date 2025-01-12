@@ -51,7 +51,7 @@ class GameEngine {
     var playerSide: Int
     var onResult: ((Result) -> Void)?
     var movesHistory: [Move] = []
-    var gameMode: GameMode = .playerVsAI
+    var gameMode: GameMode = .playerVsPlayer
 
     internal var directionOffsets: [Int] = [8, -8, -1, 1, 7, -7, 9, -9]
     internal var numberOfSquaresToEdge: [[Int]] = []
@@ -61,9 +61,11 @@ class GameEngine {
     // initial position
     internal let fenString: String
     internal let defaults: IDefaults
+    internal let aiEngine: AIEngine
 
-    init(defaults: IDefaults, fenString: String = Constants.initialChessPosition) {
+    init(defaults: IDefaults, aiEngine: AIEngine, fenString: String = Constants.initialChessPosition) {
         self.defaults = defaults
+        self.aiEngine = aiEngine
         self.fenString = fenString
         self.board = [:]
         self.playerSide = defaults.playerSide

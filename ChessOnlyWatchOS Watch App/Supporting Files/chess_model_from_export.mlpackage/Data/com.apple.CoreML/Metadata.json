@@ -1,0 +1,11 @@
+{
+  "MLModelVersionStringKey" : "--",
+  "MLModelDescriptionKey" : "--",
+  "MLModelCreatorDefinedKey" : {
+    "com.github.apple.coremltools.source_dialect" : "TorchExport::ATEN",
+    "com.github.apple.coremltools.source" : "torch==2.5.1+cu121",
+    "com.github.apple.coremltools.version" : "8.1"
+  },
+  "MLModelAuthorKey" : "--",
+  "MLModelLicenseKey" : "--"
+}
