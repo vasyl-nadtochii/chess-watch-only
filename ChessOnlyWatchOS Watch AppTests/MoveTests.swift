@@ -14,6 +14,6 @@ final class MoveTests: XCTestCase {
 
     func testSANConverting() {
         var move = Move(startSquare: 10, targetSquare: 26)
-        XCTAssertEqual(move.moveToSANString(), "c2c4")
+        XCTAssertEqual(move.toSANMoveString(), "c2c4")
     }
 }

@@ -59,7 +59,6 @@ extension GameEngine {
                     // TODO: Promote pawn for computer
                 }
                 moveCopy.promotedPawn = true
-                // TODO: also, when there is a timer implemented, we should pause it unless player finishes promotion
             } else if checkEnPassantStartScenario(move: move, piece: piece) {
                 self.enPassantSquareIndex = move.targetSquare
             }

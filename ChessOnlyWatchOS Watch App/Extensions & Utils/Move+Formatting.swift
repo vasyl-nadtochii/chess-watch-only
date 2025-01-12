@@ -9,7 +9,7 @@ import Foundation
 
 extension Move {
 
-    func moveToSANString() -> String {
+    func toSANMoveString() -> String {
         let columns = ["a", "b", "c", "d", "e", "f", "g", "h"]
         let rows = Array(1...8)
 
