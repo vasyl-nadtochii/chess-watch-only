@@ -12,6 +12,11 @@ import AVFoundation
 
 class GameFieldViewModel: ObservableObject {
 
+    enum Tab: Hashable {
+        case board
+        case sideMenu
+    }
+
     enum SideStatus {
         case none
         case check
@@ -113,6 +118,7 @@ class GameFieldViewModel: ObservableObject {
     @Published var isShowingPawnPromotionOptions: Bool = false
     @Published var boardPosition: BoardPosition
     @Published var sideToMove: Int
+    @Published var currentTab: Tab = .board
 
     private let defaults: Defaults
     private let avPlayer: AVPlayer

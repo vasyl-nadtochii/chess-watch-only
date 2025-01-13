@@ -14,15 +14,22 @@ struct GameFieldView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                gameField
-                Spacer()
-                buttons
+        TabView(selection: $viewModel.currentTab) {
+            ZStack {
+                VStack(spacing: 0) {
+                    gameField
+                    Spacer()
+                    buttons
+                }
+                .applySafeAreaOffsetIfNeed()
+                cellPicker
             }
-            .applySafeAreaOffsetIfNeed()
-            cellPicker
+            .tag(GameFieldViewModel.Tab.board)
+
+            Text("Side menu")
+                .tag(GameFieldViewModel.Tab.sideMenu)
         }
+        .tabViewStyle(.page(indexDisplayMode: .never))
         .background(
             Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme)
                 .overlay {
