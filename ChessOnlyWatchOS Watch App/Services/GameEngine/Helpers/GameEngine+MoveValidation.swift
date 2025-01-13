@@ -74,7 +74,7 @@ extension GameEngine {
 
         var possiblePawnOffsets = [7, 9]
 
-        if piecePosition == Piece.white {
+        if pieceSide == Piece.white {
             if piecePosition % 8 == 0 {
                 possiblePawnOffsets.removeAll(where: { abs($0) == 7 })
             } else if (piecePosition + 1) % 8 == 0 {
@@ -88,7 +88,7 @@ extension GameEngine {
             }
         }
 
-        if piecePosition == Piece.black {
+        if pieceSide == Piece.black {
             possiblePawnOffsets = possiblePawnOffsets.map({ $0 * -1 })
         }
 
