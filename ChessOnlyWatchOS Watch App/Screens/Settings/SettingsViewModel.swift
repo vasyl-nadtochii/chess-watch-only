@@ -29,6 +29,13 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var woodenTableEnabled: Bool {
+        didSet {
+            defaults.woodenTableEnabled = woodenTableEnabled
+            NotificationCenter.default.post(name: .woodenTableIsOnUpdated, object: nil)
+        }
+    }
+
     var playerSideString: String {
         if playerSide == Piece.white {
             return "White"
@@ -46,6 +53,7 @@ class SettingsViewModel: ObservableObject {
         self.playerSide = defaults.playerSide
         self.boardColorTheme = defaults.boardColorTheme
         self.soundEnabled = defaults.soundEnabled
+        self.woodenTableEnabled = defaults.woodenTableEnabled
     }
 
     func togglePlayerSide() {

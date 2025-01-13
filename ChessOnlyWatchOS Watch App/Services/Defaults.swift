@@ -12,6 +12,7 @@ protocol IDefaults {
     var playerSide: Int { get set }
     var boardColorTheme: BoardColorTheme { get set }
     var soundEnabled: Bool { get set }
+    var woodenTableEnabled: Bool { get set }
 }
 
 class Defaults: IDefaults {
@@ -47,6 +48,16 @@ class Defaults: IDefaults {
         }
         set {
             UserDefaults.standard.setValue(!newValue, forKey: soundEnabledKey)
+        }
+    }
+
+    private let woodenTableEnabledKey: String = "woodenTableEnabledKey"
+    var woodenTableEnabled: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: woodenTableEnabledKey)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: woodenTableEnabledKey)
         }
     }
 }

@@ -45,6 +45,17 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
+
+            Button {
+                viewModel.woodenTableEnabled.toggle()
+            } label: {
+                VStack(alignment: .leading) {
+                    Text("Wooden Table")
+                        .font(.title3)
+                    Text(viewModel.woodenTableEnabled ? "Enabled" : "Disabled")
+                        .foregroundColor(.secondary)
+                }
+            }
         }
         .navigationTitle("Settings")
     }

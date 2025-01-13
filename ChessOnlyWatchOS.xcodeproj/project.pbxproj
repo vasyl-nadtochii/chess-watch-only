@@ -11,7 +11,7 @@
 		2A20C95E2C4B16A400533CFB /* MockDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20C95D2C4B16A400533CFB /* MockDefaults.swift */; };
 		2A2EC7A62C3F1E1E00F0AFBE /* BoardColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */; };
 		2A2EC7A82C3F21BE00F0AFBE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */; };
-		2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2A31376E2C3AD91200B68401 /* Chess.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2A31376D2C3AD91200B68401 /* Chess.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */; };
 		2A3137752C3AD91200B68401 /* GameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3137742C3AD91200B68401 /* GameFieldView.swift */; };
 		2A3137772C3AD91400B68401 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3137762C3AD91400B68401 /* Assets.xcassets */; };
@@ -91,7 +91,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				2A31376E2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app in Embed Watch Content */,
+				2A31376E2C3AD91200B68401 /* Chess.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,7 +104,7 @@
 		2A2EC7A52C3F1E1E00F0AFBE /* BoardColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColorTheme.swift; sourceTree = "<group>"; };
 		2A2EC7A72C3F21BE00F0AFBE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessOnlyWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChessOnlyWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A31376D2C3AD91200B68401 /* Chess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A3137722C3AD91200B68401 /* ChessOnlyWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessOnlyWatchOSApp.swift; sourceTree = "<group>"; };
 		2A3137742C3AD91200B68401 /* GameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFieldView.swift; sourceTree = "<group>"; };
 		2A3137762C3AD91400B68401 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				2A3137672C3AD91200B68401 /* ChessOnlyWatchOS.app */,
-				2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */,
+				2A31376D2C3AD91200B68401 /* Chess.app */,
 				2A31377F2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests.xctest */,
 				2A3137892C3AD91400B68401 /* ChessOnlyWatchOS Watch AppUITests.xctest */,
 			);
@@ -442,7 +442,7 @@
 			);
 			name = "ChessOnlyWatchOS Watch App";
 			productName = "ChessOnlyWatchOS Watch App";
-			productReference = 2A31376D2C3AD91200B68401 /* ChessOnlyWatchOS Watch App.app */;
+			productReference = 2A31376D2C3AD91200B68401 /* Chess.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2A31377E2C3AD91400B68401 /* ChessOnlyWatchOS Watch AppTests */ = {
@@ -779,7 +779,6 @@
 				DEVELOPMENT_TEAM = QN4J7445H4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ChessOnlyWatchOS;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -788,7 +787,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ordinary.ChessOnlyWatchOS.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Chess;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -809,7 +808,6 @@
 				DEVELOPMENT_TEAM = QN4J7445H4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ChessOnlyWatchOS;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -818,7 +816,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ordinary.ChessOnlyWatchOS.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Chess;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

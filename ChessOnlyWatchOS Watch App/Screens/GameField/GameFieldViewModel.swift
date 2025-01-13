@@ -102,6 +102,7 @@ class GameFieldViewModel: ObservableObject {
     var availableCellsIndiciesToPick: [Int] = []
     var gameEngine: GameEngine
     var currentColorTheme: BoardColorTheme
+    var woodenTableEnabled: Bool
 
     var pawnToPromote: Int?
     var pawnIndexToPromote: Int?
@@ -140,11 +141,12 @@ class GameFieldViewModel: ObservableObject {
             self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
         }
 
-        // self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl())
-        self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl(), fenString: "8/8/8/8/3k4/6B1/4P3/4K3 w - - 0 1") // just for test
+        self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl())
+        //self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl(), fenString: "8/8/8/8/3k4/6B1/4P3/4K3 w - - 0 1") // just for test
         self.boardPosition = gameEngine.boardPosition
         self.sideToMove = gameEngine.sideToMove
         self.currentColorTheme = defaults.boardColorTheme
+        self.woodenTableEnabled = defaults.woodenTableEnabled
         self.gameEngine.onResult = { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -174,6 +176,9 @@ class GameFieldViewModel: ObservableObject {
 
         NotificationCenter.default.addObserver(forName: .boardColorThemeUpdated, object: nil, queue: .main) { _ in
             self.currentColorTheme = defaults.boardColorTheme
+        }
+        NotificationCenter.default.addObserver(forName: .woodenTableIsOnUpdated, object: nil, queue: .main) { _ in
+            self.woodenTableEnabled = defaults.woodenTableEnabled
         }
     }
 

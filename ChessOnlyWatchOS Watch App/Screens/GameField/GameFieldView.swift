@@ -26,9 +26,11 @@ struct GameFieldView: View {
         .background(
             Color.getBoardBackgroundColor(theme: viewModel.currentColorTheme)
                 .overlay {
-                    Image.woodTexture
-                        .resizable()
-                        .scaledToFill()
+                    if viewModel.woodenTableEnabled {
+                        Image.woodTexture
+                            .resizable()
+                            .scaledToFill()
+                    }
                 }
                 .ignoresSafeArea()
         )

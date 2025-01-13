@@ -11,4 +11,5 @@ extension Notification.Name {
 
     static let playerSideUpdated = Notification.Name("playerSideUpdated")
     static let boardColorThemeUpdated = Notification.Name("boardColorThemeUpdated")
+    static let woodenTableIsOnUpdated = Notification.Name("woodenTableIsOnUpdated")
 }
