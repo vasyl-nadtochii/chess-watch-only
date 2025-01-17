@@ -123,7 +123,7 @@ class GameFieldViewModel: ObservableObject {
     private let defaults: Defaults
     private let avPlayer: AVPlayer
 
-    init(defaults: Defaults) {
+    init(defaults: Defaults, gameEngine: GameEngine) {
         self.defaults = defaults
         self.avPlayer = AVPlayer()
         self.avPlayer.volume = 10
@@ -147,8 +147,7 @@ class GameFieldViewModel: ObservableObject {
             self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
         }
 
-        //self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl())
-        self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl(), fenString: "6k1/1P6/8/8/8/8/1p6/6K1 w - - 0 1") // just for test
+        self.gameEngine = gameEngine
         self.boardPosition = gameEngine.boardPosition
         self.sideToMove = gameEngine.sideToMove
         self.currentColorTheme = defaults.boardColorTheme

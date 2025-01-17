@@ -37,6 +37,7 @@
 		2AA17F9A2C5681C300E1CD05 /* GameEngine+AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */; };
 		2AA2D9462C5D77FD004E7EB9 /* MeasureTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */; };
 		2AB6E8522D3AFB3300C38186 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB6E8512D3AFB3300C38186 /* String.swift */; };
+		2AB6E8542D3B1AB000C38186 /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB6E8532D3B1AB000C38186 /* StartViewModel.swift */; };
 		2ABBCBBD2C51A66E002609AF /* GameEngine+SlidingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */; };
 		2ABBCBC02C51A9D3002609AF /* GameEngine+KnightMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */; };
 		2ABBCBC22C51AA53002609AF /* GameEngine+KingMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */; };
@@ -133,6 +134,7 @@
 		2AA17F992C5681C300E1CD05 /* GameEngine+AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+AI.swift"; sourceTree = "<group>"; };
 		2AA2D9452C5D77FD004E7EB9 /* MeasureTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTime.swift; sourceTree = "<group>"; };
 		2AB6E8512D3AFB3300C38186 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		2AB6E8532D3B1AB000C38186 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		2ABBCBBC2C51A66E002609AF /* GameEngine+SlidingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+SlidingMoves.swift"; sourceTree = "<group>"; };
 		2ABBCBBF2C51A9D3002609AF /* GameEngine+KnightMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KnightMoves.swift"; sourceTree = "<group>"; };
 		2ABBCBC12C51AA53002609AF /* GameEngine+KingMoves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameEngine+KingMoves.swift"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				2A3137A12C3AE57200B68401 /* StartView.swift */,
+				2AB6E8532D3B1AB000C38186 /* StartViewModel.swift */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				2A3137732C3AD91200B68401 /* ChessOnlyWatchOSApp.swift in Sources */,
 				2ACFF3A92C3B379C00E9F05F /* Notification.swift in Sources */,
 				2AC0C0392C3BB31300C1B9F4 /* Move.swift in Sources */,
+				2AB6E8542D3B1AB000C38186 /* StartViewModel.swift in Sources */,
 				2A3137B72C3B166200B68401 /* CellPicker.swift in Sources */,
 				2ACFF3A22C3B32B400E9F05F /* SettingsView.swift in Sources */,
 				2ACFF3A52C3B33CA00E9F05F /* SettingsViewModel.swift in Sources */,

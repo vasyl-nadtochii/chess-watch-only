@@ -9,38 +9,45 @@ import SwiftUI
 
 struct StartView: View {
 
-    @State var isShowingGameScreen: Bool = false
-    @State var isShowingSettingsScreen: Bool = false
-
-    let defaults = Defaults()
+    @ObservedObject var viewModel: StartViewModel
 
     var body: some View {
         NavigationView {
-            VStack {
+            ZStack {
+                buttons
                 NavigationLink(
-                    isActive: $isShowingGameScreen,
+                    isActive: $viewModel.isShowingGameScreen,
                     destination: {
                         GameFieldView(
-                            viewModel: .init(defaults: defaults),
-                            isPresented: $isShowingGameScreen
+                            viewModel: viewModel.gameFieldViewModel,
+                            isPresented: $viewModel.isShowingGameScreen
                         )
                     },
-                    label: {
-                        Text("Start")
-                    }
+                    label: {}
                 )
+                .buttonStyle(PlainButtonStyle())
                 NavigationLink(
-                    isActive: $isShowingSettingsScreen,
+                    isActive: $viewModel.isShowingSettingsScreen,
                     destination: {
-                        SettingsView(viewModel: .init(defaults: defaults))
+                        SettingsView(viewModel: .init(defaults: viewModel.defaults))
                     },
-                    label: {
-                        Text("Settings")
-                    }
+                    label: {}
                 )
+                .buttonStyle(PlainButtonStyle())
             }
             .navigationTitle("Chess")
             .navigationBarTitleDisplayMode(.large)
+        }
+    }
+
+    var buttons: some View {
+        VStack {
+            Button("Start") {
+                viewModel.isShowingGameScreen = true
+            }
+            Button("Settings") {
+                viewModel.isShowingSettingsScreen = true
+            }
         }
     }
 }

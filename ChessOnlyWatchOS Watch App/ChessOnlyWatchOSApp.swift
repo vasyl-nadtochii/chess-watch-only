@@ -11,7 +11,7 @@ import SwiftUI
 struct ChessOnlyWatchOS_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            StartView()
+            StartView(viewModel: .init())
         }
     }
 }
