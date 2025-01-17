@@ -161,4 +161,23 @@ extension Piece {
     static var pawnPromotionOptions: [Int] {
         return [ Piece.queen, Piece.rook, Piece.bishop, Piece.knight ]
     }
+
+    static func pieceFromSymbol(_ symbol: String) -> Int {
+        switch symbol {
+        case "p":
+            return Piece.pawn
+        case "n":
+            return Piece.knight
+        case "b":
+            return Piece.bishop
+        case "r":
+            return Piece.rook
+        case "q":
+            return Piece.queen
+        case "k":
+            return Piece.king
+        default:
+            return 0
+        }
+    }
 }

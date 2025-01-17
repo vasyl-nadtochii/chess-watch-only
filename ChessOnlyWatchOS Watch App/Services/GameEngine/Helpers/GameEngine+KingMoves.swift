@@ -33,7 +33,8 @@ extension GameEngine {
         for directionOffset in directionOffsets {
             if (startIndex + directionOffset >= 0 && startIndex + directionOffset < 64)
                 && pieceColor != Piece.pieceColor(from: board[startIndex + directionOffset] ?? 0)
-                && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex + directionOffset)) {
+                && checkIfMoveIsValid(piece: piece, move: .init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
+                && !checkIfPieceIsAttackedByKing(pieceSide: pieceColor, piecePosition: startIndex + directionOffset) {
                 moves.append(.init(startSquare: startIndex, targetSquare: startIndex + directionOffset))
             }
         }

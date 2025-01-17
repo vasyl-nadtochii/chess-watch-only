@@ -18,6 +18,8 @@ struct Move: Hashable, Identifiable {
     let startSquare: Int
     let targetSquare: Int
 
+    var pieceToPromotePawnTo: Int?
+
     var pieceThatMoved: Int?
     var enPassantSquareIndex: Int?
     var promotedPawn: Bool = false

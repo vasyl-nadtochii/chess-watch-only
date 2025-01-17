@@ -55,8 +55,11 @@ extension GameEngine {
                     onResult?(.pawnShouldBePromoted(pawn: piece, pawnIndex: move.targetSquare))
                     playerSidePromotion = true
                 } else {
-                    promotePawn(at: move.targetSquare, from: piece, to: Piece.queen | opponentToPlayerSide)
-                    // TODO: Promote pawn for computer
+                    promotePawn(
+                        at: move.targetSquare,
+                        from: piece,
+                        to: (move.pieceToPromotePawnTo ?? Piece.queen) | opponentToPlayerSide
+                    )
                 }
                 moveCopy.promotedPawn = true
             } else if checkEnPassantStartScenario(move: move, piece: piece) {

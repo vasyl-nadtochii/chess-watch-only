@@ -147,35 +147,13 @@ class GameFieldViewModel: ObservableObject {
             self.avPlayer.replaceCurrentItem(with: .init(url: URL(fileURLWithPath: defaultPath)))
         }
 
-        self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl())
-        //self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl(), fenString: "8/8/8/8/3k4/6B1/4P3/4K3 w - - 0 1") // just for test
+        //self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl())
+        self.gameEngine = .init(defaults: defaults, aiEngine: AIEngineImpl(), fenString: "6k1/1P6/8/8/8/8/1p6/6K1 w - - 0 1") // just for test
         self.boardPosition = gameEngine.boardPosition
         self.sideToMove = gameEngine.sideToMove
         self.currentColorTheme = defaults.boardColorTheme
         self.woodenTableEnabled = defaults.woodenTableEnabled
-        self.gameEngine.onResult = { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .pawnShouldBePromoted(let pawn, let pawnIndex):
-                self.pawnToPromote = pawn
-                self.pawnIndexToPromote = pawnIndex
-                self.isShowingPawnPromotionOptions = true
-            case .playerSideUpdated:
-                self.boardPosition = self.gameEngine.boardPosition
-                self.setInitialCursorPosition()
-            case .sideToMoveChanged:
-                self.sideToMove = self.gameEngine.sideToMove
-            case .madePlainMove:
-                self.playSoundIfNeed(type: .move)
-            case .capturedPiece:
-                self.playSoundIfNeed(type: .capture)
-            case .madeCastleMove:
-                self.playSoundIfNeed(type: .castle)
-            case .pawnPromoted:
-                self.updateAvailableCellsToPickMove()
-                self.setInitialCursorPosition()
-            }
-        }
+        self.setGameEngineOnResult()
 
         self.updateAvailableCellsToPickMove()
         self.setInitialCursorPosition()
@@ -308,6 +286,32 @@ class GameFieldViewModel: ObservableObject {
             self.availableCellsIndiciesToPick = gameEngine.getAvailableMoves(at: selectedCellIndex, for: getPieceAtCell(index: selectedCellIndex))
                 .map { $0.targetSquare }
                 .sorted(by: { self.sideToMove == Piece.black ? $0 > $1 : $0 < $1 })
+        }
+    }
+
+    private func setGameEngineOnResult() {
+        self.gameEngine.onResult = { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .pawnShouldBePromoted(let pawn, let pawnIndex):
+                self.pawnToPromote = pawn
+                self.pawnIndexToPromote = pawnIndex
+                self.isShowingPawnPromotionOptions = true
+            case .playerSideUpdated:
+                self.boardPosition = self.gameEngine.boardPosition
+                self.setInitialCursorPosition()
+            case .sideToMoveChanged:
+                self.sideToMove = self.gameEngine.sideToMove
+            case .madePlainMove:
+                self.playSoundIfNeed(type: .move)
+            case .capturedPiece:
+                self.playSoundIfNeed(type: .capture)
+            case .madeCastleMove:
+                self.playSoundIfNeed(type: .castle)
+            case .pawnPromoted:
+                self.updateAvailableCellsToPickMove()
+                self.setInitialCursorPosition()
+            }
         }
     }
 }

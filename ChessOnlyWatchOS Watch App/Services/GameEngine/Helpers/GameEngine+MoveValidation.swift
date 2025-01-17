@@ -151,4 +151,41 @@ extension GameEngine {
 
         return false
     }
+
+    internal func checkIfPieceIsAttackedByKing(pieceSide: Int, piecePosition: Int) -> Bool {
+        let oppositeColorToPiece = pieceSide == Piece.white ? Piece.black : Piece.white
+        guard let oppositeKingPosition = board.first(where: { $0.value == Piece.king | oppositeColorToPiece })?.key else {
+            print("No king on the board?")
+            return true
+        }
+        var possibleKingOffsets = [1, -1, -8, 8, 7, -7, 9, -9]
+
+        if oppositeKingPosition % 8 == 0 {
+            possibleKingOffsets.removeAll(where: {
+                $0 == -9 || $0 == -1 || $0 == 7
+            })
+        } else if (oppositeKingPosition + 1) % 8 == 0 {
+            possibleKingOffsets.removeAll(where: {
+                $0 == 9 || $0 == 1 || $0 == -7
+            })
+        }
+
+        if oppositeKingPosition < 8 {
+            possibleKingOffsets.removeAll(where: {
+                $0 == -8
+            })
+        } else if oppositeKingPosition >= 56 {
+            possibleKingOffsets.removeAll(where: {
+                $0 == 8
+            })
+        }
+
+        for possibleKingOffset in possibleKingOffsets {
+            if oppositeKingPosition + possibleKingOffset == piecePosition {
+                return true
+            }
+        }
+
+        return false
+    }
 }

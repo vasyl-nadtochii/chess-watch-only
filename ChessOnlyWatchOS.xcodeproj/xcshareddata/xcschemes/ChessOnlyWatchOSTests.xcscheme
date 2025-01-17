@@ -24,7 +24,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2A31376C2C3AD91200B68401"
-               BuildableName = "ChessOnlyWatchOS Watch App.app"
+               BuildableName = "Chess.app"
                BlueprintName = "ChessOnlyWatchOS Watch App"
                ReferencedContainer = "container:ChessOnlyWatchOS.xcodeproj">
             </BuildableReference>
