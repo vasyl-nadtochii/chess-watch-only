@@ -37,16 +37,40 @@ struct StartView: View {
             }
             .navigationTitle("Chess")
             .navigationBarTitleDisplayMode(.large)
+            .alert(
+                viewModel.newGameWarning,
+                isPresented: $viewModel.isShowingAlert,
+                actions: {
+                    Button("Yes, start new game") {
+                        viewModel.isShowingAlert = false
+                        viewModel.startNewGame()
+                    }
+                    Button("No, go back") {
+                        viewModel.isShowingAlert = false
+                    }
+                }
+            )
         }
     }
 
     var buttons: some View {
-        VStack {
-            Button("Start") {
-                viewModel.isShowingGameScreen = true
+        ScrollView {
+            VStack(spacing: 10) {
+                if viewModel.continueFromSaveAvailable {
+                    Button("Continue") {
+                        viewModel.continueFromSave()
+                    }
+                }
+                Button("New Game") {
+                    viewModel.startNewGameIfCan()
+                }
+                Button("Settings") {
+                    viewModel.isShowingSettingsScreen = true
+                }
             }
-            Button("Settings") {
-                viewModel.isShowingSettingsScreen = true
+            .padding(.vertical, 12)
+            .onAppear {
+                viewModel.onViewWillAppear()
             }
         }
     }

@@ -56,6 +56,17 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
+
+            if let version = viewModel.appVersion {
+                Button {} label: {
+                    VStack(alignment: .leading) {
+                        Text("Version")
+                            .font(.title3)
+                        Text(version)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
         }
         .navigationTitle("Settings")
     }

@@ -76,6 +76,7 @@ extension GameEngine {
         }
 
         movesHistory.append(moveCopy)
+        updateSavedGame()
 
         if !playerSidePromotion {
             toggleSideToMove()
@@ -115,6 +116,8 @@ extension GameEngine {
         }
 
         movesHistory.removeLast()
+        updateSavedGame()
+
         toggleSideToMove()
     }
 

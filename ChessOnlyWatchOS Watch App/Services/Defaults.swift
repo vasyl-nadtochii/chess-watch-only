@@ -13,6 +13,7 @@ protocol IDefaults {
     var boardColorTheme: BoardColorTheme { get set }
     var soundEnabled: Bool { get set }
     var woodenTableEnabled: Bool { get set }
+    var savedGameFENString: String? { get set }
 }
 
 class Defaults: IDefaults {
@@ -58,6 +59,16 @@ class Defaults: IDefaults {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: woodenTableEnabledKey)
+        }
+    }
+
+    private let savedGameFENStringKey: String = "savedGameFENStringKey"
+    var savedGameFENString: String? {
+        get {
+            return UserDefaults.standard.string(forKey: savedGameFENStringKey)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: savedGameFENStringKey)
         }
     }
 }

@@ -60,7 +60,7 @@ class GameEngine {
 
     // initial position
     internal let fenString: String
-    internal let defaults: IDefaults
+    internal var defaults: IDefaults
     internal let aiEngine: AIEngine
 
     init(defaults: IDefaults, aiEngine: AIEngine, fenString: String = Constants.initialChessPosition) {

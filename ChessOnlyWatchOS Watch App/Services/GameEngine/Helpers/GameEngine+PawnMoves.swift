@@ -14,6 +14,7 @@ extension GameEngine {
         guard let pawnColor = Piece.pieceColor(from: pawn) else { return }
         board[squareIndex] = newPieceType | pawnColor
         if pawnColor == playerSide {
+            updateSavedGame()
             toggleSideToMove()
             onResult?(.pawnPromoted)
         }

@@ -75,4 +75,47 @@ extension GameEngine {
             }
         }
     }
+
+    internal func updateSavedGame() {
+        defaults.savedGameFENString = boardToFEN()
+    }
+
+    private func boardToFEN() -> String {
+        guard (0...63).contains(board.keys.min() ?? 0),
+              (0...63).contains(board.keys.max() ?? 0) else {
+            return "Invalid board positions"
+        }
+
+        var fenRows: [String] = []
+
+        for row in 0..<8 {
+            var rowFEN = ""
+            var emptySquares = 0
+
+            for col in 0..<8 {
+                let position = row * 8 + col
+                if let pieceInt = board[position] {
+                    if emptySquares > 0 {
+                        rowFEN += "\(emptySquares)"
+                        emptySquares = 0
+                    }
+                    var pieceString = Piece.symbolFromPiece(Piece.pieceType(from: pieceInt) ?? 0)
+                    if Piece.pieceColor(from: pieceInt) == Piece.white {
+                        pieceString = pieceString.uppercased()
+                    }
+                    rowFEN += pieceString
+                } else {
+                    emptySquares += 1
+                }
+            }
+
+            if emptySquares > 0 {
+                rowFEN += "\(emptySquares)"
+            }
+
+            fenRows.append(rowFEN)
+        }
+
+        return fenRows.reversed().joined(separator: "/")
+    }
 }

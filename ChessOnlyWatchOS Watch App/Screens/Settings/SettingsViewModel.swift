@@ -48,6 +48,8 @@ class SettingsViewModel: ObservableObject {
 
     private let defaults: Defaults
 
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+
     init(defaults: Defaults) {
         self.defaults = defaults
         self.playerSide = defaults.playerSide
